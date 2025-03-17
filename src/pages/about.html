@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameSwap - Sobre o Projeto</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tektur&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./src/pages/about.html" class="active">Sobre</a></li>
+                <li><a href="research.html">Pesquisa</a></li>
+                <!-- <li><a href="../pages/about.html" class="active">Projeto</a></li> -->
+                <li><a href="contact.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1 data-text="Nosso Projeto">Nosso Projeto</h1>
+            <p>Conheça a proposta inovadora do GameSwap</p>
+        </section>
+
+
+        <section class="project-info">
+            <div class="box">
+                <h2>🎯 Objetivo do Projeto</h2>
+                <p>O GameSwap é uma plataforma inovadora que conecta jogadores para a compra, venda e troca de itens de jogos, como skins raras, ferramentas e jogos com níveis desbloqueados. Com um sistema seguro e eficiente, buscamos criar um ecossistema completo para gamers.</p>
+            </div>
+        </section>
+
+        <section class="project-info">
+            <div class="box">
+                <h2>🔑 Funcionalidades Principais</h2>
+                <ul>
+                    <li><strong>Anúncios de Produtos:</strong> Usuários podem criar anúncios detalhados com imagens, descrições e preços.</li>
+                    <li><strong>Transações Seguras:</strong> Pagamentos protegidos dentro da plataforma.</li>
+                    <li><strong>Chat Privado:</strong> Comunicação direta entre compradores e vendedores.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="project-info">
+            <div class="box">
+                <h2>🎮 Público-Alvo</h2>
+                <p>Nosso público é composto por jogadores de todas as idades, incluindo aqueles que buscam itens raros, melhoria no desempenho dos jogos ou interação com a comunidade gamer.</p>
+            </div>
+        </section>
+
+        <!-- <section class="project-info">
+            <div class="box">
+                <h2>📈 Tendências de Mercado</h2>
+                <p>O mercado global de games está crescendo rapidamente. Em 2024, projeta-se um crescimento de mais de 10% ao ano. O setor de venda de itens digitais tem previsão de atingir USD 32 bilhões até 2030.</p>
+            </div>
+        </section> -->
+
+        <section class="project-info">
+            <div class="box">
+                <h2>🚀 Futuro do GameSwap</h2>
+                <p>Nossa visão inclui expansão para novas funcionalidades, como fóruns interativos, parcerias com desenvolvedores e integração com ferramentas de streaming e criação de conteúdo.</p>
+            </div>
+        </section>
+        <section class="carousel-container">
+            <section class="carousel-container">
+                <h2 class="carousel-title">🎮 Jogos em Destaque</h2>
+                <button class="carousel-btn" id="left"><i class="fas fa-chevron-left"></i></button>
+                <!-- restante do carrossel -->
+            
+            <div class="carousel">
+                <div class="carousel-item box">
+                    <div class="img-container">
+                        <img class="img-front" src="../assets/Images/counterstrike.webp" alt="CS:GO">
+                        <img class="img-back" src="../assets/Images/skins-cs.jpg" alt="Produtos CS:GO">
+                    </div>
+                    <h3>CS:GO</h3>
+                    <p>Negocie skins raras e adesivos exclusivos para suas armas favoritas.</p>
+                </div>
+                
+                <div class="carousel-item box">
+                    <div class="img-container">
+                        <img class="img-front" src="../assets/Images/fortnite.jpg" alt="Fortnite">
+                        <img class="img-back" src="../assets/Images/skins-fortnite.jpg" alt="Produtos Fortnite">
+                    </div>
+                    <h3>Fortnite</h3>
+                    <p>Adquira skins exclusivas e itens cosméticos para destacar-se nas partidas.</p>
+                </div>
+                <div class="carousel-item box">
+                    <div class="img-container">
+                        <img class="img-front" src="../assets/Images/leagueoflegends.jpg" alt="League of Legends">
+                        <img class="img-back" src="../assets/Images/skins-lol.webp" alt="Produtos lol">
+                    </div>
+                    <h3>League of Legends</h3>
+                    <p>Compre ou venda skins raras para seus campeões favoritos.</p>
+                </div>
+                <div class="carousel-item box">
+                    <div class="img-container">
+                        <img class="img-front" src="../assets/Images/valorant.jpg" alt="Valorant">
+                        <img class="img-back" src="../assets/Images/skins-valorant.webp" alt="Produtos Valorant">
+                    </div>
+                    <h3>Valorant</h3>
+                    <p>Explore skins premium e pacotes exclusivos para armas.</p>
+                </div>
+            </div>
+
+            <button class="carousel-btn" id="right"><i class="fas fa-chevron-right"></i></button>
+        </section>
+    </main>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+    <footer>
+        <p>&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const items = document.querySelectorAll('.carousel-item');
+        let currentItem = 0;
+
+        document.getElementById('right').addEventListener('click', () => {
+            items[currentItem].classList.remove('active');
+            currentItem = (currentItem + 1) % items.length;
+            items[currentItem].classList.add('active');
+            carousel.scrollLeft = items[currentItem].offsetLeft - carousel.offsetLeft;
+        });
+
+        document.getElementById('left').addEventListener('click', () => {
+            items[currentItem].classList.remove('active');
+            currentItem = (currentItem - 1 + items.length) % items.length;
+            items[currentItem].classList.add('active');
+            carousel.scrollLeft = items[currentItem].offsetLeft - carousel.offsetLeft;
+        });
+
+        // Scroll top button
+        window.addEventListener('scroll', function() {
+            document.getElementById('scrollTop').style.display = window.pageYOffset > 300 ? 'block' : 'none';
+        });
+        document.getElementById('scrollTop').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
+    </script>
+</body>
+</html>

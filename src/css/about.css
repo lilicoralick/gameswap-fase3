@@ -1,0 +1,229 @@
+.box {
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 2rem auto;
+    max-width: 800px;
+    text-align: center;
+    transition: box-shadow 0.3s ease-in-out;
+    position: relative;
+    z-index: 1;
+}
+
+.box:hover {
+    box-shadow: 0 0 20px rgba(194, 125, 235, 0.6);
+}
+
+.box h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.box ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.box ul li {
+    margin: 0.5rem 0;
+}
+
+.scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: none;
+    transition: background-color 0.3s;
+}
+
+.scroll-top:hover {
+    background-color: var(--secondary-color);
+}
+.carousel-container {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    margin: 3rem auto;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.carousel-item {
+    min-width: 100%;
+    padding: 1rem;
+    margin-right: 1rem;
+    background: var(--card-background);
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: filter 0.5s ease;
+}
+
+.carousel-item h3 {
+    color: var(--secondary-color);
+    margin-top: 1rem;
+    transition: color 0.3s ease;
+}
+
+.carousel-item:hover h3,
+.carousel-item:hover p {
+    color: #c27deb;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 50%;
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+#left {
+    left: 10px;
+}
+
+#right {
+    right: 10px;
+}
+
+.carousel-btn:hover {
+    background: rgba(194,125,235,0.7);
+}
+.carousel-title {
+    text-align: center;
+    font-family: "Tektur", sans-serif;
+    color: #d00eb6;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.carousel-title:hover {
+    color: #c27deb;
+}
+/* Personalização minimalista da barra de rolagem do carrossel */
+.carousel::-webkit-scrollbar {
+    height: 5px; /* Altura bem fina */
+}
+
+.carousel::-webkit-scrollbar-track {
+    background: transparent; /* Fundo transparente */
+}
+
+.carousel::-webkit-scrollbar-thumb {
+    background-color: #c27deb; /* Cor roxa padrão do projeto */
+    border-radius: 10px; /* Bordas arredondadas para suavidade */
+}
+.img-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.img-container img {
+    width: 100%;
+    height: auto;
+    transition: opacity 0.5s ease-in-out;
+    display: block;
+}
+
+.img-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.img-container:hover .img-front {
+    opacity: 0;
+}
+
+.img-container:hover .img-back {
+    opacity: 1;
+}
+
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(120vh) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.3;
+    }
+    80% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-20vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.pixel {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: var(--secondary-color);
+    opacity: 0;
+    box-shadow: 0 0 2px rgba(138, 43, 226, 0.4);
+    animation: floatUp var(--duration) infinite linear;
+    animation-delay: var(--delay);
+}
+
+/* Pixel shapes */
+.pixel.square {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.pixel.triangle {
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.pixel.diamond {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.pixel.cross {
+    clip-path: polygon(
+        35% 0%, 65% 0%, 65% 35%, 100% 35%,
+        100% 65%, 65% 65%, 65% 100%, 35% 100%,
+        35% 65%, 0% 65%, 0% 35%, 35% 35%
+    );
+}

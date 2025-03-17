@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameSwap - Troque seus Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="./src/pages/about.html">Sobre</a></li>
+                <li><a href="research.html">Pesquisa</a></li>
+                <!-- li><a href="../pages/about.html">Projeto</a></li> -->
+                <li><a href="contact.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1 data-text="Bem-vindo ao GameSwap">Bem-vindo ao GameSwap</h1>
+            <p>A plataforma revolucionária para troca de games entre jogadores</p>
+            <a href="./src/pages/about.html" class="cta-button">
+                <span>S</span>
+                <span>a</span>
+                <span>i</span>
+                <span>b</span>
+                <span>a</span>
+                <span>&nbsp;</span>
+                <span>M</span>
+                <span>a</span>
+                <span>i</span>
+                <span>s</span>
+            </a>
+        </section>
+
+        <section class="features">
+            <h2>Por que escolher o GameSwap?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Troque seus itens e skins</h3>
+                    <p>Encontre outros jogadores e faça trocas de forma segura e confiável.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Comunidade Ativa</h3>
+                    <p>Conecte-se com milhares de gamers em todo o Brasil.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Economia</h3>
+                    <p>Economize tempo e encontre tudo o que precisa na GameSwap.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html> 
