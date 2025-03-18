@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+    <div class="background-animation"></div>
     <header>
         <nav class="main-nav">
             <div class="logo">GameSwap</div>
@@ -70,6 +71,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ===== Menu Toggle Logic =====
             const menuToggle = document.getElementById('menu-toggle');
             const navMenu = document.getElementById('nav-menu');
             
@@ -77,6 +79,67 @@
                 navMenu.classList.toggle('active');
                 menuToggle.classList.toggle('active');
             });
+
+            // ===== Background Animation Setup =====
+            // Container onde as formas serão criadas e animadas
+            const animationContainer = document.querySelector('.background-animation');
+            
+            // Arrays com as opções de formas e cores disponíveis
+            const shapes = ['square', 'triangle', 'diamond', 'cross']; // Formas geométricas
+            const colors = ['color1', 'color2', 'color3', 'color4', 'color5']; // Paleta de cores roxas
+            const numberOfPixels = 50; // Número de formas na tela
+
+            /**
+             * Função que cria uma nova forma geométrica
+             * - Seleciona aleatoriamente uma forma e uma cor
+             * - Define posição horizontal aleatória
+             * - Configura duração e delay da animação
+             */
+            function createPixel() {
+                const pixel = document.createElement('div');
+                
+                // Seleção aleatória de forma e cor
+                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                pixel.className = `pixel ${randomShape} ${randomColor}`;
+                
+                // Posicionamento horizontal aleatório (0-100% da largura da tela)
+                const left = Math.random() * 100;
+                pixel.style.left = `${left}%`;
+                
+                // Configurações de tempo da animação
+                const duration = 10 + Math.random() * 15; // Duração: 10-25 segundos
+                const delay = Math.random() * 10; // Atraso inicial: 0-10 segundos
+                pixel.style.setProperty('--duration', `${duration}s`);
+                pixel.style.setProperty('--delay', `${delay}s`);
+                
+                return pixel;
+            }
+
+            // Criação inicial das formas geométricas
+            // Preenche a tela com o número definido de formas
+            for (let i = 0; i < numberOfPixels; i++) {
+                animationContainer.appendChild(createPixel());
+            }
+
+            /**
+             * Sistema de reciclagem das formas
+             * - Verifica a cada segundo quais formas saíram da tela
+             * - Remove as formas que passaram do topo
+             * - Cria novas formas para manter o número constante
+             */
+            setInterval(() => {
+                const pixels = document.querySelectorAll('.pixel');
+                pixels.forEach(pixel => {
+                    const computedStyle = window.getComputedStyle(pixel);
+                    const transform = computedStyle.getPropertyValue('transform');
+                    // Verifica se a forma passou do topo da tela
+                    if (transform.includes('matrix') && parseFloat(transform.split(',')[5]) < 0) {
+                        pixel.remove();
+                        animationContainer.appendChild(createPixel());
+                    }
+                });
+            }, 1000); // Intervalo de verificação: 1 segundo
         });
     </script>
 </body>

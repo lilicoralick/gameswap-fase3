@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+    <div class="background-animation"></div>
     <header>
         <nav class="main-nav">
             <div class="logo">GameSwap</div>
@@ -142,11 +143,71 @@
             carousel.scrollLeft = items[currentItem].offsetLeft - carousel.offsetLeft;
         });
 
-        // Scroll top button
-        window.addEventListener('scroll', function() {
-            document.getElementById('scrollTop').style.display = window.pageYOffset > 300 ? 'block' : 'none';
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== Menu Toggle Logic =====
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // ===== Background Animation Setup =====
+            const animationContainer = document.querySelector('.background-animation');
+            const shapes = ['square', 'triangle', 'diamond', 'cross']; // Tipos de formas disponíveis
+            const colors = ['color1', 'color2', 'color3', 'color4', 'color5']; // Variações de cores
+            const numberOfPixels = 50; // Quantidade total de formas na tela
+
+            // Função para criar uma nova forma geométrica
+            function createPixel() {
+                const pixel = document.createElement('div');
+                // Seleciona uma forma e cor aleatória
+                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                pixel.className = `pixel ${randomShape} ${randomColor}`;
+                
+                // Posição horizontal aleatória (0-100%)
+                const left = Math.random() * 100;
+                pixel.style.left = `${left}%`;
+                
+                // Configuração da animação
+                const duration = 10 + Math.random() * 15; // Duração entre 10-25 segundos
+                const delay = Math.random() * 10; // Delay inicial aleatório (0-10 segundos)
+                pixel.style.setProperty('--duration', `${duration}s`);
+                pixel.style.setProperty('--delay', `${delay}s`);
+                
+                return pixel;
+            }
+
+            // Criação inicial das formas
+            for (let i = 0; i < numberOfPixels; i++) {
+                animationContainer.appendChild(createPixel());
+            }
+
+            // Sistema de reciclagem das formas
+            // Verifica a cada segundo se alguma forma precisa ser substituída
+            setInterval(() => {
+                const pixels = document.querySelectorAll('.pixel');
+                pixels.forEach(pixel => {
+                    const computedStyle = window.getComputedStyle(pixel);
+                    const transform = computedStyle.getPropertyValue('transform');
+                    // Se a forma passou do topo da tela (Y negativo), remove e cria uma nova
+                    if (transform.includes('matrix') && parseFloat(transform.split(',')[5]) < 0) {
+                        pixel.remove();
+                        animationContainer.appendChild(createPixel());
+                    }
+                });
+            }, 1000);
+
+            // ===== Scroll Top Button Logic =====
+            window.addEventListener('scroll', function() {
+                document.getElementById('scrollTop').style.display = 
+                    window.pageYOffset > 300 ? 'block' : 'none';
+            });
+            document.getElementById('scrollTop').onclick = () => 
+                window.scrollTo({top: 0, behavior: 'smooth'});
         });
-        document.getElementById('scrollTop').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
     </script>
 </body>
 </html>

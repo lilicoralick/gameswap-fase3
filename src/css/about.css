@@ -168,6 +168,15 @@
     opacity: 1;
 }
 
+/* ====== Animação de Fundo da Página About ====== */
+
+/**
+ * Container principal da animação
+ * - position: fixed mantém a animação fixa mesmo durante a rolagem
+ * - z-index: -1 garante que a animação fique atrás de todo o conteúdo
+ * - overflow: hidden impede barras de rolagem indesejadas
+ * - background-color: transparent permite que o fundo da página seja visível
+ */
 .background-animation {
     position: fixed;
     top: 0;
@@ -179,47 +188,104 @@
     background-color: transparent;
 }
 
+/**
+ * Animação de Flutuação (floatUp)
+ * - Movimento suave de baixo para cima com rotação
+ * - Fade in/out para transições suaves
+ * 
+ * Estágios da animação:
+ * 1. Início (0%): Começa abaixo da tela, invisível
+ * 2. Fade In (20%): Aparece gradualmente
+ * 3. Visível (20-80%): Mantém opacidade constante durante a subida
+ * 4. Fade Out (80-100%): Desaparece ao sair pelo topo
+ */
 @keyframes floatUp {
     0% {
-        transform: translateY(120vh) rotate(0deg);
+        transform: translateY(120vh) rotate(0deg); /* Começa fora da tela (120% da altura) */
         opacity: 0;
     }
     20% {
-        opacity: 0.3;
+        opacity: 0.3; /* Fade in gradual */
     }
     80% {
-        opacity: 0.3;
+        opacity: 0.3; /* Mantém visibilidade durante a subida */
     }
     100% {
-        transform: translateY(-20vh) rotate(360deg);
-        opacity: 0;
+        transform: translateY(-20vh) rotate(360deg); /* Rotação completa ao sair da tela */
+        opacity: 0; /* Desaparece completamente */
     }
 }
 
+/**
+ * Estilo Base das Formas Pixeladas
+ * - Tamanho 8x8 pixels para efeito retro/pixelado
+ * - Box-shadow cria um efeito de brilho suave
+ * - Animação controlada por variáveis CSS (--duration e --delay)
+ * - Posicionamento absoluto para controle preciso
+ */
 .pixel {
     position: absolute;
     width: 8px;
     height: 8px;
-    background-color: var(--secondary-color);
     opacity: 0;
-    box-shadow: 0 0 2px rgba(138, 43, 226, 0.4);
+    box-shadow: 0 0 4px rgba(148, 0, 211, 0.6); /* Brilho roxo suave */
     animation: floatUp var(--duration) infinite linear;
     animation-delay: var(--delay);
 }
 
-/* Pixel shapes */
+/* ==== Variações de Cores ==== */
+
+/**
+ * Paleta de Cores Roxa
+ * - Cores escolhidas para combinar com o tema do GameSwap
+ * - Variações de tons para criar profundidade visual
+ * - Uso de variáveis CSS para cores principais do tema
+ */
+.pixel.color1 {
+    background-color: var(--primary-color);   /* Roxo principal do tema */
+}
+
+.pixel.color2 {
+    background-color: var(--secondary-color); /* Roxo secundário do tema */
+}
+
+.pixel.color3 {
+    background-color: #B23AEE; /* Violeta mais claro para contraste */
+}
+
+.pixel.color4 {
+    background-color: #9370DB; /* Roxo médio para variação */
+}
+
+.pixel.color5 {
+    background-color: #BA55D3; /* Orquídea médio para complemento */
+}
+
+/* ==== Formas Geométricas ==== */
+
+/**
+ * Definições de Formas usando clip-path
+ * - Cada forma é criada usando coordenadas precisas
+ * - Mantém o tamanho base de 8x8 pixels
+ * - Formas simples mas distintas para variedade visual
+ */
+
+/* Quadrado: forma básica e sólida */
 .pixel.square {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
+/* Triângulo: forma dinâmica apontando para cima */
 .pixel.triangle {
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
 }
 
+/* Diamante: quadrado rotacionado para efeito elegante */
 .pixel.diamond {
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
 
+/* Cruz: forma mais complexa para interesse visual */
 .pixel.cross {
     clip-path: polygon(
         35% 0%, 65% 0%, 65% 35%, 100% 35%,
@@ -227,3 +293,11 @@
         35% 65%, 0% 65%, 0% 35%, 35% 35%
     );
 }
+
+/**
+ * Nota sobre Performance:
+ * - Uso de transform para animações suaves
+ * - Opacity para transições graduais
+ * - clip-path para formas eficientes
+ * - Número limitado de elementos para performance otimizada
+ */
