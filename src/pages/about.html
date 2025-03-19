@@ -46,46 +46,47 @@
         </section>
 
          <section class="carousel-container">
-            <section class="carousel-container">
-                <h2 class="carousel-title"><i class="fa-solid fa-gamepad"></i> Jogos em Destaque <i class="fa-solid fa-gamepad"></i></h2>
-                <button class="carousel-btn" id="left"><i class="fas fa-chevron-left"></i></button>
-                <!-- restante do carrossel -->
-            
+            <h2 class="carousel-title"><i class="fa-solid fa-gamepad"></i> Jogos em Destaque <i class="fa-solid fa-gamepad"></i></h2>
             <div class="carousel">
-                <div class="carousel-item box">
-                    <div class="img-container">
-                        <img class="img-front" src="../assets/Images/counterstrike.webp" alt="CS:GO">
-                        <img class="img-back" src="../assets/Images/skins-cs.jpg" alt="Produtos CS:GO">
+                <button class="carousel-btn" id="left"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-items">
+                    <div class="carousel-item box">
+                        <div class="img-container">
+                            <img class="img-front" src="../assets/Images/counterstrike.webp" alt="CS:GO">
+                            <img class="img-back" src="../assets/Images/skins-cs.jpg" alt="Produtos CS:GO">
+                        </div>
+                        <h3>CS:GO</h3>
+                        <p>Negocie skins raras e adesivos exclusivos para suas armas favoritas.</p>
                     </div>
-                    <h3>CS:GO</h3>
-                    <p>Negocie skins raras e adesivos exclusivos para suas armas favoritas.</p>
-                </div>
-                
-                <div class="carousel-item box">
-                    <div class="img-container">
-                        <img class="img-front" src="../assets/Images/fortnite.jpg" alt="Fortnite">
-                        <img class="img-back" src="../assets/Images/skins-fortnite.jpg" alt="Produtos Fortnite">
+                    
+                    <div class="carousel-item box">
+                        <div class="img-container">
+                            <img class="img-front" src="../assets/Images/fortnite.jpg" alt="Fortnite">
+                            <img class="img-back" src="../assets/Images/skins-fortnite.jpg" alt="Produtos Fortnite">
+                        </div>
+                        <h3>Fortnite</h3>
+                        <p>Adquira skins exclusivas e itens cosméticos para destacar-se nas partidas.</p>
                     </div>
-                    <h3>Fortnite</h3>
-                    <p>Adquira skins exclusivas e itens cosméticos para destacar-se nas partidas.</p>
-                </div>
-                <div class="carousel-item box">
-                    <div class="img-container">
-                        <img class="img-front" src="../assets/Images/leagueoflegends.jpg" alt="League of Legends">
-                        <img class="img-back" src="../assets/Images/skins-lol.webp" alt="Produtos lol">
+                    <div class="carousel-item box">
+                        <div class="img-container">
+                            <img class="img-front" src="../assets/Images/leagueoflegends.jpg" alt="League of Legends">
+                            <img class="img-back" src="../assets/Images/skins-lol.webp" alt="Produtos lol">
+                        </div>
+                        <h3>League of Legends</h3>
+                        <p>Compre ou venda skins raras para seus campeões favoritos.</p>
                     </div>
-                    <h3>League of Legends</h3>
-                    <p>Compre ou venda skins raras para seus campeões favoritos.</p>
-                </div>
-                <div class="carousel-item box">
-                    <div class="img-container">
-                        <img class="img-front" src="../assets/Images/valorant.jpg" alt="Valorant">
-                        <img class="img-back" src="../assets/Images/skins-valorant.webp" alt="Produtos Valorant">
+                    <div class="carousel-item box">
+                        <div class="img-container">
+                            <img class="img-front" src="../assets/Images/valorant.jpg" alt="Valorant">
+                            <img class="img-back" src="../assets/Images/skins-valorant.webp" alt="Produtos Valorant">
+                        </div>
+                        <h3>Valorant</h3>
+                        <p>Explore skins premium e pacotes exclusivos para armas.</p>
                     </div>
-                    <h3>Valorant</h3>
-                    <p>Explore skins premium e pacotes exclusivos para armas.</p>
                 </div>
+                <button class="carousel-btn" id="right"><i class="fas fa-chevron-right"></i></button>
             </div>
+        </section>
 
         <section class="project-info">
             <div class="box">
@@ -118,9 +119,6 @@
                 <p>Nossa visão inclui expansão para novas funcionalidades, como fóruns interativos, aba de notícias, parcerias com desenvolvedores e integração com ferramentas de streaming e criação de conteúdo.</p>
             </div>
         </section>
-
-            <button class="carousel-btn" id="right"><i class="fas fa-chevron-right"></i></button>
-        </section>
     </main>
 
     <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
@@ -130,25 +128,27 @@
     </footer>
 
     <script>
-        const carousel = document.querySelector('.carousel');
-        const items = document.querySelectorAll('.carousel-item');
-        let currentItem = 0;
-
-        document.getElementById('right').addEventListener('click', () => {
-            items[currentItem].classList.remove('active');
-            currentItem = (currentItem + 1) % items.length;
-            items[currentItem].classList.add('active');
-            carousel.scrollLeft = items[currentItem].offsetLeft - carousel.offsetLeft;
-        });
-
-        document.getElementById('left').addEventListener('click', () => {
-            items[currentItem].classList.remove('active');
-            currentItem = (currentItem - 1 + items.length) % items.length;
-            items[currentItem].classList.add('active');
-            carousel.scrollLeft = items[currentItem].offsetLeft - carousel.offsetLeft;
-        });
-
         document.addEventListener('DOMContentLoaded', function() {
+            const carouselItems = document.querySelector('.carousel-items');
+            const items = document.querySelectorAll('.carousel-item');
+            let currentItem = 0;
+
+            document.getElementById('right').addEventListener('click', () => {
+                currentItem = (currentItem + 1) % items.length;
+                carouselItems.scrollTo({
+                    left: items[currentItem].offsetLeft,
+                    behavior: 'smooth'
+                });
+            });
+
+            document.getElementById('left').addEventListener('click', () => {
+                currentItem = (currentItem - 1 + items.length) % items.length;
+                carouselItems.scrollTo({
+                    left: items[currentItem].offsetLeft,
+                    behavior: 'smooth'
+                });
+            });
+
             // ===== Menu Toggle Logic =====
             const menuToggle = document.getElementById('menu-toggle');
             const navMenu = document.getElementById('nav-menu');
