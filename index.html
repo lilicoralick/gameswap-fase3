@@ -78,6 +78,9 @@
             menuToggle.addEventListener('click', function() {
                 navMenu.classList.toggle('active');
                 menuToggle.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
             });
 
             // ===== Background Animation Setup =====
