@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Mercado - GameSwap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/research.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./about.html">Sobre</a></li>
+                <li><a href="research.html" class="active">Pesquisa</a></li>
+                <!-- <li><a href="project.html">Projeto</a></li> -->
+                <li><a href="contact.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1 data-text="Pesquisa de Mercado">Pesquisa de Mercado</h1>
+            <p>O mercado global de jogos atingirá US$ 436,68 bilhões até 2030. Descubra como a GameSwap se posiciona nesse cenário.</p>
+        </section>
+
+        <section class="features">
+            <h2>Espaço no mercado</h2>
+            <p>O mercado brasileiro de jogos já vale R$ 1,1 trilhão, com 74,5% da população jogando regularmente. O segmento de troca de ativos digitais, como skins, tem um valor atual de USD 5,5 bilhões e deve crescer para USD 32,3 bilhões até 2030, com um CAGR de 26%. Plataformas como Epic Games Store e Steam movimentam USD 20 bilhões anualmente em transações secundárias. O GameSwap se beneficia desse crescimento ao oferecer segurança avançada e se alinhar com tendências de valorização de itens digitais e comunidades gamificadas.</p>
+
+            <!-- Gráfico inserido aqui -->
+            <div class="chart-container box">
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <h2>Principais Tendências</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Multiplataforma e Ecossistemas Integrados</h3>
+                    <p>Empresas como Xbox estão adotando modelos multiplataforma para alcançar mais usuários, podemos aproveitar e integrar itens de diferentes plataformas (ex: skins de PC e console).</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Marcas Não-Endêmicas e Parcerias</h3>
+                    <p>Nike, Coca-Cola e Fenty Beauty estão investindo em campanhas gamificadas, criando novos fluxos de receita. A GameSwap pode atrair parcerias para ofertas exclusivas.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Demanda dos Jogadores</h3>
+                    <p>60% dos jogadores são atraídos por exclusividade e 80% dos usuários por segurança. Nosso serviço é altamente valorizado por eles. Segurança e interatividade também são prioridades dos usuários.</p>
+                </div>
+            </div>
+            <h2>Viabilidade</h2>
+            <p>O GameSwap aproveita um mercado em crescimento exponencial, alinhando-se com tendências-chave como valorização de itens digitais, comunidades gamificadas e segurança Com um CAGR de 26% em marketplaces de investimentos, o projeto tem cláusulas técnicas e comerciais, permitindo capturar uma fatia significativa desse nicho em expansão. Para superar as limitações das plataformas tradicionais, que negligenciam o comércio de itens digitais valiosos, como skins raras, nossa plataforma oferece um ambiente seguro e especializado. A parceria com a Palo Alto Networks garante a proteção dos usuários com soluções de segurança avançadas, incluindo criptografia e autenticação multifatorial, em conformidade com as normas globais.</p>
+        </section>
+    </main>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+    <footer>
+        <p> 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Marketplaces de Ativos Digitais', 'MMORPGs Globais', 'Mercado Global de Jogos'],
+                datasets: [{
+                    label: 'Valor Atual (2022/2023) (em bilhões de dólares)',
+                    data: [5.5, 14.1, 247.43],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Azul
+                    borderColor: 'rgba(54, 162, 235, 1)', // Azul
+                    borderWidth: 1
+                },
+                {
+                    label: 'Projeção para 2030 (em bilhões de dólares)',
+                    data: [32.3, 23.8, 436.68],
+                    backgroundColor: 'rgba(75, 0, 130, 0.2)', // Roxo
+                    borderColor: 'rgba(75, 0, 130, 1)', // Roxo
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Valor (em bilhões de dólares)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Segmento do Mercado'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Crescimento do Mercado de Jogos: 2022/2023 vs 2030',
+                        font: {
+                            size: 16
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+        });
+    </script>
+    <script>
+        // Scroll top button
+        window.addEventListener('scroll', function() {
+            document.getElementById('scrollTop').style.display = window.pageYOffset > 300 ? 'block' : 'none';
+        });
+        document.getElementById('scrollTop').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
+    </script>
+</body>
+</html>

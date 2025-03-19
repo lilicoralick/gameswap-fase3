@@ -75,12 +75,16 @@ body {
         color: #c27deb;
     }
 }
-
+.hero-about{
+    background-image: url("../assets/Images/Background-Illustration.gif");
+    background-size: cover;
+    background-position: fixed;
+}
 .hero {
     text-align: center;
     padding: 4rem 2rem;
     position: relative;
-    background: radial-gradient(circle at center, var(--primary-color) 0%, var(--background-color) 100%);
+    
 }
 
 .hero::before {
