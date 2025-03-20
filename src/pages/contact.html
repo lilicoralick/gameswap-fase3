@@ -8,9 +8,148 @@
     <link rel="stylesheet" href="../css/contact.css">
     <link href="https://fonts.googleapis.com/css2?family=Tektur&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
     <div class="background-animation"></div>
     <header>
         <nav class="main-nav">
             <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./about.html">Sobre</a></li>
+                <li><a href="research.html">Pesquisa</a></li>
+                <!-- <li><a href="../pages/about.html" class="active">Projeto</a></li> -->
+                <li><a href="contact.html" class="active">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1 data-text="Entre em Contato">Entre em Contato</h1>
+            <p>Estamos aqui para ajudar! Envie sua mensagem e retornaremos em breve.</p>
+        </section>
+
+        <section class="contact-form">
+            <div class="form-container box">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Assunto</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Mensagem</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="cta-button">
+                        <span>E</span>
+                        <span>n</span>
+                        <span>v</span>
+                        <span>i</span>
+                        <span>a</span>
+                        <span>r</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="hero hero-about">
+            <div class="overlay"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu Toggle Logic
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // Form Submit Logic
+            const form = document.getElementById('contactForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                Toastify({
+                    text: "Mensagem enviada com sucesso!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #9400D3, #8A2BE2)",
+                    }
+                }).showToast();
+
+                form.reset();
+            });
+
+            // Background Animation Setup
+            const animationContainer = document.querySelector('.background-animation');
+            const shapes = ['square', 'triangle', 'diamond', 'cross'];
+            const colors = ['color1', 'color2', 'color3', 'color4', 'color5'];
+            const numberOfPixels = 50;
+
+            function createPixel() {
+                const pixel = document.createElement('div');
+                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                pixel.className = `pixel ${randomShape} ${randomColor}`;
+                
+                const left = Math.random() * 100;
+                pixel.style.left = `${left}%`;
+                
+                const duration = 10 + Math.random() * 15;
+                const delay = Math.random() * 10;
+                pixel.style.setProperty('--duration', `${duration}s`);
+                pixel.style.setProperty('--delay', `${delay}s`);
+                
+                return pixel;
+            }
+
+            for (let i = 0; i < numberOfPixels; i++) {
+                animationContainer.appendChild(createPixel());
+            }
+
+            setInterval(() => {
+                const pixels = document.querySelectorAll('.pixel');
+                pixels.forEach(pixel => {
+                    const computedStyle = window.getComputedStyle(pixel);
+                    const transform = computedStyle.getPropertyValue('transform');
+                    if (transform.includes('matrix') && parseFloat(transform.split(',')[5]) < 0) {
+                        pixel.remove();
+                        animationContainer.appendChild(createPixel());
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
