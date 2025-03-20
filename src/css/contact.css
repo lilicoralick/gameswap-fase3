@@ -71,12 +71,12 @@
 .hero-about {
     background-image: url("../assets/Images/Background-Illustration.gif");
     background-size: cover;
-    background-position: center;
-    height: 400px;
+    background-position: top center;
+    height: 250px;
     margin-top: 4rem;
     padding: 0;
     position: relative;
-    margin-bottom: -100px;
+    margin-bottom: -80px;
 }
 
 .hero-about .overlay {
@@ -146,8 +146,8 @@ footer {
     }
 
     .hero-about {
-        height: 300px;
-        margin-bottom: -80px;
+        height: 200px;
+        margin-bottom: -60px;
     }
 }
 
@@ -165,7 +165,7 @@ footer {
     }
 
     .hero-about {
-        height: 200px;
-        margin-bottom: -60px;
+        height: 150px;
+        margin-bottom: -40px;
     }
 }
