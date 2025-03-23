@@ -352,3 +352,46 @@ footer {
     }
 }
 
+/* Estilos para a tabela na página de pesquisa */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff; /* Cor de fundo da tabela */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+h1 {
+    text-align: center; /* Centraliza o texto do título */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Borda das células */
+    padding: 12px; /* Espaçamento interno */
+    text-align: left; /* Alinhamento do texto */
+}
+
+th {
+    background-color: #9400D3; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+    font-weight: bold; /* Negrito para o cabeçalho */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Cor de fundo para linhas pares */
+}
+
+tr:hover {
+    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
+}
+
+td{
+    color: #8A2BE2;
+}
+/* Estilo para a tabela em dispositivos móveis */
+@media (max-width: 600px) {
+    th, td {
+        padding: 8px; /* Ajuste de espaçamento em telas menores */
+    }
+}
