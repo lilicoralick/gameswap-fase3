@@ -176,3 +176,8 @@ footer {
         margin-bottom: -40px;
     }
 }
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 16ch; } /* Ajustado para "Entre em Contato" */
+}

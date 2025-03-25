@@ -330,3 +330,8 @@
  * - clip-path para formas eficientes
  * - Número limitado de elementos para performance otimizada
  */
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 13ch; } /* Ajustado para "Nosso Projeto" */
+}
