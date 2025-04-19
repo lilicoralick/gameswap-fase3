@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conformidade LGPD - GameSwap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lgpd-compliance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+                <li><a href="inventory.html">Meu Inventário</a></li>
+                <li><a href="profile.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lgpd-compliance-container">
+        <div class="lgpd-compliance-card">
+            <h1>Conformidade com a LGPD</h1>
+            <p class="subtitle">Por favor, leia e aceite nossos termos de privacidade para continuar</p>
+
+            <div class="tabs-container">
+                <button class="tab-button active" data-tab="terms">Termos de Uso</button>
+                <button class="tab-button" data-tab="privacy">Política de Privacidade</button>
+                <button class="tab-button" data-tab="cookies">Política de Cookies</button>
+            </div>
+
+            <div class="tab-content active" id="terms">
+                <div class="terms-scroll">
+                    <div class="terms-section">
+                        <h3>1. Introdução</h3>
+                        <p>Ao utilizar a plataforma GameSwap, você concorda com estes termos de uso. Estes termos estabelecem as regras e regulamentos para o uso do nosso site.</p>
+                    </div>
+                    <div class="terms-section">
+                        <h3>2. Uso da Plataforma</h3>
+                        <p>O GameSwap é uma plataforma para troca e venda de jogos digitais. Ao utilizar nossos serviços, você concorda em:</p>
+                        <ul>
+                            <li>Fornecer informações precisas e verdadeiras</li>
+                            <li>Manter a confidencialidade de sua conta</li>
+                            <li>Não utilizar a plataforma para fins ilegais</li>
+                            <li>Respeitar os direitos de propriedade intelectual</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="privacy">
+                <div class="terms-scroll">
+                    <div class="terms-section">
+                        <h3>1. Coleta de Dados</h3>
+                        <p>Coletamos informações pessoais quando você se registra em nossa plataforma, realiza transações ou interage conosco.</p>
+                    </div>
+                    <div class="terms-section">
+                        <h3>2. Uso dos Dados</h3>
+                        <p>Utilizamos seus dados para:</p>
+                        <ul>
+                            <li>Processar suas transações</li>
+                            <li>Melhorar nossos serviços</li>
+                            <li>Enviar comunicações importantes</li>
+                            <li>Garantir a segurança da plataforma</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="cookies">
+                <div class="terms-scroll">
+                    <div class="terms-section">
+                        <h3>1. O que são Cookies</h3>
+                        <p>Cookies são pequenos arquivos de texto armazenados em seu dispositivo quando você visita nosso site.</p>
+                    </div>
+                    <div class="terms-section">
+                        <h3>2. Como Utilizamos os Cookies</h3>
+                        <p>Utilizamos cookies para:</p>
+                        <ul>
+                            <li>Manter você conectado</li>
+                            <li>Lembrar suas preferências</li>
+                            <li>Analisar o uso do site</li>
+                            <li>Melhorar a experiência do usuário</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="terms-check" class="terms-checkbox">
+                <label for="terms-check" class="checkbox-label">Li e concordo com os Termos de Uso</label>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="privacy-check" class="terms-checkbox">
+                <label for="privacy-check" class="checkbox-label">Li e concordo com a Política de Privacidade</label>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="cookies-check" class="terms-checkbox">
+                <label for="cookies-check" class="checkbox-label">Li e concordo com a Política de Cookies</label>
+            </div>
+
+            <div class="buttons-container">
+                <button id="decline-btn" class="btn btn-decline">Não Concordo</button>
+                <button id="accept-btn" class="btn btn-accept" disabled>Concordo e Continuo</button>
+            </div>
+        </div>
+
+        <div class="success-message" style="display: none;">
+            <i class="fas fa-check-circle"></i>
+            <h2>Consentimento Registrado!</h2>
+            <p>Obrigado por aceitar nossos termos.</p>
+            <p>Você será redirecionado em instantes...</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="security-info">
+            <div class="ssl-badge">
+                <i class="fas fa-lock"></i>
+                <span>SSL Seguro</span>
+            </div>
+            <div class="security-details">
+                <p><i class="fas fa-shield-alt"></i> Transações Criptografadas</p>
+                <p><i class="fas fa-user-shield"></i> Proteção de Dados</p>
+                <p><i class="fas fa-check-circle"></i> Verificação em Duas Etapas</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script src="../js/lgpd-compliance.js"></script>
+</body>
+</html> 

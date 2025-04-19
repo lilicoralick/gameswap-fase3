@@ -1,0 +1,433 @@
+// Função para formatar o número do cartão
+function formatCardNumber(input) {
+    let value = input.value.replace(/\D/g, '');
+    let formattedValue = '';
+    
+    for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+            formattedValue += ' ';
+        }
+        formattedValue += value[i];
+    }
+    
+    input.value = formattedValue;
+    updateCardPreview();
+}
+
+// Função para formatar a data de expiração
+function formatExpirationDate(input) {
+    let value = input.value.replace(/\D/g, '');
+    
+    if (value.length >= 2) {
+        value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+    
+    input.value = value;
+    updateCardPreview();
+}
+
+// Função para formatar o nome do titular
+function formatCardholderName(input) {
+    input.value = input.value.toUpperCase();
+    updateCardPreview();
+}
+
+// Função para atualizar o preview do cartão
+function updateCardPreview() {
+    const cardNumber = document.getElementById('card-number').value;
+    const cardholderName = document.getElementById('card-holder').value;
+    const expirationDate = document.getElementById('card-expiry').value;
+    
+    document.querySelector('.card-number').textContent = cardNumber || '**** **** **** ****';
+    document.querySelector('.card-details').innerHTML = `
+        <div>${cardholderName || 'NOME DO TITULAR'}</div>
+        <div>${expirationDate || 'MM/AA'}</div>
+    `;
+}
+
+// Função para validar o cartão usando o algoritmo de Luhn
+function validateCardNumber(cardNumber) {
+    const digits = cardNumber.replace(/\D/g, '');
+    let sum = 0;
+    let isEven = false;
+    
+    for (let i = digits.length - 1; i >= 0; i--) {
+        let digit = parseInt(digits[i]);
+        
+        if (isEven) {
+            digit *= 2;
+            if (digit > 9) {
+                digit -= 9;
+            }
+        }
+        
+        sum += digit;
+        isEven = !isEven;
+    }
+    
+    return sum % 10 === 0;
+}
+
+// Função para validar a data de expiração
+function validateExpirationDate(expirationDate) {
+    const [month, year] = expirationDate.split('/');
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear() % 100;
+    const currentMonth = currentDate.getMonth() + 1;
+    
+    const expYear = parseInt(year);
+    const expMonth = parseInt(month);
+    
+    if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
+        return false;
+    }
+    
+    return true;
+}
+
+// Função para tokenizar os dados do cartão
+async function tokenizeCard(cardData) {
+    try {
+        // Simulação de chamada à API de tokenização
+        const response = await fetch('https://api.gameswap.com/tokenize', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+            },
+            body: JSON.stringify(cardData)
+        });
+        
+        if (!response.ok) {
+            throw new Error('Erro na tokenização do cartão');
+        }
+        
+        const data = await response.json();
+        return data.token;
+    } catch (error) {
+        console.error('Erro na tokenização:', error);
+        throw error;
+    }
+}
+
+// Funções para gerenciar métodos de pagamento alternativos
+function initializePaymentMethods() {
+    const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+    const creditCardSection = document.getElementById('credit-card-section');
+    const pixSection = document.getElementById('pix-payment-section');
+    const applePaySection = document.getElementById('apple-pay-section');
+    const paypalSection = document.getElementById('paypal-section');
+    const paymentOptions = document.querySelectorAll('.payment-method-option');
+    
+    // Função para mostrar/esconder seções de pagamento
+    function togglePaymentSections() {
+        const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+        
+        // Esconder todas as seções
+        creditCardSection.style.display = 'none';
+        pixSection.style.display = 'none';
+        applePaySection.style.display = 'none';
+        paypalSection.style.display = 'none';
+        
+        // Remover classe selected de todas as opções
+        paymentOptions.forEach(option => {
+            option.classList.remove('selected');
+        });
+        
+        // Mostrar a seção selecionada
+        switch(selectedMethod) {
+            case 'credit-card':
+                creditCardSection.style.display = 'block';
+                document.getElementById('credit-card-option').classList.add('selected');
+                break;
+            case 'pix':
+                pixSection.style.display = 'block';
+                document.getElementById('pix-option').classList.add('selected');
+                generatePixQRCode();
+                startPixCountdown();
+                break;
+            case 'apple-pay':
+                applePaySection.style.display = 'block';
+                document.getElementById('apple-pay-option').classList.add('selected');
+                break;
+            case 'paypal':
+                paypalSection.style.display = 'block';
+                document.getElementById('paypal-option').classList.add('selected');
+                break;
+        }
+    }
+    
+    // Adicionar evento de clique para cada opção de pagamento
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const radioInput = this.querySelector('input[type="radio"]');
+            radioInput.checked = true;
+            togglePaymentSections();
+        });
+    });
+    
+    // Adicionar evento de mudança para os radio buttons
+    paymentMethods.forEach(method => {
+        method.addEventListener('change', togglePaymentSections);
+    });
+    
+    // Inicializar com o método padrão (cartão de crédito)
+    document.getElementById('credit-card-option').classList.add('selected');
+}
+
+// Função para gerar QR Code do PIX
+function generatePixQRCode() {
+    // Em um ambiente real, isso seria gerado pelo backend
+    // Aqui estamos apenas simulando
+    const qrPlaceholder = document.querySelector('.qr-placeholder');
+    qrPlaceholder.innerHTML = `
+        <i class="fas fa-qrcode"></i>
+        <p>QR Code gerado</p>
+        <p class="qr-info">Valor: R$ 314,89</p>
+    `;
+}
+
+// Função para iniciar o contador regressivo do PIX
+function startPixCountdown() {
+    const countdownElement = document.querySelector('.countdown');
+    let minutes = 15;
+    let seconds = 0;
+    
+    const countdownInterval = setInterval(() => {
+        if (seconds === 0) {
+            minutes--;
+            seconds = 59;
+        } else {
+            seconds--;
+        }
+        
+        countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (minutes === 0 && seconds === 0) {
+            clearInterval(countdownInterval);
+            countdownElement.textContent = 'Expirado';
+            countdownElement.style.color = '#e74c3c';
+            
+            // Gerar novo QR Code após expiração
+            setTimeout(() => {
+                generatePixQRCode();
+                startPixCountdown();
+            }, 2000);
+        }
+    }, 1000);
+}
+
+// Função para copiar o código PIX
+function copyPixCode() {
+    const codeDisplay = document.querySelector('.code-display');
+    const codeText = codeDisplay.textContent;
+    
+    navigator.clipboard.writeText(codeText).then(() => {
+        const copyButton = document.querySelector('.btn-copy-code');
+        const originalText = copyButton.innerHTML;
+        
+        copyButton.innerHTML = '<i class="fas fa-check"></i> Código copiado!';
+        
+        setTimeout(() => {
+            copyButton.innerHTML = originalText;
+        }, 2000);
+    }).catch(err => {
+        console.error('Erro ao copiar o código: ', err);
+    });
+}
+
+// Função para processar pagamento com Apple Pay
+function processApplePay() {
+    // Verificar se o Apple Pay está disponível
+    if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+        showLoading();
+        
+        // Simulação de processamento
+        setTimeout(() => {
+            hideLoading();
+            showSuccess('Pagamento com Apple Pay processado com sucesso!');
+        }, 2000);
+    } else {
+        showError('Apple Pay não está disponível neste dispositivo.');
+    }
+}
+
+// Função para processar pagamento com PayPal
+function processPayPal() {
+    showLoading();
+    
+    // Simulação de redirecionamento para o PayPal
+    setTimeout(() => {
+        hideLoading();
+        showSuccess('Pagamento com PayPal processado com sucesso!');
+    }, 2000);
+}
+
+// Função para processar pagamento com PIX
+function processPix() {
+    showLoading();
+    
+    // Simulação de processamento do PIX
+    setTimeout(() => {
+        hideLoading();
+        showSuccess('Pagamento com PIX processado com sucesso!');
+    }, 2000);
+}
+
+// Modificar a função processPayment para lidar com diferentes métodos
+async function processPayment(event) {
+    event.preventDefault();
+    
+    const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+    
+    switch(selectedMethod) {
+        case 'credit-card':
+            // Código existente para processamento de cartão de crédito
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const cardholderName = document.getElementById('card-holder').value;
+            const expirationDate = document.getElementById('card-expiry').value;
+            const cvv = document.getElementById('card-cvv').value;
+            
+            // Validações
+            if (!validateCardNumber(cardNumber)) {
+                showError('Número do cartão inválido');
+                return;
+            }
+            
+            if (!validateExpirationDate(expirationDate)) {
+                showError('Data de expiração inválida');
+                return;
+            }
+            
+            if (cvv.length < 3) {
+                showError('CVV inválido');
+                return;
+            }
+            
+            try {
+                // Mostrar loading
+                showLoading();
+                
+                // Tokenizar os dados do cartão
+                const cardData = {
+                    number: cardNumber,
+                    holder: cardholderName,
+                    expiration: expirationDate,
+                    cvv: cvv
+                };
+                
+                const token = await tokenizeCard(cardData);
+                
+                // Processar o pagamento com o token
+                const paymentData = {
+                    token: token,
+                    amount: parseFloat(document.querySelector('.summary-total span:last-child').textContent.replace('R$', '').trim()),
+                    description: 'Pagamento GameSwap'
+                };
+                
+                // Simulação de processamento do pagamento
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Sucesso
+                showSuccess('Pagamento processado com sucesso!');
+                
+                // Limpar formulário
+                document.getElementById('payment-form').reset();
+                updateCardPreview();
+                
+            } catch (error) {
+                showError('Erro ao processar o pagamento. Tente novamente.');
+            } finally {
+                hideLoading();
+            }
+            break;
+            
+        case 'pix':
+            processPix();
+            break;
+            
+        case 'apple-pay':
+            processApplePay();
+            break;
+            
+        case 'paypal':
+            processPayPal();
+            break;
+    }
+}
+
+// Funções auxiliares para feedback visual
+function showLoading() {
+    const loadingElement = document.createElement('div');
+    loadingElement.className = 'loading-overlay';
+    loadingElement.innerHTML = `
+        <div class="loading-spinner"></div>
+        <p>Processando pagamento...</p>
+    `;
+    document.body.appendChild(loadingElement);
+}
+
+function hideLoading() {
+    const loadingElement = document.querySelector('.loading-overlay');
+    if (loadingElement) {
+        loadingElement.remove();
+    }
+}
+
+function showError(message) {
+    const errorElement = document.createElement('div');
+    errorElement.className = 'error-message';
+    errorElement.textContent = message;
+    document.querySelector('.payment-card').appendChild(errorElement);
+    
+    setTimeout(() => {
+        errorElement.remove();
+    }, 3000);
+}
+
+function showSuccess(message) {
+    const successElement = document.createElement('div');
+    successElement.className = 'success-message';
+    successElement.textContent = message;
+    document.querySelector('.payment-card').appendChild(successElement);
+    
+    setTimeout(() => {
+        successElement.remove();
+    }, 3000);
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    const cardNumberInput = document.getElementById('card-number');
+    const expirationDateInput = document.getElementById('card-expiry');
+    const cardholderNameInput = document.getElementById('card-holder');
+    const paymentForm = document.getElementById('payment-form');
+    const copyPixButton = document.querySelector('.btn-copy-code');
+    const applePayButton = document.querySelector('.apple-pay-button');
+    const paypalButton = document.querySelector('.paypal-button');
+    
+    // Inicializar métodos de pagamento
+    initializePaymentMethods();
+    
+    // Eventos existentes
+    cardNumberInput.addEventListener('input', () => formatCardNumber(cardNumberInput));
+    expirationDateInput.addEventListener('input', () => formatExpirationDate(expirationDateInput));
+    cardholderNameInput.addEventListener('input', () => formatCardholderName(cardholderNameInput));
+    paymentForm.addEventListener('submit', processPayment);
+    
+    // Novos eventos para métodos de pagamento alternativos
+    if (copyPixButton) {
+        copyPixButton.addEventListener('click', copyPixCode);
+    }
+    
+    if (applePayButton) {
+        applePayButton.addEventListener('click', processApplePay);
+    }
+    
+    if (paypalButton) {
+        paypalButton.addEventListener('click', processPayPal);
+    }
+    
+    // Inicializar preview do cartão
+    updateCardPreview();
+}); 

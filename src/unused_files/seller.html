@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Vendedor - GameSwap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/seller.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+                <li><a href="inventory.html">Meu Inventário</a></li>
+                <li><a href="profile.html">Perfil</a></li>
+                <li>
+                    <button class="cart-button" id="cart-button">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="seller-container">
+            <div class="seller-header">
+                <div class="seller-profile">
+                    <div class="seller-avatar">
+                        <img src="../assets/skins/perfil.webp" alt="Avatar do Vendedor">
+                        <div class="seller-badge gold">
+                            <i class="fas fa-crown"></i>
+                            <span>Gold</span>
+                        </div>
+                    </div>
+                    <div class="seller-info">
+                        <h1>EliteSkins</h1>
+                        <p class="seller-join-date">Membro desde: Janeiro 2023</p>
+                        <div class="seller-stats">
+                            <div class="stat">
+                                <span class="stat-value">2.5k</span>
+                                <span class="stat-label">Vendas</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">4.9</span>
+                                <span class="stat-label">Avaliação</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">98%</span>
+                                <span class="stat-label">Taxa de Sucesso</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seller-actions">
+                    <button class="btn-follow">
+                        <i class="fas fa-plus"></i>
+                        Seguir
+                    </button>
+                    <button class="btn-contact">
+                        <i class="fas fa-envelope"></i>
+                        Contatar
+                    </button>
+                </div>
+            </div>
+
+            <div class="seller-content">
+                <div class="seller-sidebar">
+                    <div class="seller-about">
+                        <h3>Sobre o Vendedor</h3>
+                        <p>Vendedor especializado em skins raras e colecionáveis. Comprometido com a qualidade e satisfação dos clientes.</p>
+                    </div>
+                    <div class="seller-details">
+                        <h3>Detalhes</h3>
+                        <ul>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Verificado</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Vendedor Seguro</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-bolt"></i>
+                                <span>Entrega Rápida</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-headset"></i>
+                                <span>Suporte 24/7</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="seller-languages">
+                        <h3>Idiomas</h3>
+                        <ul>
+                            <li>Português (Brasil)</li>
+                            <li>Inglês</li>
+                            <li>Espanhol</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="seller-main">
+                    <div class="seller-tabs">
+                        <button class="tab-btn active" data-tab="items">Itens à Venda</button>
+                        <button class="tab-btn" data-tab="reviews">Avaliações</button>
+                        <button class="tab-btn" data-tab="history">Histórico</button>
+                    </div>
+
+                    <div class="tab-content active" id="items">
+                        <div class="items-grid">
+                            <!-- Itens serão adicionados dinamicamente -->
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="reviews">
+                        <div class="reviews-container">
+                            <div class="review-summary">
+                                <div class="rating-overview">
+                                    <div class="average-rating">
+                                        <span class="rating-value">4.9</span>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="total-reviews">(2.5k avaliações)</span>
+                                    </div>
+                                    <div class="rating-distribution">
+                                        <div class="rating-bar">
+                                            <span>5 estrelas</span>
+                                            <div class="bar">
+                                                <div class="fill" style="width: 85%"></div>
+                                            </div>
+                                            <span>85%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>4 estrelas</span>
+                                            <div class="bar">
+                                                <div class="fill" style="width: 10%"></div>
+                                            </div>
+                                            <span>10%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>3 estrelas</span>
+                                            <div class="bar">
+                                                <div class="fill" style="width: 3%"></div>
+                                            </div>
+                                            <span>3%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>2 estrelas</span>
+                                            <div class="bar">
+                                                <div class="fill" style="width: 1%"></div>
+                                            </div>
+                                            <span>1%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>1 estrela</span>
+                                            <div class="bar">
+                                                <div class="fill" style="width: 1%"></div>
+                                            </div>
+                                            <span>1%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="reviews-list">
+                                <!-- Avaliações serão adicionadas dinamicamente -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="history">
+                        <div class="history-container">
+                            <div class="history-filters">
+                                <select class="history-filter">
+                                    <option value="all">Todas as Transações</option>
+                                    <option value="sales">Vendas</option>
+                                    <option value="purchases">Compras</option>
+                                </select>
+                                <select class="history-sort">
+                                    <option value="recent">Mais Recentes</option>
+                                    <option value="oldest">Mais Antigas</option>
+                                    <option value="price-high">Maior Preço</option>
+                                    <option value="price-low">Menor Preço</option>
+                                </select>
+                            </div>
+                            <div class="history-list">
+                                <!-- Histórico será adicionado dinamicamente -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="security-info">
+            <div class="ssl-badge">
+                <i class="fas fa-lock"></i>
+                <span>SSL Seguro</span>
+            </div>
+            <div class="security-details">
+                <p><i class="fas fa-shield-alt"></i> Transações Criptografadas</p>
+                <p><i class="fas fa-user-shield"></i> Proteção de Dados</p>
+                <p><i class="fas fa-check-circle"></i> Verificação em Duas Etapas</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Sistema de Tabs
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Carregar itens do vendedor
+        function loadSellerItems() {
+            const itemsGrid = document.querySelector('#items .items-grid');
+            const items = [
+                {
+                    name: 'AK-47 | Bloodsport',
+                    price: 'R$ 149,90',
+                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0Ob3djFN79fnzL-cluX5MrLVk2Vu5cB1g_zMu9Tzi1Lgr0VoYz3wIoO.webp',
+                    game: 'CS:GO',
+                    quality: 'Factory New'
+                },
+                // Adicione mais itens aqui
+            ];
+
+            items.forEach(item => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                itemCard.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="item-overlay">
+                            <span class="item-price">${item.price}</span>
+                        </div>
+                    </div>
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.game}</p>
+                        <span class="item-quality">${item.quality}</span>
+                    </div>
+                `;
+                itemsGrid.appendChild(itemCard);
+            });
+        }
+
+        // Carregar avaliações
+        function loadReviews() {
+            const reviewsList = document.querySelector('.reviews-list');
+            const reviews = [
+                {
+                    user: 'GamerPro123',
+                    rating: 5,
+                    date: '15/03/2024',
+                    comment: 'Excelente vendedor! Entrega rápida e item em perfeito estado.'
+                },
+                // Adicione mais avaliações aqui
+            ];
+
+            reviews.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review-card';
+                reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-user">
+                            <img src="../assets/skins/michael.jpg" alt="${review.user}">
+                            <span>${review.user}</span>
+                        </div>
+                        <div class="review-rating">
+                            ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}
+                        </div>
+                    </div>
+                    <div class="review-date">${review.date}</div>
+                    <div class="review-comment">${review.comment}</div>
+                `;
+                reviewsList.appendChild(reviewElement);
+            });
+        }
+
+        // Carregar histórico
+        function loadHistory() {
+            const historyList = document.querySelector('.history-list');
+            const history = [
+                {
+                    date: '15/03/2024',
+                    item: 'AK-47 | Bloodsport',
+                    price: 'R$ 149,90',
+                    type: 'sale',
+                    buyer: 'GamerPro123'
+                },
+                // Adicione mais itens ao histórico aqui
+            ];
+
+            history.forEach(item => {
+                const historyElement = document.createElement('div');
+                historyElement.className = 'history-card';
+                historyElement.innerHTML = `
+                    <div class="history-date">${item.date}</div>
+                    <div class="history-item">${item.item}</div>
+                    <div class="history-price">${item.price}</div>
+                    <div class="history-type ${item.type}">
+                        ${item.type === 'sale' ? 'Venda' : 'Compra'}
+                    </div>
+                    <div class="history-user">${item.type === 'sale' ? 'Comprador' : 'Vendedor'}: ${item.type === 'sale' ? item.buyer : item.seller}</div>
+                `;
+                historyList.appendChild(historyElement);
+            });
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSellerItems();
+            loadReviews();
+            loadHistory();
+        });
+    </script>
+</body>
+</html> 

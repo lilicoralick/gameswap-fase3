@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Inventário - GameSwap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/inventory.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+                <li><a href="inventory.html" class="active">Meu Inventário</a></li>
+                <li><a href="profile.html">Perfil</a></li>
+                <li>
+                    <button class="cart-button" id="cart-button">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="inventory-container">
+            <div class="inventory-header">
+                <h1>Meu Inventário</h1>
+                <p>Gerencie seus itens e anúncios</p>
+            </div>
+
+            <div class="inventory-content">
+                <div class="inventory-form">
+                    <h2>Anunciar Novo Item</h2>
+                    <form id="itemForm">
+                        <div class="form-group">
+                            <label for="itemName">Nome do Item</label>
+                            <input type="text" id="itemName" name="itemName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game">Jogo</label>
+                            <select id="game" name="game" required>
+                                <option value="">Selecione um jogo</option>
+                                <option value="csgo">Counter-Strike: Global Offensive</option>
+                                <option value="dota2">Dota 2</option>
+                                <option value="tf2">Team Fortress 2</option>
+                                <option value="rust">Rust</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quality">Qualidade</label>
+                            <select id="quality" name="quality" required>
+                                <option value="">Selecione a qualidade</option>
+                                <option value="factory_new">Factory New</option>
+                                <option value="minimal_wear">Minimal Wear</option>
+                                <option value="field_tested">Field-Tested</option>
+                                <option value="well_worn">Well-Worn</option>
+                                <option value="battle_scarred">Battle-Scarred</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Preço (R$)</label>
+                            <input type="number" id="price" name="price" step="0.01" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Imagem do Item</label>
+                            <div class="image-upload">
+                                <label class="upload-label" for="itemImage">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Clique para fazer upload</span>
+                                </label>
+                                <input type="file" id="itemImage" name="itemImage" accept="image/*" hidden>
+                                <div class="image-preview" id="imagePreview"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Descrição</label>
+                            <textarea id="description" name="description" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit">Anunciar Item</button>
+                            <button type="reset" class="btn-reset">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="inventory-items">
+                    <h2>Meus Itens</h2>
+                    <div class="items-grid" id="active-items">
+                        <!-- Itens ativos serão adicionados aqui dinamicamente -->
+                    </div>
+                </div>
+
+                <div class="sold-items">
+                    <div class="sold-items-header">
+                        <h2>Itens Vendidos</h2>
+                        <div class="sold-stats">
+                            <div class="stat">
+                                <span class="stat-value" id="total-sold">0</span>
+                                <span class="stat-label">Total Vendido</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="total-earnings">R$ 0,00</span>
+                                <span class="stat-label">Ganhos Totais</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items-grid" id="sold-items">
+                        <!-- Itens vendidos serão adicionados aqui dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="security-info">
+            <div class="ssl-badge">
+                <i class="fas fa-lock"></i>
+                <span>SSL Seguro</span>
+            </div>
+            <div class="security-details">
+                <p><i class="fas fa-shield-alt"></i> Transações Criptografadas</p>
+                <p><i class="fas fa-user-shield"></i> Proteção de Dados</p>
+                <p><i class="fas fa-check-circle"></i> Verificação em Duas Etapas</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Preview de imagem
+        document.getElementById('itemImage').addEventListener('change', function(e) {
+            const preview = document.getElementById('imagePreview');
+            const file = e.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="remove-image" onclick="removeImage()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function removeImage() {
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('itemImage').value = '';
+        }
+
+        // Gerenciamento de itens
+        let items = JSON.parse(localStorage.getItem('inventoryItems')) || [];
+
+        function saveItems() {
+            localStorage.setItem('inventoryItems', JSON.stringify(items));
+            updateItemsGrid();
+        }
+
+        function updateItemsGrid() {
+            const grid = document.getElementById('active-items');
+            grid.innerHTML = '';
+
+            const items = JSON.parse(localStorage.getItem('inventoryItems')) || [];
+
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="item-overlay">
+                            <div class="item-price">R$ ${item.price.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.game}</p>
+                        <span class="item-quality">${item.quality}</span>
+                        <div class="item-actions">
+                            <button class="btn-edit" onclick="editItem(${index})">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn-delete" onclick="deleteItem(${index})">
+                                <i class="fas fa-trash"></i> Deletar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function editItem(index) {
+            const item = items[index];
+            document.getElementById('itemName').value = item.name;
+            document.getElementById('game').value = item.game;
+            document.getElementById('quality').value = item.quality;
+            document.getElementById('price').value = item.price;
+            document.getElementById('description').value = item.description;
+            
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = `
+                <img src="${item.image}" alt="Preview">
+                <button type="button" class="remove-image" onclick="removeImage()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            items.splice(index, 1);
+            saveItems();
+        }
+
+        function deleteItem(index) {
+            if (confirm('Tem certeza que deseja deletar este item?')) {
+                items.splice(index, 1);
+                saveItems();
+            }
+        }
+
+        // Form submission
+        document.getElementById('itemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const imageFile = document.getElementById('itemImage').files[0];
+            if (!imageFile) {
+                alert('Por favor, selecione uma imagem para o item.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const newItem = {
+                    name: document.getElementById('itemName').value,
+                    game: document.getElementById('game').value,
+                    quality: document.getElementById('quality').value,
+                    price: parseFloat(document.getElementById('price').value),
+                    description: document.getElementById('description').value,
+                    image: e.target.result
+                };
+
+                items.push(newItem);
+                saveItems();
+                this.reset();
+                removeImage();
+                alert('Item anunciado com sucesso!');
+            }.bind(this);
+
+            reader.readAsDataURL(imageFile);
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Itens de exemplo
+            const sampleItems = [
+                {
+                    name: 'AK-47 | Bloodsport',
+                    game: 'csgo',
+                    quality: 'factory_new',
+                    price: 149.90,
+                    description: 'Skin rara e cobiçada da AK-47 com design militar moderno.',
+                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0Ob3djFN79fnzL-cluX5MrLVk2Vu5cB1g_zMu9Tzi1Lgr0VoYz3wIoO.webp'
+                },
+                {
+                    name: 'M4A1-S | Decimator',
+                    game: 'csgo',
+                    quality: 'minimal_wear',
+                    price: 199.90,
+                    description: 'Skin exclusiva da M4A1-S com design futurista e detalhes em vermelho.',
+                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfxPrMfipP7dezhr-KhsjnJ77UmlRa5sx3j9bJ8I3jkRrh_0RuZmqnIYG.webp'
+                },
+                {
+                    name: 'AWP | Mortis',
+                    game: 'csgo',
+                    quality: 'field_tested',
+                    price: 299.90,
+                    description: 'Skin temática da AWP com design inspirado em elementos mortuários.',
+                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0v73cCxX7eOwmIWInOTLP7LWnn8f7J1z07yUrNihjQfnrUBpYWCnJ9f.webp'
+                }
+            ];
+
+            // Itens vendidos de exemplo
+            const sampleSoldItems = [
+                {
+                    name: 'Desert Eagle | Conspiracy',
+                    game: 'csgo',
+                    quality: 'factory_new',
+                    price: 'R$ 89,90',
+                    description: 'Skin rara da Desert Eagle com design conspiratório.',
+                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DAQ1JmMR1osbaqPQJz7ODYfi9W9eO-m5WFk-TgPLTFnlRD7cFOhuDG_Zi7jgfi-0JsYGHzJ9XEIwRrM1-Dr.webp',
+                    saleDate: '15/03/2024',
+                    buyer: 'GamerPro123'
+                },
+                {
+                    name: 'USP-S | Kill Confirmed',
+                    game: 'csgo',
+                    quality: 'minimal_wear',
+                    price: 'R$ 159,90',
+                    description: 'Skin exclusiva da USP-S com design moderno.',
+                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfw-bbeQJB-eOmgZODqPv7Ib7ummJW4NE_ieuZoNmk3Vay-BI6NWymJIa.webp',
+                    saleDate: '10/03/2024',
+                    buyer: 'SkinCollector'
+                }
+            ];
+
+            // Se não houver itens salvos, usar os itens de exemplo
+            if (!localStorage.getItem('inventoryItems')) {
+                localStorage.setItem('inventoryItems', JSON.stringify(sampleItems));
+            }
+
+            // Se não houver itens vendidos salvos, usar os itens vendidos de exemplo
+            if (!localStorage.getItem('soldItems')) {
+                localStorage.setItem('soldItems', JSON.stringify(sampleSoldItems));
+            }
+
+            updateItemsGrid();
+            loadSoldItems();
+        });
+
+        // Função para carregar itens vendidos
+        function loadSoldItems() {
+            const soldItems = JSON.parse(localStorage.getItem('soldItems')) || [];
+            const soldItemsContainer = document.getElementById('sold-items');
+            const totalSoldElement = document.getElementById('total-sold');
+            const totalEarningsElement = document.getElementById('total-earnings');
+
+            soldItemsContainer.innerHTML = '';
+            let totalEarnings = 0;
+
+            soldItems.forEach(item => {
+                const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                totalEarnings += price;
+
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item-card sold-item';
+                itemElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="item-overlay">
+                            <span class="item-price">${item.price}</span>
+                        </div>
+                    </div>
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.game}</p>
+                        <div class="sale-info">
+                            <span class="sale-date">Vendido em: ${item.saleDate}</span>
+                            <span class="buyer">Comprador: ${item.buyer}</span>
+                        </div>
+                    </div>
+                `;
+                soldItemsContainer.appendChild(itemElement);
+            });
+
+            totalSoldElement.textContent = soldItems.length;
+            totalEarningsElement.textContent = `R$ ${totalEarnings.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Função para marcar item como vendido
+        function markItemAsSold(itemId, buyer) {
+            const items = JSON.parse(localStorage.getItem('items')) || [];
+            const soldItems = JSON.parse(localStorage.getItem('soldItems')) || [];
+            
+            const itemIndex = items.findIndex(item => item.id === itemId);
+            if (itemIndex !== -1) {
+                const soldItem = items[itemIndex];
+                soldItem.saleDate = new Date().toLocaleDateString('pt-BR');
+                soldItem.buyer = buyer;
+                
+                soldItems.push(soldItem);
+                items.splice(itemIndex, 1);
+                
+                localStorage.setItem('items', JSON.stringify(items));
+                localStorage.setItem('soldItems', JSON.stringify(soldItems));
+                
+                loadItems();
+                loadSoldItems();
+            }
+        }
+    </script>
+</body>
+</html> 

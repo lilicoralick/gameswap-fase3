@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - GameSwap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+                <li><a href="inventory.html">Meu Inventário</a></li>
+                <li><a href="profile.html" class="active">Perfil</a></li>
+                <li>
+                    <button class="cart-button" id="cart-button">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h1>Meu Perfil</h1>
+                <p>Gerencie suas informações e preferências</p>
+            </div>
+
+            <div class="upgrade-banner">
+                <div class="upgrade-content">
+                    <div class="upgrade-info">
+                        <h2>Upgrade para Premium</h2>
+                        <p>Desbloqueie recursos exclusivos e aumente suas vendas</p>
+                        <ul class="upgrade-benefits">
+                            <li><i class="fas fa-check"></i> Isenção da taxa de 10% nas compras</li>
+                            <li><i class="fas fa-check"></i> Badge Premium no perfil</li>
+                            <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                            <li><i class="fas fa-check"></i> Anúncios destacados</li>
+                            <li><i class="fas fa-check"></i> Pagamento 100% seguro</li>
+                        </ul>
+                        <div class="security-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Pagamento protegido e criptografado</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-cta">
+                        <div class="upgrade-price">
+                            <span class="price">R$ 29,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                        <button class="btn-upgrade">Fazer Upgrade</button>
+                        <p class="payment-methods">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                            <i class="fab fa-cc-pix"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <img src="../assets/default-avatar.png" alt="Avatar" id="profile-avatar-img">
+                            <button class="change-avatar" id="change-avatar">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profile-name">Nome do Usuário</h2>
+                            <p class="profile-email" id="profile-email">email@exemplo.com</p>
+                            <div class="profile-badge" id="profile-badge">
+                                <i class="fas fa-star"></i>
+                                <span>Novato</span>
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-sales">0</span>
+                                <span class="stat-label">Vendas</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-purchases">0</span>
+                                <span class="stat-label">Compras</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="rating">0.0</span>
+                                <span class="stat-label">Avaliação</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-menu">
+                        <button class="menu-item active" data-tab="personal">
+                            <i class="fas fa-user"></i>
+                            <span>Dados Pessoais</span>
+                        </button>
+                        <button class="menu-item" data-tab="security">
+                            <i class="fas fa-lock"></i>
+                            <span>Segurança</span>
+                        </button>
+                        <button class="menu-item" data-tab="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span>Notificações</span>
+                        </button>
+                        <button class="menu-item" data-tab="payment">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Pagamentos</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="profile-main">
+                    <div class="tab-content active" id="personal-tab">
+                        <h2>Dados Pessoais</h2>
+                        <form id="personal-form">
+                            <div class="form-group">
+                                <label for="fullName">Nome Completo</label>
+                                <input type="text" id="fullName" name="fullName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Telefone</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="document">CPF</label>
+                                <input type="text" id="document" name="document" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="birthDate">Data de Nascimento</label>
+                                <input type="date" id="birthDate" name="birthDate" required>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-save">Salvar Alterações</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" id="security-tab">
+                        <h2>Segurança</h2>
+                        <form id="security-form">
+                            <div class="form-group">
+                                <label for="currentPassword">Senha Atual</label>
+                                <input type="password" id="currentPassword" name="currentPassword" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newPassword">Nova Senha</label>
+                                <input type="password" id="newPassword" name="newPassword" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirmar Nova Senha</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-save">Alterar Senha</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" id="notifications-tab">
+                        <h2>Preferências de Notificação</h2>
+                        <form id="notifications-form">
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="emailNotifications" checked>
+                                    <span>Notificações por E-mail</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="newItems" checked>
+                                    <span>Novos itens disponíveis</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="priceAlerts" checked>
+                                    <span>Alertas de preço</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="tradeOffers" checked>
+                                    <span>Propostas de troca</span>
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-save">Salvar Preferências</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" id="payment-tab">
+                        <h2>Métodos de Pagamento</h2>
+                        <div class="payment-methods">
+                            <div class="payment-card">
+                                <div class="payment-info">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <span>**** **** **** 1234</span>
+                                </div>
+                                <button class="btn-remove">Remover</button>
+                            </div>
+                            <button class="btn-add-payment">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Novo Cartão
+                            </button>
+                        </div>
+
+                        <form id="add-payment-form" class="hidden">
+                            <div class="form-group">
+                                <label for="cardNumber">Número do Cartão</label>
+                                <input type="text" id="cardNumber" name="cardNumber" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiryDate">Data de Validade</label>
+                                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/AA" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" name="cvv" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cardName">Nome no Cartão</label>
+                                <input type="text" id="cardName" name="cardName" required>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-save">Adicionar Cartão</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="security-info">
+            <div class="ssl-badge">
+                <i class="fas fa-lock"></i>
+                <span>SSL Seguro</span>
+            </div>
+            <div class="security-details">
+                <p><i class="fas fa-shield-alt"></i> Transações Criptografadas</p>
+                <p><i class="fas fa-user-shield"></i> Proteção de Dados</p>
+                <p><i class="fas fa-check-circle"></i> Verificação em Duas Etapas</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Troca de abas
+        const menuItems = document.querySelectorAll('.menu-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active de todos os itens e tabs
+                menuItems.forEach(i => i.classList.remove('active'));
+                tabContents.forEach(tab => tab.classList.remove('active'));
+
+                // Adiciona active ao item clicado e sua tab correspondente
+                item.classList.add('active');
+                const tabId = `${item.dataset.tab}-tab`;
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Preview de avatar
+        const changeAvatarBtn = document.getElementById('change-avatar');
+        const avatarImg = document.getElementById('profile-avatar-img');
+
+        changeAvatarBtn.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        avatarImg.src = e.target.result;
+                        // Salvar no localStorage
+                        localStorage.setItem('profileAvatar', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            
+            input.click();
+        });
+
+        // Carregar avatar salvo
+        const savedAvatar = localStorage.getItem('profileAvatar');
+        if (savedAvatar) {
+            avatarImg.src = savedAvatar;
+        }
+
+        // Carregar dados do perfil
+        const profileData = JSON.parse(localStorage.getItem('profileData')) || {
+            name: 'Nome do Usuário',
+            email: 'email@exemplo.com',
+            phone: '',
+            document: '',
+            birthDate: '',
+            notifications: {
+                email: true,
+                newItems: true,
+                priceAlerts: true,
+                tradeOffers: true
+            }
+        };
+
+        // Preencher formulário com dados salvos
+        document.getElementById('fullName').value = profileData.name;
+        document.getElementById('email').value = profileData.email;
+        document.getElementById('phone').value = profileData.phone;
+        document.getElementById('document').value = profileData.document;
+        document.getElementById('birthDate').value = profileData.birthDate;
+
+        // Atualizar nome e email no card do perfil
+        document.getElementById('profile-name').textContent = profileData.name;
+        document.getElementById('profile-email').textContent = profileData.email;
+
+        // Salvar dados do formulário
+        document.getElementById('personal-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                document: document.getElementById('document').value,
+                birthDate: document.getElementById('birthDate').value
+            };
+
+            // Atualizar dados no localStorage
+            profileData.name = formData.name;
+            profileData.email = formData.email;
+            profileData.phone = formData.phone;
+            profileData.document = formData.document;
+            profileData.birthDate = formData.birthDate;
+            
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+
+            // Atualizar card do perfil
+            document.getElementById('profile-name').textContent = formData.name;
+            document.getElementById('profile-email').textContent = formData.email;
+
+            alert('Dados atualizados com sucesso!');
+        });
+
+        // Salvar preferências de notificação
+        document.getElementById('notifications-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                email: document.querySelector('input[name="emailNotifications"]').checked,
+                newItems: document.querySelector('input[name="newItems"]').checked,
+                priceAlerts: document.querySelector('input[name="priceAlerts"]').checked,
+                tradeOffers: document.querySelector('input[name="tradeOffers"]').checked
+            };
+
+            profileData.notifications = formData;
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            
+            alert('Preferências de notificação atualizadas!');
+        });
+
+        // Carregar preferências de notificação
+        const notifications = profileData.notifications;
+        document.querySelector('input[name="emailNotifications"]').checked = notifications.email;
+        document.querySelector('input[name="newItems"]').checked = notifications.newItems;
+        document.querySelector('input[name="priceAlerts"]').checked = notifications.priceAlerts;
+        document.querySelector('input[name="tradeOffers"]').checked = notifications.tradeOffers;
+
+        // Upgrade de plano
+        const upgradeButton = document.querySelector('.btn-upgrade');
+        upgradeButton.addEventListener('click', () => {
+            const isPremium = localStorage.getItem('isPremium') === 'true';
+            
+            if (isPremium) {
+                alert('Você já é um usuário Premium!');
+                return;
+            }
+
+            if (confirm('Deseja fazer upgrade para o plano Premium por R$ 29,90/mês?')) {
+                // Simular processamento do pagamento
+                setTimeout(() => {
+                    localStorage.setItem('isPremium', 'true');
+                    alert('Upgrade realizado com sucesso! Agora você é um usuário Premium.');
+                    
+                    // Atualizar badge do perfil
+                    const badge = document.getElementById('profile-badge');
+                    badge.innerHTML = '<i class="fas fa-crown"></i><span>Premium</span>';
+                    badge.style.background = 'rgba(108, 92, 231, 0.3)';
+                    
+                    // Esconder banner de upgrade
+                    document.querySelector('.upgrade-banner').style.display = 'none';
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html> 

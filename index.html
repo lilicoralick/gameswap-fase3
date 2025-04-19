@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameSwap - Troque seus Games</title>
+    <title>GameSwap - Marketplace de Skins</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./src/css/styles.css">
+    <link rel="stylesheet" href="./src/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <div class="background-animation"></div>
+    <!-- Background container with gif -->
+    <div class="background-container">
+        <img src="./src/assets/Images/Background-Illustration.gif" alt="Background" class="background-image">
+    </div>
+
+    <!-- Header with navigation -->
     <header>
         <nav class="main-nav">
             <div class="logo">GameSwap</div>
@@ -20,57 +25,100 @@
             </button>
             <ul id="nav-menu">
                 <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="./src/pages/about.html">Sobre</a></li>
-                <li><a href="./src/pages/research.html">Pesquisa</a></li>
-                <li><a href="./src/pages/contact.html">Contato</a></li>
+                <li><a href="./src/pages/marketplace.html">Marketplace</a></li>
+                <li><a href="./src/pages/inventory.html">Meu Inventário</a></li>
+                <li><a href="./src/pages/profile.html">Perfil</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Main content -->
     <main>
-        <section class="hero hero-about">
-            <h1 data-text="Bem-vindo ao GameSwap">Bem-vindo ao GameSwap</h1>
-            <p>A plataforma revolucionária para troca de games entre jogadores</p>
-            <a href="./src/pages/about.html" class="cta-button">
-                <span>S</span>
-                <span>a</span>
-                <span>i</span>
-                <span>b</span>
-                <span>a</span>
-                <span>&nbsp;</span>
-                <span>M</span>
-                <span>a</span>
-                <span>i</span>
-                <span>s</span>
-            </a>
-        </section>
-
-        <section class="features">
-            <h2>Por que escolher o GameSwap?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>Troque seus itens e skins</h3>
-                    <p>Encontre outros jogadores e faça trocas de forma segura e confiável.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Comunidade Ativa</h3>
-                    <p>Conecte-se com milhares de gamers em todo o Brasil.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Economia</h3>
-                    <p>Economize tempo e encontre tudo o que precisa na GameSwap.</p>
-                </div>
+        <div class="home-content">
+            <div class="title-container">
+                <h1 class="animated-title" data-text="GameSwap">GameSwap</h1>
+                <p class="tagline">A maior plataforma de troca e venda de skins de games do Brasil com tecnologia de ponta e segurança garantida para suas transações.</p>
             </div>
-        </section>
+
+            <div class="cta-buttons">
+                <a href="./src/pages/marketplace.html" class="cta-button primary-cta">Explorar Marketplace</a>
+                <a href="./src/pages/register.html" class="cta-button secondary-cta">Criar Conta</a>
+            </div>
+
+            <section class="features-section">
+                <h2 class="section-title">Por que escolher a GameSwap?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Segurança Garantida</h3>
+                        <p class="feature-description">Todas as transações são protegidas por criptografia avançada e sistema anti-fraude para garantir a segurança dos seus itens e pagamentos.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="feature-title">Transações Rápidas</h3>
+                        <p class="feature-description">Nossa plataforma permite trocas e vendas instantâneas, com entrega garantida e sistema de verificação em tempo real.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3 class="feature-title">Melhores Preços</h3>
+                        <p class="feature-description">Compare preços entre milhares de vendedores verificados e garanta o melhor negócio para suas skins com taxas reduzidas.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="feature-title">Múltiplos Jogos</h3>
+                        <p class="feature-description">Tenha acesso a skins de diversos jogos populares como CS:GO, Valorant, League of Legends, Fortnite e muitos outros em uma única plataforma.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="feature-title">Sistema de Troca</h3>
+                        <p class="feature-description">Nossa plataforma exclusiva de trocas permite que você negocie diretamente com outros jogadores, oferecendo suas skins por itens desejados.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h3 class="feature-title">Vendedores Verificados</h3>
+                        <p class="feature-description">Todos os vendedores passam por um rigoroso processo de verificação para garantir transações legítimas e seguras para todos os usuários.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+        <div class="security-info">
+            <div class="ssl-badge">
+                <i class="fas fa-lock"></i>
+                <span>SSL Seguro</span>
+            </div>
+            <div class="security-details">
+                <p><i class="fas fa-shield-alt"></i> Transações Criptografadas</p>
+                <p><i class="fas fa-user-shield"></i> Proteção de Dados</p>
+                <p><i class="fas fa-check-circle"></i> Verificação em Duas Etapas</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ===== Menu Toggle Logic =====
+            // Menu toggle for mobile
             const menuToggle = document.getElementById('menu-toggle');
             const navMenu = document.getElementById('nav-menu');
             
@@ -81,67 +129,6 @@
                 icon.classList.toggle('fa-bars');
                 icon.classList.toggle('fa-times');
             });
-
-            // ===== Background Animation Setup =====
-            // Container onde as formas serão criadas e animadas
-            const animationContainer = document.querySelector('.background-animation');
-            
-            // Arrays com as opções de formas e cores disponíveis
-            const shapes = ['square', 'triangle', 'diamond', 'cross']; // Formas geométricas
-            const colors = ['color1', 'color2', 'color3', 'color4', 'color5']; // Paleta de cores roxas
-            const numberOfPixels = 50; // Número de formas na tela
-
-            /**
-             * Função que cria uma nova forma geométrica
-             * - Seleciona aleatoriamente uma forma e uma cor
-             * - Define posição horizontal aleatória
-             * - Configura duração e delay da animação
-             */
-            function createPixel() {
-                const pixel = document.createElement('div');
-                
-                // Seleção aleatória de forma e cor
-                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                pixel.className = `pixel ${randomShape} ${randomColor}`;
-                
-                // Posicionamento horizontal aleatório (0-100% da largura da tela)
-                const left = Math.random() * 100;
-                pixel.style.left = `${left}%`;
-                
-                // Configurações de tempo da animação
-                const duration = 10 + Math.random() * 15; // Duração: 10-25 segundos
-                const delay = Math.random() * 10; // Atraso inicial: 0-10 segundos
-                pixel.style.setProperty('--duration', `${duration}s`);
-                pixel.style.setProperty('--delay', `${delay}s`);
-                
-                return pixel;
-            }
-
-            // Criação inicial das formas geométricas
-            // Preenche a tela com o número definido de formas
-            for (let i = 0; i < numberOfPixels; i++) {
-                animationContainer.appendChild(createPixel());
-            }
-
-            /**
-             * Sistema de reciclagem das formas
-             * - Verifica a cada segundo quais formas saíram da tela
-             * - Remove as formas que passaram do topo
-             * - Cria novas formas para manter o número constante
-             */
-            setInterval(() => {
-                const pixels = document.querySelectorAll('.pixel');
-                pixels.forEach(pixel => {
-                    const computedStyle = window.getComputedStyle(pixel);
-                    const transform = computedStyle.getPropertyValue('transform');
-                    // Verifica se a forma passou do topo da tela
-                    if (transform.includes('matrix') && parseFloat(transform.split(',')[5]) < 0) {
-                        pixel.remove();
-                        animationContainer.appendChild(createPixel());
-                    }
-                });
-            }, 1000); // Intervalo de verificação: 1 segundo
         });
     </script>
 </body>

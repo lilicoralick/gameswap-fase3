@@ -1,0 +1,496 @@
+/* Container Principal */
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-top: 6rem;
+}
+
+/* Cabeçalho do Perfil */
+.profile-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.profile-header h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.profile-header p {
+    color: #a29bfe;
+    font-size: 1.1rem;
+}
+
+/* Layout do Conteúdo */
+.profile-content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+}
+
+/* Sidebar */
+.profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Card do Perfil */
+.profile-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-avatar {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #6c5ce7;
+}
+
+.change-avatar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #6c5ce7;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.change-avatar:hover {
+    background: #5b4bc4;
+    transform: scale(1.1);
+}
+
+.profile-info h2 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-email {
+    color: #a29bfe;
+    margin-bottom: 1rem;
+}
+
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(108, 92, 231, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    color: #6c5ce7;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.stat-label {
+    color: #a29bfe;
+    font-size: 0.9rem;
+}
+
+/* Menu Lateral */
+.profile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    background: rgba(108, 92, 231, 0.2);
+}
+
+.menu-item.active {
+    background: #6c5ce7;
+}
+
+.menu-item i {
+    font-size: 1.2rem;
+}
+
+/* Conteúdo Principal */
+.profile-main {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h2 {
+    color: #fff;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+/* Formulários */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #6c5ce7;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Checkboxes */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+/* Botões */
+.form-actions {
+    margin-top: 2rem;
+    text-align: right;
+}
+
+.btn-save {
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+    background: #5b4bc4;
+}
+
+/* Métodos de Pagamento */
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.payment-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.payment-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #fff;
+}
+
+.payment-info i {
+    font-size: 1.5rem;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #ff7675;
+    cursor: pointer;
+}
+
+.btn-add-payment {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(108, 92, 231, 0.2);
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #6c5ce7;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-add-payment:hover {
+    background: rgba(108, 92, 231, 0.3);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .profile-content {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar {
+        order: 2;
+    }
+
+    .profile-main {
+        order: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 1rem;
+    }
+
+    .profile-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab-content.active {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* Banner de Upgrade */
+.upgrade-banner {
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.upgrade-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0 0 L100 0 L100 100 L0 100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    opacity: 0.1;
+}
+
+.upgrade-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.upgrade-info h2 {
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.upgrade-info p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+}
+
+.upgrade-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.upgrade-benefits li {
+    color: #fff;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.upgrade-benefits i {
+    color: #00b894;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+.security-badge i {
+    color: #00b894;
+}
+
+.upgrade-cta {
+    text-align: center;
+}
+
+.upgrade-price {
+    margin-bottom: 1.5rem;
+}
+
+.upgrade-price .price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.upgrade-price .period {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+}
+
+.btn-upgrade {
+    background: #fff;
+    color: #6c5ce7;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.btn-upgrade:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.payment-methods {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.5rem;
+}
+
+.payment-methods i {
+    transition: transform 0.3s ease;
+}
+
+.payment-methods i:hover {
+    transform: scale(1.1);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .upgrade-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .upgrade-benefits li {
+        justify-content: center;
+    }
+
+    .security-badge {
+        justify-content: center;
+    }
+} 

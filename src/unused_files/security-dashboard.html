@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Segurança - GameSwap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/security-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../assets/logo.png" alt="GameSwap Logo">
+                <span>GameSwap Security</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#overview">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Visão Geral</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#transactions">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transações</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#fraud-detection">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Detecção de Fraudes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#alerts">
+                            <i class="fas fa-bell"></i>
+                            <span>Alertas</span>
+                            <span class="badge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#users">
+                            <i class="fas fa-users"></i>
+                            <span>Usuários</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="../assets/skins/!perfil.webp" alt="Admin Avatar">
+                    <div>
+                        <span class="username">Admin Security</span>
+                        <span class="role">Administrador de Segurança</span>
+                    </div>
+                </div>
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Dashboard de Segurança</h1>
+                    <div class="date-time">
+                        <span id="current-date"></span>
+                        <span id="current-time"></span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar transações, usuários...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Overview Section -->
+            <section class="overview-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Transações Hoje</h3>
+                            <p class="stat-value">1,234</p>
+                            <p class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                12% vs ontem
+                            </p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Fraudes Detectadas</h3>
+                            <p class="stat-value">23</p>
+                            <p class="stat-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                5% vs ontem
+                            </p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Usuários Ativos</h3>
+                            <p class="stat-value">8,567</p>
+                            <p class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                8% vs ontem
+                            </p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Tempo Médio de Resposta</h3>
+                            <p class="stat-value">2.3s</p>
+                            <p class="stat-change positive">
+                                <i class="fas fa-arrow-down"></i>
+                                15% mais rápido
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Transações por Hora</h3>
+                        <canvas id="transactionsChart"></canvas>
+                    </div>
+                    <div class="chart-card fraud-chart">
+                        <h3>Tipos de Fraude</h3>
+                        <canvas id="fraudTypesChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Transactions Section -->
+            <section class="transactions-section">
+                <div class="section-header">
+                    <h2>Transações Recentes</h2>
+                    <div class="filters">
+                        <select>
+                            <option>Todas as Transações</option>
+                            <option>Suspeitas</option>
+                            <option>Confirmadas</option>
+                        </select>
+                        <button class="export-btn">
+                            <i class="fas fa-download"></i>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+                <div class="transactions-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuário</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Risco</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="suspicious">
+                                <td>#TRX-78945</td>
+                                <td>user123</td>
+                                <td>R$ 1.299,90</td>
+                                <td><span class="status pending">Pendente</span></td>
+                                <td><span class="risk high">Alto</span></td>
+                                <td>10:23:45</td>
+                                <td>
+                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn block"><i class="fas fa-ban"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-78944</td>
+                                <td>gamer456</td>
+                                <td>R$ 299,90</td>
+                                <td><span class="status completed">Concluída</span></td>
+                                <td><span class="risk low">Baixo</span></td>
+                                <td>10:20:12</td>
+                                <td>
+                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="suspicious">
+                                <td>#TRX-78943</td>
+                                <td>newuser789</td>
+                                <td>R$ 2.999,90</td>
+                                <td><span class="status pending">Pendente</span></td>
+                                <td><span class="risk medium">Médio</span></td>
+                                <td>10:15:30</td>
+                                <td>
+                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn block"><i class="fas fa-ban"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AI Insights Section -->
+            <section class="ai-insights">
+                <div class="section-header">
+                    <h2>Insights da IA</h2>
+                    <div class="ai-status">
+                        <span class="status active">IA Ativa</span>
+                        <i class="fas fa-brain"></i>
+                    </div>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <h3>Padrões de Comportamento</h3>
+                            <span class="confidence">98% de confiança</span>
+                        </div>
+                        <p>Detectado aumento de 25% em transações suspeitas durante a madrugada</p>
+                        <div class="insight-actions">
+                            <button class="btn-primary">Investigar</button>
+                            <button class="btn-secondary">Ignorar</button>
+                        </div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <h3>Análise de IP</h3>
+                            <span class="confidence">95% de confiança</span>
+                        </div>
+                        <p>5 tentativas de login de diferentes países em 30 minutos</p>
+                        <div class="insight-actions">
+                            <button class="btn-primary">Investigar</button>
+                            <button class="btn-secondary">Ignorar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/security-dashboard.js"></script>
+</body>
+</html> 

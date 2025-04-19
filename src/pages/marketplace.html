@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameSwap - Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="marketplace.html" class="active">Marketplace</a></li>
+                <li><a href="inventory.html">Meu Inventário</a></li>
+                <li><a href="profile.html">Perfil</a></li>
+                <li>
+                    <button class="cart-button" id="cart-button">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="main-content">
+            <aside class="filter-sidebar">
+                <div class="filter-header">
+                    <h3>Filtros</h3>
+                    <button class="clear-filters">Limpar Filtros</button>
+                </div>
+                
+                <div class="filter-section">
+                    <h4>Jogos</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="game" value="csgo">
+                            <span>CS:GO</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="game" value="valorant">
+                            <span>Valorant</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="game" value="lol">
+                            <span>League of Legends</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="game" value="fortnite">
+                            <span>Fortnite</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Preço</h4>
+                    <div class="price-range">
+                        <div class="price-inputs">
+                            <input type="number" placeholder="Min" class="price-min">
+                            <span>até</span>
+                            <input type="number" placeholder="Max" class="price-max">
+                        </div>
+                        <div class="price-slider">
+                            <input type="range" min="0" max="10000" step="100" class="range-slider">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Qualidade</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="quality" value="factory-new">
+                            <span>Factory New</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="quality" value="minimal-wear">
+                            <span>Minimal Wear</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="quality" value="field-tested">
+                            <span>Field-Tested</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="quality" value="well-worn">
+                            <span>Well-Worn</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="quality" value="battle-scarred">
+                            <span>Battle-Scarred</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Raridade</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="rarity" value="consumer">
+                            <span>Consumer</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="rarity" value="industrial">
+                            <span>Industrial</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="rarity" value="mil-spec">
+                            <span>Mil-Spec</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="rarity" value="restricted">
+                            <span>Restricted</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="rarity" value="classified">
+                            <span>Classified</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="rarity" value="covert">
+                            <span>Covert</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Vendedor</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="seller" value="verified">
+                            <span>Verificados</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="seller" value="premium">
+                            <span>Premium</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="seller" value="gold">
+                            <span>Gold</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="seller" value="platinum">
+                            <span>Platinum</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Ordenar por</h4>
+                    <select class="sort-select">
+                        <option value="price-asc">Preço: Menor para Maior</option>
+                        <option value="price-desc">Preço: Maior para Menor</option>
+                        <option value="popular">Mais Populares</option>
+                        <option value="newest">Mais Recentes</option>
+                        <option value="rating">Melhor Avaliados</option>
+                    </select>
+                </div>
+            </aside>
+
+            <div class="content-area">
+                <section class="hero hero-marketplace">
+                    <h1 data-text="GameSwap Marketplace">GameSwap Marketplace</h1>
+                    <p>A maior plataforma de troca e venda de skins de games do Brasil</p>
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Busque por skins, jogos ou itens...">
+                        <button class="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="categories">
+                    <h2>Categorias Populares</h2>
+                    <div class="categories-grid">
+                        <div class="category-card">
+                            <i class="fas fa-crosshairs"></i>
+                            <h3>CS:GO</h3>
+                        </div>
+                        <div class="category-card">
+                            <i class="fas fa-gamepad"></i>
+                            <h3>Valorant</h3>
+                        </div>
+                        <div class="category-card">
+                            <i class="fas fa-dragon"></i>
+                            <h3>League of Legends</h3>
+                        </div>
+                        <div class="category-card">
+                            <i class="fas fa-ghost"></i>
+                            <h3>Fortnite</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="featured-items">
+                    <h2>Skins em Destaque</h2>
+                    <div class="items-grid" id="featured-items-grid">
+                        <!-- Itens serão carregados dinamicamente via JavaScript -->
+                    </div>
+                </section>
+
+                <section class="trending">
+                    <h2>Tendências</h2>
+                    <div class="trending-carousel">
+                        <button class="carousel-control prev" aria-label="Anterior">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="trending-grid" id="trending-grid">
+                            <!-- Itens serão carregados dinamicamente via JavaScript -->
+                        </div>
+                        <button class="carousel-control next" aria-label="Próximo">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="carousel-dots">
+                        <!-- Dots serão gerados dinamicamente via JavaScript -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="security-info">
+            <div class="ssl-badge">
+                <i class="fas fa-lock"></i>
+                <span>SSL Seguro</span>
+            </div>
+            <div class="security-details">
+                <p><i class="fas fa-shield-alt"></i> Transações Criptografadas</p>
+                <p><i class="fas fa-user-shield"></i> Proteção de Dados</p>
+                <p><i class="fas fa-check-circle"></i> Verificação em Duas Etapas</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <!-- Modal de Detalhes do Produto -->
+    <div class="product-modal" id="product-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-grid">
+                <div class="modal-image">
+                    <img src="" alt="" id="modal-product-image">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-product-name"></h2>
+                    <p class="modal-game" id="modal-product-game"></p>
+                    <div class="modal-price" id="modal-product-price"></div>
+                    
+                    <div class="modal-seller-info">
+                        <div class="modal-seller-badge" id="modal-seller-badge"></div>
+                        <div class="modal-seller-details">
+                            <p class="modal-seller-name" id="modal-seller-name"></p>
+                            <div class="modal-seller-stats">
+                                <span class="modal-rating" id="modal-seller-rating"></span>
+                                <span class="modal-sales" id="modal-seller-sales"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-quality">
+                        <h3>Qualidade</h3>
+                        <p id="modal-product-quality"></p>
+                    </div>
+
+                    <div class="modal-description">
+                        <h3>Descrição</h3>
+                        <p id="modal-product-description"></p>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button class="btn-buy">Comprar Agora</button>
+                        <button class="btn-add-to-cart">Adicionar ao Carrinho</button>
+                        <button class="btn-trade">Propor Troca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal do Carrinho -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Seu Carrinho</h2>
+                <button class="close-cart">&times;</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Itens do carrinho serão adicionados aqui dinamicamente -->
+            </div>
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span class="total-price">R$ 0,00</span>
+                </div>
+                <button class="btn-checkout">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/marketplace.js"></script>
+</body>
+</html>

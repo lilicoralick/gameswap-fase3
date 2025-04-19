@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameSwap - Pagamento Seguro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">GameSwap</div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./marketplace.html">Marketplace</a></li>
+                <li><a href="./inventory.html">Meu Inventário</a></li>
+                <li><a href="./profile.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="payment-container">
+            <div class="payment-card">
+                <div class="payment-header">
+                    <i class="fas fa-lock payment-icon"></i>
+                    <h1>Pagamento Seguro</h1>
+                    <p>Seus dados são criptografados e tokenizados para máxima segurança</p>
+                </div>
+
+                <!-- Adicionando a seção de resumo do produto -->
+                <div class="product-summary">
+                    <h2>Itens do Carrinho</h2>
+                    <div id="cart-items-summary">
+                        <!-- Itens serão adicionados aqui dinamicamente -->
+                    </div>
+                </div>
+                
+                <div class="payment-illustration">
+                    <div class="tokenization-process">
+                        <div class="tokenization-step">
+                            <div class="step-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="step-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="step-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="step-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="step-icon">
+                                <i class="fas fa-fingerprint"></i>
+                            </div>
+                        </div>
+                        <div class="tokenization-labels">
+                            <span>Dados do Cartão</span>
+                            <span>Criptografia</span>
+                            <span>Tokenização</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-form">
+                    <form id="payment-form">
+                        <div class="form-section">
+                            <h2>Escolha o Método de Pagamento</h2>
+                            <div class="payment-methods">
+                                <div class="payment-method-option" id="pix-option">
+                                    <div class="method-icon">
+                                        <i class="fas fa-qrcode"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h3>PIX</h3>
+                                        <p>Pagamento instantâneo</p>
+                                    </div>
+                                    <div class="method-select">
+                                        <input type="radio" name="payment-method" id="pix" value="pix">
+                                        <label for="pix">Selecionar</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-method-option" id="apple-pay-option">
+                                    <div class="method-icon">
+                                        <i class="fab fa-apple"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h3>Apple Pay</h3>
+                                        <p>Pagamento rápido e seguro</p>
+                                    </div>
+                                    <div class="method-select">
+                                        <input type="radio" name="payment-method" id="apple-pay" value="apple-pay">
+                                        <label for="apple-pay">Selecionar</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-method-option" id="paypal-option">
+                                    <div class="method-icon">
+                                        <i class="fab fa-paypal"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h3>PayPal</h3>
+                                        <p>Pagamento internacional</p>
+                                    </div>
+                                    <div class="method-select">
+                                        <input type="radio" name="payment-method" id="paypal" value="paypal">
+                                        <label for="paypal">Selecionar</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-method-option" id="credit-card-option">
+                                    <div class="method-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h3>Cartão de Crédito</h3>
+                                        <p>Pagamento parcelado</p>
+                                    </div>
+                                    <div class="method-select">
+                                        <input type="radio" name="payment-method" id="credit-card" value="credit-card">
+                                        <label for="credit-card">Selecionar</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section" id="pix-payment-section" style="display: none;">
+                            <h2>Pagamento via PIX</h2>
+                            <div class="pix-container">
+                                <div class="pix-qr-code">
+                                    <div class="qr-placeholder">
+                                        <i class="fas fa-qrcode"></i>
+                                        <p>QR Code será gerado aqui</p>
+                                    </div>
+                                </div>
+                                <div class="pix-instructions">
+                                    <h3>Como pagar com PIX</h3>
+                                    <ol>
+                                        <li>Abra o aplicativo do seu banco</li>
+                                        <li>Escolha a opção PIX</li>
+                                        <li>Escaneie o QR Code ou copie o código PIX</li>
+                                        <li>Confirme o pagamento</li>
+                                    </ol>
+                                    <div class="pix-code">
+                                        <p>Código PIX:</p>
+                                        <div class="code-display">00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540510.005802BR5913GameSwap6008Sao Paulo62070503***6304E2CA</div>
+                                        <button class="btn-copy-code">
+                                            <i class="fas fa-copy"></i>
+                                            Copiar código
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pix-timer">
+                                <p>Este QR Code expira em:</p>
+                                <div class="countdown">15:00</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section" id="apple-pay-section" style="display: none;">
+                            <h2>Pagamento via Apple Pay</h2>
+                            <div class="apple-pay-container">
+                                <div class="apple-pay-button">
+                                    <i class="fab fa-apple"></i>
+                                    <span>Pagar com Apple Pay</span>
+                                </div>
+                                <p class="apple-pay-note">O Apple Pay está disponível apenas em dispositivos Apple compatíveis.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section" id="paypal-section" style="display: none;">
+                            <h2>Pagamento via PayPal</h2>
+                            <div class="paypal-container">
+                                <div class="paypal-button">
+                                    <i class="fab fa-paypal"></i>
+                                    <span>Pagar com PayPal</span>
+                                </div>
+                                <p class="paypal-note">Você será redirecionado para o PayPal para concluir o pagamento.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section" id="credit-card-section" style="display: none;">
+                            <h2>Informações do Cartão</h2>
+                            <div class="card-preview">
+                                <div class="card-front">
+                                    <div class="card-chip"></div>
+                                    <div class="card-number">•••• •••• •••• ••••</div>
+                                    <div class="card-details">
+                                        <div class="card-holder">NOME DO TITULAR</div>
+                                        <div class="card-expiry">MM/AA</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="card-number">Número do Cartão</label>
+                                <div class="input-with-icon">
+                                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-holder">Nome no Cartão</label>
+                                    <input type="text" id="card-holder" placeholder="Como está no cartão">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="card-expiry">Data de Expiração</label>
+                                    <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-cvv">CVV</label>
+                                    <div class="input-with-icon">
+                                        <input type="text" id="card-cvv" placeholder="123" maxlength="4">
+                                        <i class="fas fa-question-circle cvv-info" title="Código de segurança de 3 ou 4 dígitos no verso do cartão"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="card-installments">Parcelas</label>
+                                    <select id="card-installments">
+                                        <option value="1">1x sem juros</option>
+                                        <option value="2">2x sem juros</option>
+                                        <option value="3">3x sem juros</option>
+                                        <option value="4">4x sem juros</option>
+                                        <option value="5">5x sem juros</option>
+                                        <option value="6">6x sem juros</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h2>Endereço de Cobrança</h2>
+                            <div class="form-group">
+                                <label for="billing-address">Endereço Completo</label>
+                                <input type="text" id="billing-address" placeholder="Rua, número, complemento">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="billing-city">Cidade</label>
+                                    <input type="text" id="billing-city" placeholder="Sua cidade">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="billing-state">Estado</label>
+                                    <select id="billing-state">
+                                        <option value="">Selecione</option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="AP">Amapá</option>
+                                        <option value="AM">Amazonas</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="CE">Ceará</option>
+                                        <option value="DF">Distrito Federal</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="MA">Maranhão</option>
+                                        <option value="MT">Mato Grosso</option>
+                                        <option value="MS">Mato Grosso do Sul</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="PA">Pará</option>
+                                        <option value="PB">Paraíba</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="PI">Piauí</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="RN">Rio Grande do Norte</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="RO">Rondônia</option>
+                                        <option value="RR">Roraima</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="billing-zip">CEP</label>
+                                    <input type="text" id="billing-zip" placeholder="00000-000" maxlength="9">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="billing-country">País</label>
+                                    <input type="text" id="billing-country" value="Brasil" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-summary">
+                            <div class="summary-item">
+                                <span>Subtotal:</span>
+                                <span>R$ 299,90</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Taxa de serviço:</span>
+                                <span>R$ 14,99</span>
+                            </div>
+                            <div class="summary-total">
+                                <span>Total:</span>
+                                <span>R$ 314,89</span>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-actions">
+                            <button class="btn-save-card">
+                                <i class="fas fa-save"></i>
+                                Salvar Cartão
+                            </button>
+                            <button class="btn-pay-now" type="submit" form="payment-form">
+                                <i class="fas fa-lock"></i>
+                                Pagar Agora
+                            </button>
+                        </div>
+                        
+                        <div class="security-notice">
+                            <i class="fas fa-shield-alt"></i>
+                            <p>Seus dados são processados com criptografia de ponta a ponta e tokenização. Nunca armazenamos o número completo do seu cartão.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="security-info">
+            <div class="ssl-badge">
+                <i class="fas fa-lock"></i>
+                <span>SSL Seguro</span>
+            </div>
+            <div class="security-details">
+                <p><i class="fas fa-shield-alt"></i> Transações Criptografadas</p>
+                <p><i class="fas fa-user-shield"></i> Proteção de Dados</p>
+                <p><i class="fas fa-check-circle"></i> Verificação em Duas Etapas</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu Toggle Logic
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // Formatação do número do cartão
+            const cardNumberInput = document.getElementById('card-number');
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                let formattedValue = '';
+                
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
+                }
+                
+                e.target.value = formattedValue;
+                
+                // Atualizar preview do cartão
+                const cardNumberPreview = document.querySelector('.card-number');
+                if (formattedValue.length > 0) {
+                    cardNumberPreview.textContent = formattedValue;
+                } else {
+                    cardNumberPreview.textContent = '•••• •••• •••• ••••';
+                }
+            });
+            
+            // Formatação da data de expiração
+            const cardExpiryInput = document.getElementById('card-expiry');
+            cardExpiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2);
+                }
+                
+                e.target.value = value;
+                
+                // Atualizar preview do cartão
+                const cardExpiryPreview = document.querySelector('.card-expiry');
+                if (value.length > 0) {
+                    cardExpiryPreview.textContent = value;
+                } else {
+                    cardExpiryPreview.textContent = 'MM/AA';
+                }
+            });
+            
+            // Atualizar nome do titular
+            const cardHolderInput = document.getElementById('card-holder');
+            cardHolderInput.addEventListener('input', function(e) {
+                const cardHolderPreview = document.querySelector('.card-holder');
+                if (e.target.value.length > 0) {
+                    cardHolderPreview.textContent = e.target.value.toUpperCase();
+                } else {
+                    cardHolderPreview.textContent = 'NOME DO TITULAR';
+                }
+            });
+            
+            // Formatação do CEP
+            const zipInput = document.getElementById('billing-zip');
+            zipInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 5) {
+                    value = value.substring(0, 5) + '-' + value.substring(5);
+                }
+                
+                e.target.value = value;
+            });
+
+            // Lógica para mostrar/ocultar seções de pagamento
+            const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+            const paymentSections = {
+                'pix': document.getElementById('pix-payment-section'),
+                'apple-pay': document.getElementById('apple-pay-section'),
+                'paypal': document.getElementById('paypal-section'),
+                'credit-card': document.getElementById('credit-card-section')
+            };
+
+            function showSelectedPaymentSection() {
+                // Esconder todas as seções
+                Object.values(paymentSections).forEach(section => {
+                    if (section) {
+                        section.style.display = 'none';
+                    }
+                });
+
+                // Mostrar apenas a seção selecionada
+                const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
+                if (selectedMethod && paymentSections[selectedMethod.value]) {
+                    paymentSections[selectedMethod.value].style.display = 'block';
+                }
+            }
+
+            // Adicionar evento de mudança para cada método de pagamento
+            paymentMethods.forEach(method => {
+                method.addEventListener('change', showSelectedPaymentSection);
+            });
+
+            // Mostrar a seção inicialmente selecionada
+            showSelectedPaymentSection();
+
+            // Carregar informações do produto do localStorage
+            const purchaseData = JSON.parse(localStorage.getItem('currentPurchase'));
+            
+            if (purchaseData) {
+                const cartItemsSummary = document.getElementById('cart-items-summary');
+                let total = 0;
+
+                // Se for um único produto
+                if (purchaseData.name) {
+                    // Atualizar elementos da página com as informações do produto
+                    document.getElementById('product-name').textContent = purchaseData.name;
+                    document.getElementById('product-game').textContent = purchaseData.game;
+                    document.getElementById('product-price').textContent = purchaseData.price;
+                    document.getElementById('product-image').src = purchaseData.image;
+                    document.getElementById('seller-name').textContent = purchaseData.seller;
+                    
+                    // Atualizar o total da compra no resumo
+                    const price = parseFloat(purchaseData.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                    const serviceFee = price * 0.05; // 5% de taxa de serviço
+                    total = price + serviceFee;
+                    
+                    document.querySelector('.summary-item:nth-child(1) span:last-child').textContent = purchaseData.price;
+                    document.querySelector('.summary-item:nth-child(2) span:last-child').textContent = `R$ ${serviceFee.toFixed(2).replace('.', ',')}`;
+                    document.querySelector('.summary-total span:last-child').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+                } 
+                // Se for múltiplos produtos do carrinho
+                else if (purchaseData.items && purchaseData.items.length > 0) {
+                    let subtotal = 0;
+                    
+                    // Limpar o container de itens
+                    cartItemsSummary.innerHTML = '';
+                    
+                    // Adicionar cada item do carrinho
+                    purchaseData.items.forEach(item => {
+                        const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                        subtotal += price;
+                        
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'cart-item-summary';
+                        itemElement.innerHTML = `
+                            <div class="cart-item-image">
+                                <img src="${item.image}" alt="${item.name}">
+                            </div>
+                            <div class="cart-item-details">
+                                <h3>${item.name}</h3>
+                                <p>${item.game}</p>
+                                <span class="item-price">${item.price}</span>
+                            </div>
+                        `;
+                        cartItemsSummary.appendChild(itemElement);
+                    });
+                    
+                    // Calcular taxas e total
+                    const serviceFee = subtotal * 0.05; // 5% de taxa de serviço
+                    total = subtotal + serviceFee;
+                    
+                    // Atualizar o resumo do pagamento
+                    document.querySelector('.summary-item:nth-child(1) span:last-child').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+                    document.querySelector('.summary-item:nth-child(2) span:last-child').textContent = `R$ ${serviceFee.toFixed(2).replace('.', ',')}`;
+                    document.querySelector('.summary-total span:last-child').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+                }
+                
+                // Limpar o localStorage após carregar as informações
+                localStorage.removeItem('currentPurchase');
+            } else {
+                // Se não houver informações do produto, redirecionar para a página inicial
+                window.location.href = '../../index.html';
+            }
+        });
+    </script>
+</body>
+</html> 
