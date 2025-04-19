@@ -2,11 +2,13 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Meu Inventário - GameSwap</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/inventory.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -16,7 +18,7 @@
     <header>
         <nav class="main-nav">
             <div class="logo">GameSwap</div>
-            <button class="menu-toggle" id="menu-toggle">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Menu de navegação">
                 <i class="fas fa-bars"></i>
             </button>
             <ul id="nav-menu">
@@ -25,7 +27,7 @@
                 <li><a href="inventory.html" class="active">Meu Inventário</a></li>
                 <li><a href="profile.html">Perfil</a></li>
                 <li>
-                    <button class="cart-button" id="cart-button">
+                    <button class="cart-button" id="cart-button" aria-label="Carrinho de compras">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count">0</span>
                     </button>
@@ -35,24 +37,29 @@
     </header>
 
     <main class="main">
-        <div class="inventory-container">
-            <div class="inventory-header">
+        <div class="container inventory-container px-4 px-md-2">
+            <div class="row mb-4">
+                <div class="col-12 text-center inventory-header">
                 <h1>Meu Inventário</h1>
                 <p>Gerencie seus itens e anúncios</p>
+                </div>
             </div>
 
-            <div class="inventory-content">
-                <div class="inventory-form">
-                    <h2>Anunciar Novo Item</h2>
+            <div class="row inventory-content">
+                <!-- Coluna do formulário (ocupará toda a largura em dispositivos pequenos e 1/3 em dispositivos grandes) -->
+                <div class="col-12 col-lg-4 mb-5">
+                    <div class="card bg-transparent inventory-form">
+                        <div class="card-body p-3 p-md-4">
+                            <h2 class="card-title text-center mb-4">Anunciar Novo Item</h2>
                     <form id="itemForm">
-                        <div class="form-group">
-                            <label for="itemName">Nome do Item</label>
-                            <input type="text" id="itemName" name="itemName" required>
+                                <div class="mb-3">
+                                    <label for="itemName" class="form-label">Nome do Item</label>
+                                    <input type="text" class="form-control bg-transparent" id="itemName" name="itemName" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="game">Jogo</label>
-                            <select id="game" name="game" required>
+                                <div class="mb-3">
+                                    <label for="game" class="form-label">Jogo</label>
+                                    <select id="game" name="game" class="form-select bg-transparent" required>
                                 <option value="">Selecione um jogo</option>
                                 <option value="csgo">Counter-Strike: Global Offensive</option>
                                 <option value="dota2">Dota 2</option>
@@ -61,9 +68,9 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="quality">Qualidade</label>
-                            <select id="quality" name="quality" required>
+                                <div class="mb-3">
+                                    <label for="quality" class="form-label">Qualidade</label>
+                                    <select id="quality" name="quality" class="form-select bg-transparent" required>
                                 <option value="">Selecione a qualidade</option>
                                 <option value="factory_new">Factory New</option>
                                 <option value="minimal_wear">Minimal Wear</option>
@@ -73,13 +80,13 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="price">Preço (R$)</label>
-                            <input type="number" id="price" name="price" step="0.01" required>
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Preço (R$)</label>
+                                    <input type="number" class="form-control bg-transparent" id="price" name="price" step="0.01" required>
                         </div>
 
-                        <div class="form-group">
-                            <label>Imagem do Item</label>
+                                <div class="mb-3">
+                                    <label class="form-label">Imagem do Item</label>
                             <div class="image-upload">
                                 <label class="upload-label" for="itemImage">
                                     <i class="fas fa-cloud-upload-alt"></i>
@@ -90,48 +97,55 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="description">Descrição</label>
-                            <textarea id="description" name="description" rows="4" required></textarea>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Descrição</label>
+                                    <textarea id="description" name="description" rows="4" class="form-control bg-transparent" required></textarea>
                         </div>
 
-                        <div class="form-actions">
-                            <button type="submit" class="btn-submit">Anunciar Item</button>
-                            <button type="reset" class="btn-reset">Cancelar</button>
+                                <div class="d-flex flex-column flex-sm-row justify-content-between gap-3 mt-4 form-actions">
+                                    <button type="submit" class="btn btn-primary btn-submit order-1 order-sm-0">Anunciar Item</button>
+                                    <button type="reset" class="btn btn-secondary btn-reset">Cancelar</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
-                <div class="inventory-items">
-                    <h2>Meus Itens</h2>
-                    <div class="items-grid" id="active-items">
+                <!-- Coluna dos itens (ocupará toda a largura em dispositivos pequenos e 2/3 em dispositivos grandes) -->
+                <div class="col-12 col-lg-8">
+                    <!-- Itens ativos -->
+                    <div class="inventory-items mb-5">
+                        <h2 class="mb-4">Meus Itens</h2>
+                        <div class="row g-3 g-md-4" id="active-items">
                         <!-- Itens ativos serão adicionados aqui dinamicamente -->
                     </div>
                 </div>
 
+                    <!-- Itens vendidos -->
                 <div class="sold-items">
-                    <div class="sold-items-header">
-                        <h2>Itens Vendidos</h2>
-                        <div class="sold-stats">
-                            <div class="stat">
-                                <span class="stat-value" id="total-sold">0</span>
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 sold-items-header">
+                            <h2 class="mb-3 mb-md-0">Itens Vendidos</h2>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-end w-100 w-md-auto gap-2 gap-md-4 sold-stats">
+                                <div class="text-center stat flex-grow-1 flex-md-grow-0">
+                                    <span class="d-block stat-value" id="total-sold">0</span>
                                 <span class="stat-label">Total Vendido</span>
                             </div>
-                            <div class="stat">
-                                <span class="stat-value" id="total-earnings">R$ 0,00</span>
+                                <div class="text-center stat flex-grow-1 flex-md-grow-0">
+                                    <span class="d-block stat-value" id="total-earnings">R$ 0,00</span>
                                 <span class="stat-label">Ganhos Totais</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="row g-3 g-md-4" id="sold-items">
+                            <!-- Itens vendidos serão adicionados aqui dinamicamente -->
                     </div>
-                    <div class="items-grid" id="sold-items">
-                        <!-- Itens vendidos serão adicionados aqui dinamicamente -->
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer>
+    <footer class="mt-5">
         <div class="security-info">
             <div class="ssl-badge">
                 <i class="fas fa-lock"></i>
@@ -146,7 +160,32 @@
         <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
     </footer>
 
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/script.js"></script>
+
+    <!-- Modal do Carrinho -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Seu Carrinho</h2>
+                <button class="close-cart" id="close-cart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Itens do carrinho serão adicionados aqui -->
+            </div>
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span class="total-price" id="total-price">R$ 0,00</span>
+                </div>
+                <button class="btn-checkout" id="btn-checkout">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Menu Toggle
         const menuToggle = document.getElementById('menu-toggle');
@@ -160,6 +199,92 @@
             icon.classList.toggle('fa-times');
         });
 
+        // Carrinho de Compras
+        const cartButton = document.getElementById('cart-button');
+        const cartCount = document.querySelector('.cart-count');
+        const cartModal = document.getElementById('cart-modal');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const totalPrice = document.getElementById('total-price');
+        const checkoutButton = document.getElementById('btn-checkout');
+
+        // Atualizar contador do carrinho
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cartCount.textContent = cart.length;
+        }
+
+        // Atualizar itens do carrinho
+        function updateCartItems() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItems.innerHTML = '';
+            
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                total += price;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.game}</p>
+                        <span class="cart-item-price">${item.price}</span>
+                    </div>
+                    <button class="remove-item" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            totalPrice.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
+                    updatedCart.splice(index, 1);
+                    localStorage.setItem('cart', JSON.stringify(updatedCart));
+                    updateCartCount();
+                    updateCartItems();
+                });
+            });
+        }
+
+        // Event Listeners para o carrinho
+        cartButton.addEventListener('click', function() {
+            updateCartItems();
+            cartModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeCart.addEventListener('click', function() {
+            cartModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === cartModal) {
+                cartModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Botão de checkout
+        checkoutButton.addEventListener('click', function() {
+            window.location.href = 'payment.html';
+        });
+
+        // Atualizar contador do carrinho ao carregar a página
+        window.addEventListener('load', function() {
+            updateCartCount();
+            updateItemsGrid();
+        });
+
         // Preview de imagem
         document.getElementById('itemImage').addEventListener('change', function(e) {
             const preview = document.getElementById('imagePreview');
@@ -169,8 +294,8 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview">
-                        <button type="button" class="remove-image" onclick="removeImage()">
+                        <img src="${e.target.result}" alt="Preview" class="img-fluid">
+                        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 rounded-circle remove-image" onclick="removeImage()">
                             <i class="fas fa-times"></i>
                         </button>
                     `;
@@ -198,27 +323,42 @@
 
             const items = JSON.parse(localStorage.getItem('inventoryItems')) || [];
 
-            items.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.innerHTML = `
-                    <div class="item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="item-overlay">
-                            <div class="item-price">R$ ${item.price.toFixed(2)}</div>
+            if (items.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div class="empty-state">
+                            <i class="fas fa-box-open fa-3x mb-3 text-secondary"></i>
+                            <h3>Nenhum item encontrado</h3>
+                            <p class="text-muted">Adicione itens ao seu inventário usando o formulário ao lado.</p>
                         </div>
                     </div>
-                    <div class="item-info">
-                        <h3>${item.name}</h3>
-                        <p>${item.game}</p>
-                        <span class="item-quality">${item.quality}</span>
-                        <div class="item-actions">
-                            <button class="btn-edit" onclick="editItem(${index})">
+                `;
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'col-12 col-sm-6 col-lg-4';
+                card.innerHTML = `
+                    <div class="card h-100 bg-transparent item-card">
+                        <div class="item-image position-relative">
+                            <img src="${item.image}" class="card-img-top" alt="${item.name}">
+                            <div class="item-overlay position-absolute bottom-0 end-0 p-2">
+                                <div class="item-price badge">R$ ${item.price.toFixed(2)}</div>
+                            </div>
+                        </div>
+                        <div class="card-body item-info">
+                            <h5 class="card-title">${item.name}</h5>
+                            <p class="card-text">${item.game}</p>
+                            <span class="badge item-quality">${item.quality}</span>
+                            <div class="d-flex justify-content-between mt-3 item-actions">
+                                <button class="btn btn-outline-primary btn-sm btn-edit" onclick="editItem(${index})">
                                 <i class="fas fa-edit"></i> Editar
                             </button>
-                            <button class="btn-delete" onclick="deleteItem(${index})">
+                                <button class="btn btn-outline-danger btn-sm btn-delete" onclick="deleteItem(${index})">
                                 <i class="fas fa-trash"></i> Deletar
                             </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -236,14 +376,19 @@
             
             const preview = document.getElementById('imagePreview');
             preview.innerHTML = `
-                <img src="${item.image}" alt="Preview">
-                <button type="button" class="remove-image" onclick="removeImage()">
+                <img src="${item.image}" alt="Preview" class="img-fluid">
+                <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 rounded-circle remove-image" onclick="removeImage()">
                     <i class="fas fa-times"></i>
                 </button>
             `;
 
             items.splice(index, 1);
             saveItems();
+
+            // Scroll para o formulário em dispositivos móveis
+            if (window.innerWidth < 992) {
+                document.querySelector('.inventory-form').scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         function deleteItem(index) {
@@ -253,165 +398,82 @@
             }
         }
 
-        // Form submission
+        // Formulário de envio
         document.getElementById('itemForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const imageFile = document.getElementById('itemImage').files[0];
-            if (!imageFile) {
-                alert('Por favor, selecione uma imagem para o item.');
+            const preview = document.getElementById('imagePreview');
+            const imageElement = preview.querySelector('img');
+            
+            if (!imageElement) {
+                alert('Por favor, faça upload de uma imagem.');
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
                 const newItem = {
                     name: document.getElementById('itemName').value,
                     game: document.getElementById('game').value,
                     quality: document.getElementById('quality').value,
                     price: parseFloat(document.getElementById('price').value),
                     description: document.getElementById('description').value,
-                    image: e.target.result
+                image: imageElement.src,
+                isSold: false
                 };
 
                 items.push(newItem);
                 saveItems();
-                this.reset();
-                removeImage();
-                alert('Item anunciado com sucesso!');
-            }.bind(this);
+            
+            // Limpar formulário
+            document.getElementById('itemForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
 
-            reader.readAsDataURL(imageFile);
+            // Exibir mensagem de sucesso
+            showToast('Item adicionado com sucesso!');
         });
 
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
-            // Itens de exemplo
-            const sampleItems = [
-                {
-                    name: 'AK-47 | Bloodsport',
-                    game: 'csgo',
-                    quality: 'factory_new',
-                    price: 149.90,
-                    description: 'Skin rara e cobiçada da AK-47 com design militar moderno.',
-                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0Ob3djFN79fnzL-cluX5MrLVk2Vu5cB1g_zMu9Tzi1Lgr0VoYz3wIoO.webp'
-                },
-                {
-                    name: 'M4A1-S | Decimator',
-                    game: 'csgo',
-                    quality: 'minimal_wear',
-                    price: 199.90,
-                    description: 'Skin exclusiva da M4A1-S com design futurista e detalhes em vermelho.',
-                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfxPrMfipP7dezhr-KhsjnJ77UmlRa5sx3j9bJ8I3jkRrh_0RuZmqnIYG.webp'
-                },
-                {
-                    name: 'AWP | Mortis',
-                    game: 'csgo',
-                    quality: 'field_tested',
-                    price: 299.90,
-                    description: 'Skin temática da AWP com design inspirado em elementos mortuários.',
-                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0v73cCxX7eOwmIWInOTLP7LWnn8f7J1z07yUrNihjQfnrUBpYWCnJ9f.webp'
-                }
-            ];
-
-            // Itens vendidos de exemplo
-            const sampleSoldItems = [
-                {
-                    name: 'Desert Eagle | Conspiracy',
-                    game: 'csgo',
-                    quality: 'factory_new',
-                    price: 'R$ 89,90',
-                    description: 'Skin rara da Desert Eagle com design conspiratório.',
-                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DAQ1JmMR1osbaqPQJz7ODYfi9W9eO-m5WFk-TgPLTFnlRD7cFOhuDG_Zi7jgfi-0JsYGHzJ9XEIwRrM1-Dr.webp',
-                    saleDate: '15/03/2024',
-                    buyer: 'GamerPro123'
-                },
-                {
-                    name: 'USP-S | Kill Confirmed',
-                    game: 'csgo',
-                    quality: 'minimal_wear',
-                    price: 'R$ 159,90',
-                    description: 'Skin exclusiva da USP-S com design moderno.',
-                    image: '../assets/skins/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfw-bbeQJB-eOmgZODqPv7Ib7ummJW4NE_ieuZoNmk3Vay-BI6NWymJIa.webp',
-                    saleDate: '10/03/2024',
-                    buyer: 'SkinCollector'
-                }
-            ];
-
-            // Se não houver itens salvos, usar os itens de exemplo
-            if (!localStorage.getItem('inventoryItems')) {
-                localStorage.setItem('inventoryItems', JSON.stringify(sampleItems));
-            }
-
-            // Se não houver itens vendidos salvos, usar os itens vendidos de exemplo
-            if (!localStorage.getItem('soldItems')) {
-                localStorage.setItem('soldItems', JSON.stringify(sampleSoldItems));
-            }
-
-            updateItemsGrid();
-            loadSoldItems();
-        });
-
-        // Função para carregar itens vendidos
-        function loadSoldItems() {
-            const soldItems = JSON.parse(localStorage.getItem('soldItems')) || [];
-            const soldItemsContainer = document.getElementById('sold-items');
-            const totalSoldElement = document.getElementById('total-sold');
-            const totalEarningsElement = document.getElementById('total-earnings');
-
-            soldItemsContainer.innerHTML = '';
-            let totalEarnings = 0;
-
-            soldItems.forEach(item => {
-                const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-                totalEarnings += price;
-
-                const itemElement = document.createElement('div');
-                itemElement.className = 'item-card sold-item';
-                itemElement.innerHTML = `
-                    <div class="item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="item-overlay">
-                            <span class="item-price">${item.price}</span>
-                        </div>
-                    </div>
-                    <div class="item-info">
-                        <h3>${item.name}</h3>
-                        <p>${item.game}</p>
-                        <div class="sale-info">
-                            <span class="sale-date">Vendido em: ${item.saleDate}</span>
-                            <span class="buyer">Comprador: ${item.buyer}</span>
+        // Função para exibir mensagem de notificação
+        function showToast(message) {
+            // Cria e adiciona o elemento toast ao documento se não existir
+            if (!document.getElementById('inventory-toast')) {
+                const toastContainer = document.createElement('div');
+                toastContainer.className = 'position-fixed bottom-0 end-0 p-3';
+                toastContainer.style.zIndex = '1050';
+                toastContainer.innerHTML = `
+                    <div id="inventory-toast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: #6c5ce7;">
+                        <div class="d-flex">
+                            <div class="toast-body"></div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button>
                         </div>
                     </div>
                 `;
-                soldItemsContainer.appendChild(itemElement);
-            });
-
-            totalSoldElement.textContent = soldItems.length;
-            totalEarningsElement.textContent = `R$ ${totalEarnings.toFixed(2).replace('.', ',')}`;
-        }
-
-        // Função para marcar item como vendido
-        function markItemAsSold(itemId, buyer) {
-            const items = JSON.parse(localStorage.getItem('items')) || [];
-            const soldItems = JSON.parse(localStorage.getItem('soldItems')) || [];
-            
-            const itemIndex = items.findIndex(item => item.id === itemId);
-            if (itemIndex !== -1) {
-                const soldItem = items[itemIndex];
-                soldItem.saleDate = new Date().toLocaleDateString('pt-BR');
-                soldItem.buyer = buyer;
-                
-                soldItems.push(soldItem);
-                items.splice(itemIndex, 1);
-                
-                localStorage.setItem('items', JSON.stringify(items));
-                localStorage.setItem('soldItems', JSON.stringify(soldItems));
-                
-                loadItems();
-                loadSoldItems();
+                document.body.appendChild(toastContainer);
             }
+            
+            // Configura e exibe o toast
+            const toastElement = document.getElementById('inventory-toast');
+            toastElement.querySelector('.toast-body').textContent = message;
+            
+            const toast = new bootstrap.Toast(toastElement, {
+                animation: true,
+                autohide: true,
+                delay: 3000
+            });
+            
+            toast.show();
         }
+
+        // Ajustar layout para a orientação do dispositivo
+        window.addEventListener('resize', function() {
+            updateLayout();
+        });
+
+        function updateLayout() {
+            // Adicionar lógica adicional para ajustar o layout conforme necessário
+            // Este é um espaço para futuras otimizações específicas
+        }
+
+        // Iniciar com o layout apropriado
+        updateLayout();
     </script>
 </body>
 </html> 
