@@ -127,10 +127,10 @@ body:hover .background-image {
     -webkit-background-clip: text;
     background-clip: text;
     white-space: nowrap;
-    text-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
-    animation: titleGlow 2s ease-in-out infinite alternate;
+    text-shadow: none;
     border-right: 3px solid var(--accent-color);
     padding-right: 5px;
+    -webkit-text-stroke: 3px white;
 }
 
 .animated-title::after {
@@ -145,6 +145,7 @@ body:hover .background-image {
     background-clip: text;
     color: transparent;
     animation: glitchEffect 5s linear infinite;
+    -webkit-text-stroke: 0;
 }
 
 .tagline {
@@ -410,10 +411,10 @@ footer {
 
 @keyframes titleGlow {
     from {
-        text-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
+        text-shadow: none;
     }
     to {
-        text-shadow: 0 0 20px rgba(108, 92, 231, 0.8), 0 0 30px rgba(253, 121, 168, 0.5);
+        text-shadow: none;
     }
 }
 
@@ -484,6 +485,7 @@ footer {
         white-space: normal;
         border-right: none;
         padding-right: 0;
+        -webkit-text-stroke: 3px white;
     }
 
     .tagline {
@@ -512,6 +514,7 @@ footer {
 @media (max-width: 480px) {
     .animated-title {
         font-size: 2.5rem;
+        -webkit-text-stroke: 3px white;
     }
 
     .feature-card {
