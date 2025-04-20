@@ -301,7 +301,7 @@ main.main {
 
 /* Garantindo que o footer fique sempre na parte inferior */
 footer {
-    background-color: rgba(15, 15, 26, 0.8);
+    background-color: var(--card-background);
     padding: 2rem;
     text-align: center;
     backdrop-filter: blur(10px);
