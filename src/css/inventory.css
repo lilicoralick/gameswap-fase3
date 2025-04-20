@@ -226,11 +226,97 @@ header .cart-count {
     padding: 2rem;
     margin-top: 0; /* Removida margem do topo */
 }
+.security-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
 
+.ssl-badge {
+    display: flex;
+    align-items: center;
+    background-color: rgba(15, 15, 30, 0.7);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ssl-badge i {
+    color: var(--success-color);
+    font-size: 1.2rem;
+}
+
+.security-details {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.security-details p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.security-details i {
+    color: var(--primary-color);
+}.security-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.ssl-badge {
+    display: flex;
+    align-items: center;
+    background-color: rgba(15, 15, 30, 0.7);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ssl-badge i {
+    color: var(--success-color);
+    font-size: 1.2rem;
+}
+
+.security-details {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.security-details p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.security-details i {
+    color: var(--primary-color);
+}
 @media (max-width: 768px) {
     .inventory-container {
         margin-top: 0; /* Removida margem do topo */
         padding: 1rem;
+    }
+    .security-info {
+        flex-direction: column;
+        gap: 1rem;
     }
 }
 
@@ -869,6 +955,14 @@ header .cart-count {
     .animated-title {
         font-size: 3rem;
         -webkit-text-stroke: 2px white;
+    }
+
+    .ssl-badge {
+        padding: 0.6rem 1rem;
+    }
+    .security-details {
+        gap: 1rem;
+        flex-direction: column;
     }
 } 
 @media (max-width: 412px) {
