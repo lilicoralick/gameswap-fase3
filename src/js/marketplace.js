@@ -282,6 +282,127 @@ document.addEventListener('DOMContentLoaded', function() {
     // Aplicar filtros quando a ordenação for alterada
     document.querySelector('.sort-select').addEventListener('change', aplicarFuncaoFiltro);
 
+    // ===== Funcionalidade de busca =====
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.querySelector('.search-button');
+    
+    // Função para realizar a busca
+    function realizarBusca() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        
+        if (searchTerm === '') {
+            // Se o campo de busca estiver vazio, apenas reaplica os filtros normais
+            aplicarFuncaoFiltro();
+            return;
+        }
+        
+        // Aplica os filtros normais primeiro
+        let filteredItems = featuredItems.filter(item => {
+            const itemPrice = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            
+            const selectedGames = Array.from(document.querySelectorAll('input[name="game"]:checked')).map(cb => cb.value);
+            const selectedQualities = Array.from(document.querySelectorAll('input[name="quality"]:checked')).map(cb => cb.value);
+            const selectedRarities = Array.from(document.querySelectorAll('input[name="rarity"]:checked')).map(cb => cb.value);
+            const selectedSellers = Array.from(document.querySelectorAll('input[name="seller"]:checked')).map(cb => cb.value);
+            
+            const minPrice = parseFloat(document.querySelector('.price-min').value) || 0;
+            const maxPrice = parseFloat(document.querySelector('.price-max').value) || Infinity;
+            
+            const matchesGame = selectedGames.length === 0 || selectedGames.includes(item.game.toLowerCase());
+            const matchesQuality = selectedQualities.length === 0 || selectedQualities.includes(item.quality.toLowerCase().replace(' ', '-'));
+            const matchesPrice = itemPrice >= minPrice && itemPrice <= maxPrice;
+            const matchesSeller = selectedSellers.length === 0 || selectedSellers.includes(item.seller.badge);
+            
+            return matchesGame && matchesQuality && matchesPrice && matchesSeller;
+        });
+        
+        // Agora filtra com base no termo de busca
+        filteredItems = filteredItems.filter(item => {
+            return (
+                item.name.toLowerCase().includes(searchTerm) ||
+                item.game.toLowerCase().includes(searchTerm) ||
+                item.quality.toLowerCase().includes(searchTerm) ||
+                item.description.toLowerCase().includes(searchTerm) ||
+                item.seller.name.toLowerCase().includes(searchTerm)
+            );
+        });
+        
+        // Ordenar os itens
+        const sortBy = document.querySelector('.sort-select').value;
+        filteredItems.sort((a, b) => {
+            const priceA = parseFloat(a.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            const priceB = parseFloat(b.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            
+            switch(sortBy) {
+                case 'price-asc':
+                    return priceA - priceB;
+                case 'price-desc':
+                    return priceB - priceA;
+                case 'popular':
+                    return parseInt(b.seller.sales) - parseInt(a.seller.sales);
+                case 'rating':
+                    return parseFloat(b.seller.rating) - parseFloat(a.seller.rating);
+                default:
+                    return 0;
+            }
+        });
+        
+        // Atualizar a exibição
+        const itemsGrid = document.getElementById('featured-items-grid');
+        if (itemsGrid) {
+            itemsGrid.innerHTML = '';
+            
+            if (filteredItems.length === 0) {
+                // Exibe mensagem de nenhum resultado encontrado
+                itemsGrid.innerHTML = `<div class="no-results">Nenhum resultado encontrado para "${searchTerm}"</div>`;
+            } else {
+                filteredItems.forEach(item => {
+                    itemsGrid.innerHTML += createItemCard(item);
+                });
+                
+                // Reativar os event listeners dos cards
+                document.querySelectorAll('.item-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        if (!e.target.closest('.btn-buy') && !e.target.closest('.btn-trade')) {
+                            const itemId = parseInt(this.dataset.id);
+                            const item = filteredItems.find(i => i.id === itemId);
+                            if (item) {
+                                openModal(item);
+                            }
+                        }
+                    });
+                });
+            }
+        }
+    }
+    
+    // Event listener para o botão de busca
+    if (searchButton) {
+        searchButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            realizarBusca();
+        });
+    }
+    
+    // Event listener para a tecla Enter no campo de busca
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                realizarBusca();
+            }
+        });
+        
+        // Pesquisa automática ao digitar com pequeno delay
+        let timeoutId;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                realizarBusca();
+            }, 500); // Espera 500ms após o usuário parar de digitar
+        });
+    }
+
     // ===== Dados de Exemplo =====
     const featuredItems = [
         {

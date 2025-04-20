@@ -138,17 +138,22 @@
 
 .price-inputs {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
 .price-inputs input {
-    width: 100px;
+    width: 100%;
     padding: 0.5rem;
     background: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: 5px;
     color: var(--text-color);
+}
+
+.price-inputs span {
+    align-self: center;
+    margin: 0.2rem 0;
 }
 
 .range-slider {
@@ -339,8 +344,9 @@
 
 .items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .item-card {
@@ -1062,4 +1068,16 @@
 .filter-toggle:hover {
     background-color: var(--secondary-color);
     transform: translateY(-2px);
+}
+
+/* Estilo para mensagem de nenhum resultado encontrado */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
 }
