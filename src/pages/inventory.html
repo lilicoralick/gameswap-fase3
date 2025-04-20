@@ -145,6 +145,9 @@
         </div>
     </main>
 
+    <!-- Espaçador para evitar sobreposição em dispositivos móveis -->
+    <div class="footer-spacer d-block d-md-none"></div>
+
     <footer>
         <div class="security-info">
             <div class="ssl-badge">
@@ -159,7 +162,6 @@
         </div>
         <p class="copyright">&copy; 2025 GameSwap - Desenvolvido por Gustavo Medeiros, Michael Marotto, Davi Grabalos, Lívia Scoralick e Vinicius Serrano</p>
     </footer>
-
 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -326,8 +328,8 @@
 
             if (items.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <div class="empty-state">
+                    <div class="col-12 text-center py-4">
+                        <div class="empty-state d-flex flex-column justify-content-center align-items-center py-4">
                             <i class="fas fa-box-open fa-3x mb-3 text-secondary"></i>
                             <h3>Nenhum item encontrado</h3>
                             <p class="text-muted">Adicione itens ao seu inventário usando o formulário ao lado.</p>
