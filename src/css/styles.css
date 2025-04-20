@@ -38,12 +38,16 @@ body {
     top: 0;
     z-index: 1000;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    height: 78px;
+    transition: all 0.3s ease;
 }
 
 .logo {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
+    z-index: 1001;
 }
 
 #nav-menu {
@@ -54,6 +58,7 @@ body {
     text-align: center;
     align-items: center;
     justify-content: flex-end;
+    transition: all 0.3s ease;
 }
 
 #nav-menu a {
@@ -61,10 +66,28 @@ body {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+#nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
 }
 
 #nav-menu a:hover {
     color: var(--accent-color);
+}
+
+#nav-menu a:hover::after,
+#nav-menu a.active::after {
+    width: 100%;
 }
 
 /* Remove the absolute positioning styles for cart button */
@@ -73,34 +96,350 @@ body {
     right: auto;
 }
 
-/* Media query updates for the responsive menu */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.menu-toggle:focus {
+    outline: none;
+}
+
+.menu-toggle:hover {
+    color: var(--accent-color);
+}
+
+/* Mobile Filter Toggle Button */
+/* .filter-toggle {
+    display: none; 
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+}
+
+.filter-toggle:hover {
+    background-color: var(--secondary-color);
+}
+
+.filter-toggle i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.filter-toggle.active i {
+    transform: rotate(180deg);
+} */
+
+/* Filter Sidebar */
+.filter-sidebar {
+    width: 300px;
+    background: var(--card-background);
+    padding: 1.5rem;
+    border-radius: 10px;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+    transition: all 0.3s ease;
+}
+
 @media (max-width: 950px) {
-    #nav-menu {
+    /* .filter-toggle {
+        display: flex;
+    } */
+
+    .filter-sidebar {
         position: fixed;
-        flex-direction: column;
-        top: 4.3rem;
+        top: 78px;
         left: 0;
         width: 100%;
-        margin-left: 0;
-        background-color: rgba(26, 26, 46, 0.95);
-        height: 0;
-        overflow: hidden;
-        transition: height 0.3s ease;
-        padding: 0;
-        text-align: center;
+        height: calc(100vh - 78px);
+        z-index: 999;
+        overflow-y: auto;
+        margin-bottom: 0;
+        border-radius: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .filter-sidebar.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .filter-mobile-actions {
+        display: flex;
+        position: sticky;
+        bottom: 0;
+        background: var(--card-background);
+        padding: 1rem;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-sidebar {
+        top: 60px;
+        height: calc(100vh - 60px);
+    }
+}
+
+/* Filter Overlay */
+.filter-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+/* Mobile Filter Actions */
+.filter-mobile-actions {
+    display: none;
+    margin-top: 1.5rem;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.apply-filters, .close-filters {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.apply-filters {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+}
+
+.close-filters {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+/* Media query updates for the responsive menu */
+@media (max-width: 950px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    #nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--card-background);
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        padding: 2rem;
+        gap: 2rem;
+    }
+
+    #nav-menu.active {
+        right: 0;
+    }
+
+    #nav-menu li {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.3s ease;
+        width: 100%;
+        text-align: center;
+    }
+
+    #nav-menu.active li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* Add staggered animation for menu items */
+    #nav-menu.active li:nth-child(1) { transition-delay: 0.1s; }
+    #nav-menu.active li:nth-child(2) { transition-delay: 0.2s; }
+    #nav-menu.active li:nth-child(3) { transition-delay: 0.3s; }
+    #nav-menu.active li:nth-child(4) { transition-delay: 0.4s; }
+    #nav-menu.active li:nth-child(5) { transition-delay: 0.5s; }
+
+    #nav-menu a {
+        font-size: 1.2rem;
+        display: block;
+        padding: 1rem 0;
+    }
+
+    .menu-toggle.active i {
+        transform: rotate(180deg);
+    }
+}
+
+/* Additional mobile styles */
+@media (max-width: 480px) {
+    .main-nav {
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .menu-toggle {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-marketplace h1 {
+        font-size: 2rem;
     }
     
-    #nav-menu.active {
-        height: auto;
-        padding: 1rem 0;
+    .search-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .search-button {
+        width: 100%;
+    }
+    
+    .trending-carousel {
+        margin: 0 -1rem;
+    }
+    
+    .carousel-control {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 90%;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+    
+    .modal-image {
+        max-height: 200px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .modal-actions button {
+        width: 100%;
+    }
+    
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .category-card {
+        padding: 1.5rem;
+    }
+    
+    .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .main-nav {
+        padding: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .menu-toggle {
+        font-size: 1.3rem;
+    }
+    
+    .hero-marketplace h1 {
+        font-size: 4rem;
+    }
+    
+    .hero-marketplace p {
+        font-size: 1rem;
+    }
+    
+    .main-content {
+        padding: 1rem;
+        
+    }
+    
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .item-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .category-card i {
+        font-size: 2rem;
+    }
+    
+    .category-card h3 {
+        font-size: 1rem;
+    }
+    
+    section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .trending-card {
+        width: 100%;
+    }
+    
+    .cart-button {
+        padding: 0.5rem;
+        font-size: 1.2rem;
     }
 }
 
 /* Hero Section */
 .hero-marketplace {
     min-height: auto;
-    padding: 3rem 0;
+   
     margin-bottom: 0;
     display: flex;
     flex-direction: column;
@@ -108,25 +447,21 @@ body {
     align-items: center;
     text-align: center;
     position: relative;
+/* Adicionado espaçamento para desktop */
 }
 
 .hero-marketplace h1 {
-    font-size: 2.5rem;
+    font-size: 4rem;
     margin-bottom: 0.5rem;
 }
 
 .hero-marketplace p {
     font-size: 1.1rem;
     margin-bottom: 1rem;
-    color: #a29bfe;
+    color: var(--text-color);
 }
 
-.search-container {
-    max-width: 600px;
-    margin: 0.5rem auto 0;
-    display: flex;
-    gap: 1rem;
-}
+
 
 #search-input {
     flex: 1;
@@ -592,9 +927,7 @@ body {
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .hero-marketplace h1 {
-        font-size: 2.5rem;
-    }
+    
 
     .search-container {
         flex-direction: column;
@@ -701,7 +1034,7 @@ body {
 
 .hero {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 3rem 2rem;
     position: relative;
     
 }
@@ -740,7 +1073,7 @@ body {
 
 .hero h1 {
     font-family: 'Tektur', sans-serif;
-    font-size: 3rem;
+    font-size: 4rem;
     margin: 0 auto 1rem;
     display: inline-block;
     white-space: nowrap;
@@ -1042,7 +1375,7 @@ footer {
     }
     
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 4rem;
         animation: typing 3s steps(25, end), blink 1s step-end infinite;
     }
     
@@ -1084,7 +1417,7 @@ footer {
     }
 
     .hero h1 {
-        font-size: 2rem;
+        font-size: 3rem;
         animation: typing 2.5s steps(20, end), blink 1s step-end infinite;
         white-space: normal;
         border-right: none;
@@ -1119,7 +1452,7 @@ footer {
     }
     
     .hero h1 {
-        font-size: 1.5rem;
+        font-size: 3rem;
     }
     
     .hero p {
@@ -2466,7 +2799,6 @@ footer {
     display: flex;
     gap: 2rem;
     padding: 2rem;
-    margin-top: 4rem; /* Adicionando espaço entre o header e o conteúdo principal */
     position: relative;
     z-index: 1;
 }
@@ -4377,4 +4709,12 @@ footer {
     color: #6c5ce7;
     font-weight: bold;
     font-size: 1.1rem;
-} 
+}
+
+/* Remove typing animation for marketplace hero */
+.hero-marketplace h1 {
+    animation: none;
+    overflow: visible;
+    white-space: normal;
+    border-right: none;
+}

@@ -1,15 +1,286 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // ===== Menu Toggle Logic =====
+    // ===== Lógica do Toggle do Menu =====
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.getElementById('nav-menu');
     
-    menuToggle.addEventListener('click', function() {
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
         navMenu.classList.toggle('active');
         menuToggle.classList.toggle('active');
         const icon = menuToggle.querySelector('i');
         icon.classList.toggle('fa-bars');
         icon.classList.toggle('fa-times');
+        
+        // Atualiza os atributos ARIA para acessibilidade
+        const expanded = navMenu.classList.contains('active');
+        menuToggle.setAttribute('aria-expanded', expanded);
+        
+        // Previne o scroll quando o menu está aberto em dispositivos móveis
+        if (expanded) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
     });
+    
+    // Fecha o menu ao clicar em links (para mobile)
+    const navLinks = document.querySelectorAll('#nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 950) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+                menuToggle.setAttribute('aria-expanded', false);
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
+    
+    // Fecha o menu ao clicar fora dele
+    document.addEventListener('click', function(event) {
+        const isMenuToggle = event.target === menuToggle || menuToggle.contains(event.target);
+        const isNavMenu = event.target === navMenu || navMenu.contains(event.target);
+        
+        if (!isMenuToggle && !isNavMenu && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+            menuToggle.setAttribute('aria-expanded', false);
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Trata o redimensionamento da janela para o menu
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 950) {
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+            menuToggle.setAttribute('aria-expanded', false);
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // ===== Lógica do Toggle do Filtro para Mobile =====
+    const filterToggle = document.getElementById('filter-toggle');
+    const filterSidebar = document.getElementById('filter-sidebar');
+    const filterOverlay = document.getElementById('filter-overlay');
+    const applyFilters = document.getElementById('apply-filters');
+    const closeFilters = document.getElementById('close-filters');
+    const clearFiltersButton = document.querySelector('.clear-filters');
+    const closeFilterBtn = document.getElementById('close-filter-btn');
+    
+    // Função para abrir o menu de filtros
+    function openFilterMenu() {
+        filterToggle.classList.add('active');
+        filterSidebar.classList.add('active');
+        filterOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Função para fechar o menu de filtros
+    function closeFilterMenu() {
+        filterToggle.classList.remove('active');
+        filterSidebar.classList.remove('active');
+        filterOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Alterna a barra lateral de filtros no mobile
+    if (filterToggle) {
+        filterToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (filterSidebar.classList.contains('active')) {
+                closeFilterMenu();
+            } else {
+                openFilterMenu();
+            }
+        });
+    }
+
+    // Fecha os filtros ao clicar no botão fechar do topo
+    if (closeFilterBtn) {
+        closeFilterBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeFilterMenu();
+        });
+    }
+
+    // Fecha os filtros ao clicar no botão fechar
+    if (closeFilters) {
+        closeFilters.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeFilterMenu();
+        });
+    }
+
+    // Fecha os filtros ao clicar no overlay
+    if (filterOverlay) {
+        filterOverlay.addEventListener('click', function() {
+            closeFilterMenu();
+        });
+    }
+
+    // Previne que cliques dentro do filtro fechem o menu
+    if (filterSidebar) {
+        filterSidebar.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Fecha o filtro ao clicar fora dele
+    document.addEventListener('click', function(event) {
+        if (filterSidebar && filterSidebar.classList.contains('active')) {
+            const isFilterToggle = event.target === filterToggle || filterToggle.contains(event.target);
+            const isFilterSidebar = event.target === filterSidebar || filterSidebar.contains(event.target);
+            
+            if (!isFilterToggle && !isFilterSidebar) {
+                closeFilterMenu();
+            }
+        }
+    });
+
+    // Aplica os filtros e fecha a barra lateral em mobile
+    if (applyFilters) {
+        applyFilters.addEventListener('click', function(e) {
+            e.stopPropagation();
+            aplicarFuncaoFiltro();
+            if (window.innerWidth <= 950) {
+                closeFilterMenu();
+            }
+        });
+    }
+
+    // Trata o redimensionamento da janela
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 950) {
+            closeFilterMenu();
+        }
+    });
+    
+    // Função para aplicar os filtros
+    function aplicarFuncaoFiltro() {
+        const selectedGames = Array.from(document.querySelectorAll('input[name="game"]:checked')).map(cb => cb.value);
+        const selectedQualities = Array.from(document.querySelectorAll('input[name="quality"]:checked')).map(cb => cb.value);
+        const selectedRarities = Array.from(document.querySelectorAll('input[name="rarity"]:checked')).map(cb => cb.value);
+        const selectedSellers = Array.from(document.querySelectorAll('input[name="seller"]:checked')).map(cb => cb.value);
+        
+        const minPrice = parseFloat(document.querySelector('.price-min').value) || 0;
+        const maxPrice = parseFloat(document.querySelector('.price-max').value) || Infinity;
+        const sortBy = document.querySelector('.sort-select').value;
+        
+        // Filtrar os itens
+        let filteredItems = featuredItems.filter(item => {
+            const itemPrice = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            
+            const matchesGame = selectedGames.length === 0 || selectedGames.includes(item.game.toLowerCase());
+            const matchesQuality = selectedQualities.length === 0 || selectedQualities.includes(item.quality.toLowerCase().replace(' ', '-'));
+            const matchesPrice = itemPrice >= minPrice && itemPrice <= maxPrice;
+            const matchesSeller = selectedSellers.length === 0 || selectedSellers.includes(item.seller.badge);
+            
+            return matchesGame && matchesQuality && matchesPrice && matchesSeller;
+        });
+        
+        // Ordenar os itens
+        filteredItems.sort((a, b) => {
+            const priceA = parseFloat(a.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            const priceB = parseFloat(b.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            
+            switch(sortBy) {
+                case 'price-asc':
+                    return priceA - priceB;
+                case 'price-desc':
+                    return priceB - priceA;
+                case 'popular':
+                    return parseInt(b.seller.sales) - parseInt(a.seller.sales);
+                case 'rating':
+                    return parseFloat(b.seller.rating) - parseFloat(a.seller.rating);
+                default:
+                    return 0;
+            }
+        });
+        
+        // Atualizar a exibição
+        const itemsGrid = document.getElementById('featured-items-grid');
+        if (itemsGrid) {
+            itemsGrid.innerHTML = '';
+            filteredItems.forEach(item => {
+                itemsGrid.innerHTML += createItemCard(item);
+            });
+            
+            // Reativar os event listeners dos cards
+            document.querySelectorAll('.item-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.btn-buy') && !e.target.closest('.btn-trade')) {
+                        const itemId = parseInt(this.dataset.id);
+                        const item = filteredItems.find(i => i.id === itemId);
+                        if (item) {
+                            openModal(item);
+                        }
+                    }
+                });
+            });
+        }
+    }
+    
+    // Limpar todos os filtros
+    if (clearFiltersButton) {
+        clearFiltersButton.addEventListener('click', function() {
+            // Limpar checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Limpar inputs de preço
+            document.querySelector('.price-min').value = '';
+            document.querySelector('.price-max').value = '';
+            
+            // Resetar range slider
+            const rangeSlider = document.querySelector('.range-slider');
+            if (rangeSlider) rangeSlider.value = rangeSlider.max;
+            
+            // Resetar select de ordenação
+            document.querySelector('.sort-select').value = 'price-asc';
+            
+            // Aplicar os filtros limpos
+            aplicarFuncaoFiltro();
+        });
+    }
+    
+    // Atualizar o range slider quando os inputs de preço mudarem
+    const priceInputs = document.querySelectorAll('.price-inputs input');
+    const rangeSlider = document.querySelector('.range-slider');
+    
+    if (priceInputs && rangeSlider) {
+        priceInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('price-max')) {
+                    rangeSlider.value = this.value || rangeSlider.max;
+                }
+                aplicarFuncaoFiltro();
+            });
+        });
+        
+        rangeSlider.addEventListener('input', function() {
+            document.querySelector('.price-max').value = this.value;
+            aplicarFuncaoFiltro();
+        });
+    }
+    
+    // Aplicar filtros quando qualquer checkbox for alterado
+    document.querySelectorAll('.filter-options input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', aplicarFuncaoFiltro);
+    });
+    
+    // Aplicar filtros quando a ordenação for alterada
+    document.querySelector('.sort-select').addEventListener('change', aplicarFuncaoFiltro);
 
     // ===== Dados de Exemplo =====
     const featuredItems = [
@@ -241,193 +512,210 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="trending-info">
                     <h3>${item.name}</h3>
-                    <p>${item.game}</p>
-                    <span class="trending-price">${item.price}</span>
+                    <p>${item.game} | ${item.quality}</p>
+                    <div class="trending-price">${item.price}</div>
                 </div>
             </div>
         `;
     }
 
-    // ===== Renderização Inicial =====
+    // ===== Funções de Renderização =====
     function renderFeaturedItems() {
-        const featuredGrid = document.getElementById('featured-items-grid');
-        featuredGrid.innerHTML = featuredItems.map(createItemCard).join('');
+        const featuredItemsGrid = document.getElementById('featured-items-grid');
+        if (!featuredItemsGrid) return;
+        
+        let html = '';
+        
+        featuredItems.forEach(item => {
+            html += createItemCard(item);
+        });
+        
+        featuredItemsGrid.innerHTML = html;
+        
+        // Adicionar event listeners para os cartões
+        document.querySelectorAll('.item-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.btn-buy') && !e.target.closest('.btn-trade')) {
+                    const itemId = parseInt(this.dataset.id);
+                    const item = featuredItems.find(i => i.id === itemId) || trendingItems.find(i => i.id === itemId);
+                    if (item) {
+                        openModal(item);
+                    }
+                }
+            });
+        });
     }
 
     function renderTrendingItems() {
         const trendingGrid = document.getElementById('trending-grid');
-        trendingGrid.innerHTML = trendingItems.map(createTrendingCard).join('');
-    }
-
-    // ===== Filtros e Busca =====
-    const searchInput = document.getElementById('search-input');
-    const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
-    const priceInputs = document.querySelectorAll('.price-inputs input');
-    const rangeSlider = document.querySelector('.range-slider');
-    const sortSelect = document.querySelector('.sort-select');
-    const clearFiltersButton = document.querySelector('.clear-filters');
-
-    function applyFilters() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const selectedGames = Array.from(document.querySelectorAll('input[name="game"]:checked')).map(cb => cb.value);
-        const selectedQualities = Array.from(document.querySelectorAll('input[name="quality"]:checked')).map(cb => cb.value);
-        const selectedRarities = Array.from(document.querySelectorAll('input[name="rarity"]:checked')).map(cb => cb.value);
-        const selectedSellers = Array.from(document.querySelectorAll('input[name="seller"]:checked')).map(cb => cb.value);
-        const minPrice = parseFloat(priceInputs[0].value) || 0;
-        const maxPrice = parseFloat(priceInputs[1].value) || Infinity;
-        const sortBy = sortSelect.value;
-
-        // Filtragem e ordenação dos itens
-        let filteredItems = [...featuredItems];
-
-        // Aplicar filtros
-        filteredItems = filteredItems.filter(item => {
-            const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
-                                item.game.toLowerCase().includes(searchTerm);
-            const matchesGame = selectedGames.length === 0 || selectedGames.includes(item.game.toLowerCase());
-            const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-            const matchesPrice = price >= minPrice && price <= maxPrice;
-
-            return matchesSearch && matchesGame && matchesPrice;
+        if (!trendingGrid) return;
+        
+        let html = '';
+        
+        trendingItems.forEach(item => {
+            html += createTrendingCard(item);
         });
-
-        // Ordenação
-        switch(sortBy) {
-            case 'price-asc':
-                filteredItems.sort((a, b) => {
-                    const priceA = parseFloat(a.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-                    const priceB = parseFloat(b.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-                    return priceA - priceB;
-                });
-                break;
-            case 'price-desc':
-                filteredItems.sort((a, b) => {
-                    const priceA = parseFloat(a.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-                    const priceB = parseFloat(b.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-                    return priceB - priceA;
-                });
-                break;
-            case 'popular':
-                filteredItems.sort((a, b) => b.seller.sales - a.seller.sales);
-                break;
-            case 'newest':
-                // Assumindo que os itens mais recentes têm IDs maiores
-                filteredItems.sort((a, b) => b.id - a.id);
-                break;
-            case 'rating':
-                filteredItems.sort((a, b) => b.seller.rating - a.seller.rating);
-                break;
-        }
-
-        // Renderizar itens filtrados
-        const featuredGrid = document.getElementById('featured-items-grid');
-        featuredGrid.innerHTML = filteredItems.map(createItemCard).join('');
+        
+        trendingGrid.innerHTML = html;
+        createDots();
+        adjustItemsPerSlide();
     }
-
-    // Event Listeners para filtros
-    searchInput.addEventListener('input', applyFilters);
-    filterCheckboxes.forEach(checkbox => checkbox.addEventListener('change', applyFilters));
-    priceInputs.forEach(input => input.addEventListener('input', applyFilters));
-    rangeSlider.addEventListener('input', function() {
-        priceInputs[1].value = this.value;
-        applyFilters();
-    });
-    sortSelect.addEventListener('change', applyFilters);
-    clearFiltersButton.addEventListener('click', function() {
-        filterCheckboxes.forEach(checkbox => checkbox.checked = false);
-        priceInputs.forEach(input => input.value = '');
-        rangeSlider.value = 10000;
-        sortSelect.value = 'price-asc';
-        searchInput.value = '';
-        applyFilters();
-    });
 
     // ===== Modal de Produto =====
     const modal = document.getElementById('product-modal');
-    const closeModal = document.querySelector('.close-modal');
-    const itemCards = document.querySelectorAll('.item-card');
+    const closeModal = modal ? modal.querySelector('.close-modal') : null;
 
     function openModal(item) {
-        document.getElementById('modal-product-name').textContent = item.name;
-        document.getElementById('modal-product-game').textContent = item.game;
-        document.getElementById('modal-product-price').textContent = item.price;
-        document.getElementById('modal-product-image').src = item.image;
-        document.getElementById('modal-product-quality').textContent = item.quality;
-        document.getElementById('modal-seller-name').textContent = item.seller.name;
-        document.getElementById('modal-seller-rating').innerHTML = `<i class="fas fa-star"></i> ${item.seller.rating}`;
-        document.getElementById('modal-seller-sales').textContent = `+${item.seller.sales} vendas`;
-        document.getElementById('modal-seller-badge').innerHTML = `
-            <div class="seller-badge ${item.seller.badge}">
-                <i class="fas fa-${item.seller.badge === 'platinum' ? 'gem' : 'crown'}"></i>
-                <span>${item.seller.badge.charAt(0).toUpperCase() + item.seller.badge.slice(1)}</span>
-            </div>
-        `;
+        if (!modal) return;
+        
+        const modalProductName = document.getElementById('modal-product-name');
+        const modalProductGame = document.getElementById('modal-product-game');
+        const modalProductPrice = document.getElementById('modal-product-price');
+        const modalProductImage = document.getElementById('modal-product-image');
+        const modalProductQuality = document.getElementById('modal-product-quality');
+        const modalSellerName = document.getElementById('modal-seller-name');
+        const modalSellerRating = document.getElementById('modal-seller-rating');
+        const modalSellerSales = document.getElementById('modal-seller-sales');
+        const modalSellerBadge = document.getElementById('modal-seller-badge');
+        
+        if (modalProductName) modalProductName.textContent = item.name;
+        if (modalProductGame) modalProductGame.textContent = item.game;
+        if (modalProductPrice) modalProductPrice.textContent = item.price;
+        if (modalProductImage) modalProductImage.src = item.image;
+        if (modalProductQuality) modalProductQuality.textContent = item.quality;
+        if (modalSellerName) modalSellerName.textContent = item.seller.name;
+        if (modalSellerRating) modalSellerRating.innerHTML = `<i class="fas fa-star"></i> ${item.seller.rating}`;
+        if (modalSellerSales) modalSellerSales.textContent = `+${item.seller.sales} vendas`;
+        
+        if (modalSellerBadge) {
+            modalSellerBadge.innerHTML = `
+                <div class="seller-badge ${item.seller.badge}">
+                    <i class="fas fa-${item.seller.badge === 'platinum' ? 'gem' : 'crown'}"></i>
+                    <span>${item.seller.badge === 'platinum' ? 'Platinum' : 'Gold'}</span>
+                </div>
+            `;
+        }
 
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
 
     // Event Listeners para o modal
-    document.addEventListener('click', function(e) {
-        const itemCard = e.target.closest('.item-card');
-        const trendingCard = e.target.closest('.trending-card');
-        
-        // Se o clique foi em um botão "Comprar" dentro de um item, abra o modal primeiro
-        if (e.target.classList.contains('btn-buy') || e.target.classList.contains('btn-trade')) {
-            if (itemCard) {
-                const itemId = parseInt(itemCard.dataset.id);
-                let item = featuredItems.find(i => i.id === itemId);
-                if (!item) {
-                    item = trendingItems.find(i => i.id === itemId);
-                }
-                
-                if (item) {
-                    // Se for clique em botão de comprar, abrimos o modal primeiro
-                    e.preventDefault();
-                    openModal(item);
-                    return; // Retorna para não executar o restante da função
+    if (modal) {
+        document.addEventListener('click', function(e) {
+            const itemCard = e.target.closest('.item-card');
+            const trendingCard = e.target.closest('.trending-card');
+            
+            // Se o clique foi em um botão "Comprar" dentro de um item, abra o modal primeiro
+            if (e.target.classList.contains('btn-buy') || e.target.classList.contains('btn-trade')) {
+                if (itemCard) {
+                    const itemId = parseInt(itemCard.dataset.id);
+                    let item = featuredItems.find(i => i.id === itemId);
+                    if (!item) {
+                        item = trendingItems.find(i => i.id === itemId);
+                    }
+                    
+                    if (item) {
+                        // Se for clique em botão de comprar, abrimos o modal primeiro
+                        e.preventDefault();
+                        openModal(item);
+                        return; // Retorna para não executar o restante da função
+                    }
                 }
             }
-        }
-        
-        // Para cliques em outros elementos do card
-        if (itemCard && !e.target.classList.contains('btn-buy') && !e.target.classList.contains('btn-trade')) {
-            const itemId = parseInt(itemCard.dataset.id);
-            const item = featuredItems.find(i => i.id === itemId);
-            if (item) openModal(item);
-        } else if (trendingCard) {
-            const itemId = parseInt(trendingCard.dataset.id);
-            const item = trendingItems.find(i => i.id === itemId);
-            if (item) openModal(item);
-        }
-    });
+            
+            // Para cliques em outros elementos do card
+            if (itemCard && !e.target.classList.contains('btn-buy') && !e.target.classList.contains('btn-trade')) {
+                const itemId = parseInt(itemCard.dataset.id);
+                const item = featuredItems.find(i => i.id === itemId);
+                if (item) openModal(item);
+            } else if (trendingCard) {
+                const itemId = parseInt(trendingCard.dataset.id);
+                const item = trendingItems.find(i => i.id === itemId);
+                if (item) openModal(item);
+            }
+        });
 
-    closeModal.addEventListener('click', function() {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    });
-
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
         }
-    });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ===== Verificar se os elementos existem antes de adicionar listeners =====
+        const modalBuyButton = modal.querySelector('.modal-actions .btn-buy');
+        const modalTradeButton = modal.querySelector('.modal-actions .btn-trade');
+        const modalAddToCartButton = modal.querySelector('.modal-actions .btn-add-to-cart');
+
+        if (modalBuyButton) {
+            modalBuyButton.addEventListener('click', function() {
+                const modalProductName = document.getElementById('modal-product-name');
+                if (!modalProductName) return;
+                
+                const itemName = modalProductName.textContent;
+                const item = featuredItems.find(i => i.name === itemName) || trendingItems.find(i => i.name === itemName);
+                
+                if (item) {
+                    localStorage.setItem('currentPurchase', JSON.stringify(item));
+                    window.location.href = 'payment.html';
+                }
+            });
+        }
+
+        if (modalTradeButton) {
+            modalTradeButton.addEventListener('click', function() {
+                const modalProductName = document.getElementById('modal-product-name');
+                if (!modalProductName) return;
+                
+                const itemName = modalProductName.textContent;
+                alert(`Proposta de troca para ${itemName} enviada com sucesso! O vendedor irá revisar sua oferta em breve.`);
+            });
+        }
+
+        if (modalAddToCartButton) {
+            modalAddToCartButton.addEventListener('click', function() {
+                const modalProductName = document.getElementById('modal-product-name');
+                if (!modalProductName) return;
+                
+                const itemName = modalProductName.textContent;
+                const item = featuredItems.find(i => i.name === itemName) || trendingItems.find(i => i.name === itemName);
+                
+                if (item) {
+                    addToCart(item);
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    alert('Item adicionado ao carrinho!');
+                }
+            });
+        }
+    }
 
     // ===== Carrinho de Compras =====
     const cartButton = document.getElementById('cart-button');
     const cartModal = document.getElementById('cart-modal');
-    const closeCart = document.querySelector('.close-cart');
+    const closeCart = cartModal ? cartModal.querySelector('.close-cart') : null;
     const cartItems = document.getElementById('cart-items');
     const cartCount = document.querySelector('.cart-count');
     const totalPrice = document.querySelector('.total-price');
 
     function updateCartCount() {
+        if (!cartCount) return;
+        
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         cartCount.textContent = cart.length;
     }
 
     function updateCartItems() {
+        if (!cartItems || !totalPrice) return;
+        
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         cartItems.innerHTML = '';
         
@@ -476,23 +764,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event Listeners para o carrinho
-    cartButton.addEventListener('click', function() {
-        updateCartItems();
-        cartModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    });
+    if (cartButton && cartModal) {
+        cartButton.addEventListener('click', function() {
+            updateCartItems();
+            cartModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    }
 
-    closeCart.addEventListener('click', function() {
-        cartModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    });
-
-    window.addEventListener('click', function(event) {
-        if (event.target === cartModal) {
+    if (closeCart && cartModal) {
+        closeCart.addEventListener('click', function() {
             cartModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-        }
-    });
+        });
+    }
+
+    if (cartModal) {
+        window.addEventListener('click', function(event) {
+            if (event.target === cartModal) {
+                cartModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
 
     // Event Listeners para botões de compra e troca
     document.addEventListener('click', function(e) {
@@ -535,34 +829,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event Listeners para botões do modal
-    document.querySelector('.modal-actions .btn-buy').addEventListener('click', function() {
-        const itemName = document.getElementById('modal-product-name').textContent;
-        const item = featuredItems.find(i => i.name === itemName) || trendingItems.find(i => i.name === itemName);
-        
-        if (item) {
-            localStorage.setItem('currentPurchase', JSON.stringify(item));
-            window.location.href = 'payment.html';
-        }
-    });
-
-    document.querySelector('.modal-actions .btn-trade').addEventListener('click', function() {
-        const itemName = document.getElementById('modal-product-name').textContent;
-        alert(`Proposta de troca para ${itemName} enviada com sucesso! O vendedor irá revisar sua oferta em breve.`);
-    });
-
-    document.querySelector('.modal-actions .btn-add-to-cart').addEventListener('click', function() {
-        const itemName = document.getElementById('modal-product-name').textContent;
-        const item = featuredItems.find(i => i.name === itemName) || trendingItems.find(i => i.name === itemName);
-        
-        if (item) {
-            addToCart(item);
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            alert('Item adicionado ao carrinho!');
-        }
-    });
-
     // ===== Carrossel de Tendências =====
     const carousel = document.querySelector('.trending-grid');
     const prevBtn = document.querySelector('.carousel-control.prev');
@@ -575,6 +841,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const gap = 16;
     
     function createDots() {
+        if (!dotsContainer || !carousel) return;
+        
         const totalItems = document.querySelectorAll('.trending-grid .trending-card').length;
         const totalSlides = Math.ceil(totalItems / itemsPerSlide);
         
@@ -585,9 +853,19 @@ document.addEventListener('DOMContentLoaded', function() {
             if (i === 0) dot.classList.add('active');
             dotsContainer.appendChild(dot);
         }
+        
+        // Adicionar event listeners aos pontos
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
     }
     
     function updateCarousel() {
+        if (!carousel) return;
+        
         const offset = currentIndex * (itemsPerSlide * (itemWidth + gap));
         carousel.style.transform = `translateX(-${offset}px)`;
         
@@ -596,31 +874,35 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.classList.toggle('active', index === currentIndex);
         });
         
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex >= Math.ceil(carousel.children.length / itemsPerSlide) - 1;
+        if (prevBtn) {
+            prevBtn.disabled = currentIndex === 0;
+        }
+        
+        if (nextBtn && carousel) {
+            nextBtn.disabled = currentIndex >= Math.ceil(carousel.children.length / itemsPerSlide) - 1;
+        }
     }
     
-    prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-        }
-    });
-    
-    nextBtn.addEventListener('click', () => {
-        const maxIndex = Math.ceil(carousel.children.length / itemsPerSlide) - 1;
-        if (currentIndex < maxIndex) {
-            currentIndex++;
-            updateCarousel();
-        }
-    });
-    
-    document.querySelectorAll('.dot').forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentIndex = index;
-            updateCarousel();
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
         });
-    });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (!carousel) return;
+            
+            const maxIndex = Math.ceil(carousel.children.length / itemsPerSlide) - 1;
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+    }
     
     function adjustItemsPerSlide() {
         const width = window.innerWidth;
@@ -636,13 +918,24 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel();
     }
     
-    window.addEventListener('resize', adjustItemsPerSlide);
+    if (carousel) {
+        window.addEventListener('resize', adjustItemsPerSlide);
+    }
+
+    // Adiciona a classe active ao link da página atual
+    const currentPage = window.location.pathname.split('/').pop();
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href').split('/').pop();
+        if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
+            link.classList.add('active');
+        }
+    });
 
     // ===== Inicialização =====
     renderFeaturedItems();
     renderTrendingItems();
     updateCartCount();
-    createDots();
+    if (dotsContainer) createDots();
     updateCarousel();
     adjustItemsPerSlide();
 }); 
