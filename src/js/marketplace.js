@@ -618,7 +618,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="item-actions">
                         <button class="btn-buy">Comprar</button>
-                        <button class="btn-trade">Trocar</button>
+                        <button class="btn-add-cart" onclick="addToCart(${item.id})">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
                     </div>
                 </div>
             </div>
@@ -771,10 +773,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // ===== Verificar se os elementos existem antes de adicionar listeners =====
-        const modalBuyButton = modal.querySelector('.modal-actions .btn-buy');
-        const modalTradeButton = modal.querySelector('.modal-actions .btn-trade');
-        const modalAddToCartButton = modal.querySelector('.modal-actions .btn-add-to-cart');
+        // Modal product action buttons
+        const modalBuyButton = document.querySelector('.modal-actions .btn-buy');
+        const modalAddToCartButton = document.querySelector('.modal-actions .btn-add-to-cart');
 
         if (modalBuyButton) {
             modalBuyButton.addEventListener('click', function() {
@@ -785,19 +786,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const item = featuredItems.find(i => i.name === itemName) || trendingItems.find(i => i.name === itemName);
                 
                 if (item) {
-                    localStorage.setItem('currentPurchase', JSON.stringify(item));
-                    window.location.href = 'payment.html';
+                    localStorage.setItem('currentPurchase', JSON.stringify({
+                        items: [item]
+                    }));
+                    window.location.href = '../pages/payment.html';
                 }
-            });
-        }
-
-        if (modalTradeButton) {
-            modalTradeButton.addEventListener('click', function() {
-                const modalProductName = document.getElementById('modal-product-name');
-                if (!modalProductName) return;
-                
-                const itemName = modalProductName.textContent;
-                alert(`Proposta de troca para ${itemName} enviada com sucesso! O vendedor irá revisar sua oferta em breve.`);
             });
         }
 
@@ -821,29 +814,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== Carrinho de Compras =====
     const cartButton = document.getElementById('cart-button');
-    const cartModal = document.getElementById('cart-modal');
-    const closeCart = cartModal ? cartModal.querySelector('.close-cart') : null;
-    const cartItems = document.getElementById('cart-items');
     const cartCount = document.querySelector('.cart-count');
-    const totalPrice = document.querySelector('.total-price');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCart = document.getElementById('close-cart');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalPrice = document.getElementById('total-price');
+    const checkoutButton = document.getElementById('btn-checkout');
 
+    // Atualizar contador do carrinho
     function updateCartCount() {
-        if (!cartCount) return;
-        
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         cartCount.textContent = cart.length;
     }
 
+    // Atualizar itens do carrinho
     function updateCartItems() {
-        if (!cartItems || !totalPrice) return;
-        
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cartItems.innerHTML = '';
+        cartItemsContainer.innerHTML = '';
         
         let total = 0;
         
         cart.forEach((item, index) => {
-            const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            const price = parseFloat(item.price.toString().replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
             total += price;
             
             const cartItem = document.createElement('div');
@@ -853,13 +845,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="cart-item-info">
                     <h3>${item.name}</h3>
                     <p>${item.game}</p>
-                    <span class="cart-item-price">${item.price}</span>
+                    <span class="cart-item-price">R$ ${price.toFixed(2).replace('.', ',')}</span>
                 </div>
                 <button class="remove-item" data-index="${index}">
                     <i class="fas fa-times"></i>
                 </button>
             `;
-            cartItems.appendChild(cartItem);
+            cartItemsContainer.appendChild(cartItem);
         });
         
         totalPrice.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
@@ -881,33 +873,45 @@ document.addEventListener('DOMContentLoaded', function() {
         cart.push(item);
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
-        updateCartItems();
     }
 
     // Event Listeners para o carrinho
-    if (cartButton && cartModal) {
-        cartButton.addEventListener('click', function() {
-            updateCartItems();
-            cartModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
-    }
+    cartButton.addEventListener('click', function() {
+        updateCartItems();
+        cartModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
 
-    if (closeCart && cartModal) {
-        closeCart.addEventListener('click', function() {
+    closeCart.addEventListener('click', function() {
+        cartModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === cartModal) {
             cartModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-        });
-    }
+        }
+    });
 
-    if (cartModal) {
-        window.addEventListener('click', function(event) {
-            if (event.target === cartModal) {
-                cartModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    }
+    // Botão de checkout
+    checkoutButton.addEventListener('click', function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length > 0) {
+            // Salvar os itens do carrinho como currentPurchase
+            localStorage.setItem('currentPurchase', JSON.stringify({
+                items: cart
+            }));
+            window.location.href = '../pages/payment.html';
+        } else {
+            alert('Seu carrinho está vazio!');
+        }
+    });
+
+    // Atualizar contador do carrinho ao carregar a página
+    window.addEventListener('load', function() {
+        updateCartCount();
+    });
 
     // Event Listeners para botões de compra e troca
     document.addEventListener('click', function(e) {
@@ -919,15 +923,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const itemCard = e.target.closest('.item-card');
             if (itemCard) {
                 const itemId = parseInt(itemCard.dataset.id);
-                // Se não conseguirmos encontrar nos featured items, tentamos nos trending items
                 let item = featuredItems.find(i => i.id === itemId);
                 if (!item) {
                     item = trendingItems.find(i => i.id === itemId);
                 }
 
                 if (item) {
-                    localStorage.setItem('currentPurchase', JSON.stringify(item));
-                    window.location.href = 'payment.html';
+                    e.preventDefault();
+                    openModal(item);
                 }
             }
         } else if (e.target.classList.contains('btn-trade') && !e.target.closest('.modal-actions')) {
@@ -1059,4 +1062,33 @@ document.addEventListener('DOMContentLoaded', function() {
     if (dotsContainer) createDots();
     updateCarousel();
     adjustItemsPerSlide();
+
+    // Carregar dados da compra atual
+    const currentPurchase = JSON.parse(localStorage.getItem('currentPurchase'));
+    const cartItemsSummary = document.getElementById('cart-items-summary');
+    
+    if (cartItemsSummary && currentPurchase) {
+        // Limpar o conteúdo atual
+        cartItemsSummary.innerHTML = '';
+        
+        // Criar elemento para o item
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item-summary';
+        itemElement.innerHTML = `
+            <div class="item-image">
+                <img src="${currentPurchase.image}" alt="${currentPurchase.name}">
+            </div>
+            <div class="item-details">
+                <h3>${currentPurchase.name}</h3>
+                <p class="item-price">${currentPurchase.price}</p>
+            </div>
+        `;
+        cartItemsSummary.appendChild(itemElement);
+    } else if (cartItemsSummary) {
+        // Se não houver compra atual, mostrar mensagem
+        cartItemsSummary.innerHTML = '<p class="empty-cart">Nenhum item selecionado para compra</p>';
+    }
+    
+    // Inicializar métodos de pagamento
+    initializePaymentMethods();
 }); 

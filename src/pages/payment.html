@@ -14,7 +14,9 @@
     <div class="background-animation"></div>
     <header>
         <nav class="main-nav">
-            <div class="logo">GameSwap</div>
+            <div class="logo">
+                <img src="../assets/Images/LOGOTIPO(POSITIVO).png" alt="GameSwap Logo" class="logo-image">
+            </div>
             <button class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
@@ -153,7 +155,7 @@
                                     </ol>
                                     <div class="pix-code">
                                         <p>Código PIX:</p>
-                                        <div class="code-display">00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540510.005802BR5913GameSwap6008Sao Paulo62070503***6304E2CA</div>
+                                        <div class="code-display"></div>
                                         <button class="btn-copy-code">
                                             <i class="fas fa-copy"></i>
                                             Copiar código
@@ -470,75 +472,99 @@
             // Mostrar a seção inicialmente selecionada
             showSelectedPaymentSection();
 
-            // Carregar informações do produto do localStorage
-            const purchaseData = JSON.parse(localStorage.getItem('currentPurchase'));
-            
-            if (purchaseData) {
-                const cartItemsSummary = document.getElementById('cart-items-summary');
-                let total = 0;
+            // Carregar itens do carrinho
+            const cartItemsSummary = document.getElementById('cart-items-summary');
+            const currentPurchase = JSON.parse(localStorage.getItem('currentPurchase'));
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-                // Se for um único produto
-                if (purchaseData.name) {
-                    // Atualizar elementos da página com as informações do produto
-                    document.getElementById('product-name').textContent = purchaseData.name;
-                    document.getElementById('product-game').textContent = purchaseData.game;
-                    document.getElementById('product-price').textContent = purchaseData.price;
-                    document.getElementById('product-image').src = purchaseData.image;
-                    document.getElementById('seller-name').textContent = purchaseData.seller;
-                    
-                    // Atualizar o total da compra no resumo
-                    const price = parseFloat(purchaseData.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-                    const serviceFee = price * 0.05; // 5% de taxa de serviço
-                    total = price + serviceFee;
-                    
-                    document.querySelector('.summary-item:nth-child(1) span:last-child').textContent = purchaseData.price;
-                    document.querySelector('.summary-item:nth-child(2) span:last-child').textContent = `R$ ${serviceFee.toFixed(2).replace('.', ',')}`;
-                    document.querySelector('.summary-total span:last-child').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-                } 
-                // Se for múltiplos produtos do carrinho
-                else if (purchaseData.items && purchaseData.items.length > 0) {
-                    let subtotal = 0;
-                    
-                    // Limpar o container de itens
-                    cartItemsSummary.innerHTML = '';
-                    
-                    // Adicionar cada item do carrinho
-                    purchaseData.items.forEach(item => {
-                        const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
-                        subtotal += price;
+            if (cartItemsSummary) {
+                cartItemsSummary.innerHTML = '';
+                let subtotal = 0;
+
+                // Verificar se há itens para mostrar
+                const itemsToShow = currentPurchase?.items || cartItems;
+
+                if (itemsToShow && itemsToShow.length > 0) {
+                    itemsToShow.forEach(item => {
+                        // Converte o preço de string para número
+                        const priceStr = item.price.toString();
+                        const price = parseFloat(priceStr.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
                         
-                        const itemElement = document.createElement('div');
-                        itemElement.className = 'cart-item-summary';
-                        itemElement.innerHTML = `
-                            <div class="cart-item-image">
-                                <img src="${item.image}" alt="${item.name}">
-                            </div>
-                            <div class="cart-item-details">
-                                <h3>${item.name}</h3>
-                                <p>${item.game}</p>
-                                <span class="item-price">${item.price}</span>
-                            </div>
-                        `;
-                        cartItemsSummary.appendChild(itemElement);
+                        if (!isNaN(price)) {
+                            subtotal += price;
+                            
+                            const itemElement = document.createElement('div');
+                            itemElement.className = 'cart-item';
+                            itemElement.innerHTML = `
+                                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                                <div class="cart-item-details">
+                                    <h4>${item.name}</h4>
+                                    <p>R$ ${price.toFixed(2).replace('.', ',')}</p>
+                                </div>
+                            `;
+                            cartItemsSummary.appendChild(itemElement);
+                        }
                     });
-                    
+
                     // Calcular taxas e total
                     const serviceFee = subtotal * 0.05; // 5% de taxa de serviço
-                    total = subtotal + serviceFee;
-                    
-                    // Atualizar o resumo do pagamento
-                    document.querySelector('.summary-item:nth-child(1) span:last-child').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-                    document.querySelector('.summary-item:nth-child(2) span:last-child').textContent = `R$ ${serviceFee.toFixed(2).replace('.', ',')}`;
-                    document.querySelector('.summary-total span:last-child').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+                    const total = subtotal + serviceFee;
+
+                    // Atualizar valores na interface
+                    const subtotalElement = document.querySelector('.summary-item:nth-child(1) span:last-child');
+                    const serviceFeeElement = document.querySelector('.summary-item:nth-child(2) span:last-child');
+                    const totalElement = document.querySelector('.summary-total span:last-child');
+
+                    if (subtotalElement) subtotalElement.textContent = `R$ ${subtotal.toFixed(2)}`;
+                    if (serviceFeeElement) serviceFeeElement.textContent = `R$ ${serviceFee.toFixed(2)}`;
+                    if (totalElement) totalElement.textContent = `R$ ${total.toFixed(2)}`;
+                } else {
+                    cartItemsSummary.innerHTML = '<p>Nenhum item no carrinho</p>';
                 }
+            }
+
+            // Função para atualizar o valor do PIX
+            function updatePixValue(total) {
+                const pixCodeDisplay = document.querySelector('.code-display');
+                const pixValueDisplay = document.getElementById('pix-value');
                 
-                // Limpar o localStorage após carregar as informações
-                localStorage.removeItem('currentPurchase');
-            } else {
-                // Se não houver informações do produto, redirecionar para a página inicial
-                window.location.href = '../../index.html';
+                if (pixCodeDisplay && pixValueDisplay) {
+                    // Formata o valor para exibição
+                    const displayValue = total.toFixed(2).replace('.', ',');
+                    pixValueDisplay.textContent = displayValue;
+                    
+                    // Formata o valor para o código PIX (sem separadores)
+                    const formattedValue = total.toFixed(2).replace('.', '');
+                    pixCodeDisplay.textContent = `00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865405${formattedValue}5802BR5913GameSwap6008Sao Paulo62070503***6304E2CA`;
+                }
+            }
+
+            // Atualizar o valor do PIX quando o carrinho for carregado
+            if (cartItemsSummary) {
+                cartItemsSummary.addEventListener('DOMSubtreeModified', function() {
+                    const totalElement = document.querySelector('.summary-total span:last-child');
+                    if (totalElement) {
+                        const total = parseFloat(totalElement.textContent.replace('R$ ', '').replace(',', '.'));
+                        updatePixValue(total);
+                    }
+                });
+            }
+
+            // Atualizar o valor do PIX quando o método PIX for selecionado
+            const pixRadio = document.getElementById('pix');
+            if (pixRadio) {
+                pixRadio.addEventListener('change', function() {
+                    if (this.checked) {
+                        const totalElement = document.querySelector('.summary-total span:last-child');
+                        if (totalElement) {
+                            const total = parseFloat(totalElement.textContent.replace('R$ ', '').replace(',', '.'));
+                            updatePixValue(total);
+                        }
+                    }
+                });
             }
         });
     </script>
+    <script src="../js/payment.js" defer></script>
 </body>
 </html> 

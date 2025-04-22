@@ -45,29 +45,6 @@ function updateCardPreview() {
     `;
 }
 
-// Função para validar o cartão usando o algoritmo de Luhn
-function validateCardNumber(cardNumber) {
-    const digits = cardNumber.replace(/\D/g, '');
-    let sum = 0;
-    let isEven = false;
-    
-    for (let i = digits.length - 1; i >= 0; i--) {
-        let digit = parseInt(digits[i]);
-        
-        if (isEven) {
-            digit *= 2;
-            if (digit > 9) {
-                digit -= 9;
-            }
-        }
-        
-        sum += digit;
-        isEven = !isEven;
-    }
-    
-    return sum % 10 === 0;
-}
-
 // Função para validar a data de expiração
 function validateExpirationDate(expirationDate) {
     const [month, year] = expirationDate.split('/');
@@ -85,8 +62,21 @@ function validateExpirationDate(expirationDate) {
     return true;
 }
 
+// Função para validar o número do cartão (validação básica)
+function validateCardNumber(cardNumber) {
+    // Remove caracteres não numéricos
+    const digits = cardNumber.replace(/\D/g, '');
+    
+    // Verifica se tem entre 13 e 19 dígitos
+    if (digits.length < 13 || digits.length > 19) {
+        return false;
+    }
+    
+    return true;
+}
+
 // Função para tokenizar os dados do cartão
-async function tokenizeCard(cardData) {
+/*async function tokenizeCard(cardData) {
     try {
         // Simulação de chamada à API de tokenização
         const response = await fetch('https://api.gameswap.com/tokenize', {
@@ -108,7 +98,7 @@ async function tokenizeCard(cardData) {
         console.error('Erro na tokenização:', error);
         throw error;
     }
-}
+}*/
 
 // Funções para gerenciar métodos de pagamento alternativos
 function initializePaymentMethods() {
@@ -177,13 +167,20 @@ function initializePaymentMethods() {
 
 // Função para gerar QR Code do PIX
 function generatePixQRCode() {
-    // Em um ambiente real, isso seria gerado pelo backend
-    // Aqui estamos apenas simulando
+    // Pegar o valor total atual
+    const totalElement = document.querySelector('.summary-total span:last-child');
+    let totalValue = '0,00';
+    
+    if (totalElement) {
+        totalValue = totalElement.textContent.replace('R$ ', '');
+    }
+    
+    // Atualizar o QR Code com o valor atual
     const qrPlaceholder = document.querySelector('.qr-placeholder');
     qrPlaceholder.innerHTML = `
         <i class="fas fa-qrcode"></i>
         <p>QR Code gerado</p>
-        <p class="qr-info">Valor: R$ 314,89</p>
+        <p class="qr-info">Valor: R$ ${totalValue}</p>
     `;
 }
 
@@ -397,37 +394,83 @@ function showSuccess(message) {
 }
 
 // Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    const cardNumberInput = document.getElementById('card-number');
-    const expirationDateInput = document.getElementById('card-expiry');
-    const cardholderNameInput = document.getElementById('card-holder');
-    const paymentForm = document.getElementById('payment-form');
-    const copyPixButton = document.querySelector('.btn-copy-code');
-    const applePayButton = document.querySelector('.apple-pay-button');
-    const paypalButton = document.querySelector('.paypal-button');
+document.addEventListener('DOMContentLoaded', function() {
+    // Carregar itens do carrinho
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const currentPurchase = JSON.parse(localStorage.getItem('currentPurchase'));
+    const cartItemsSummary = document.getElementById('cart-items-summary');
+    const paymentSummary = document.getElementById('payment-summary');
+    
+    if (cartItemsSummary && paymentSummary) {
+        // Limpar o conteúdo atual
+        cartItemsSummary.innerHTML = '';
+        paymentSummary.innerHTML = '';
+        
+        let subtotal = 0;
+        
+        // Se houver uma compra atual, mostrar apenas ela
+        if (currentPurchase) {
+            // Verificar se é um item único ou um array de itens
+            const itemsToShow = currentPurchase.items || [currentPurchase];
+            
+            itemsToShow.forEach(item => {
+                const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                subtotal += price;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item-summary';
+                itemElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p class="item-price">${item.price}</p>
+                    </div>
+                `;
+                cartItemsSummary.appendChild(itemElement);
+            });
+        }
+        // Se não houver compra atual, mostrar todos os itens do carrinho
+        else if (cartItems.length > 0) {
+            cartItems.forEach(item => {
+                const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                subtotal += price;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item-summary';
+                itemElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p class="item-price">${item.price}</p>
+                    </div>
+                `;
+                cartItemsSummary.appendChild(itemElement);
+            });
+        } else {
+            // Se não houver itens, mostrar mensagem
+            cartItemsSummary.innerHTML = '<p class="empty-cart">Seu carrinho está vazio</p>';
+        }
+        
+        // Calcular taxa de serviço (5% do subtotal)
+        const serviceFee = subtotal * 0.05;
+        
+        // Calcular total
+        const total = subtotal + serviceFee;
+        
+        // Atualizar valores na interface
+        const subtotalElement = document.getElementById('subtotal-value');
+        const serviceFeeElement = document.getElementById('service-fee-value');
+        const totalElement = document.getElementById('total-value');
+
+        if (subtotalElement) subtotalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+        if (serviceFeeElement) serviceFeeElement.textContent = `R$ ${serviceFee.toFixed(2).replace('.', ',')}`;
+        if (totalElement) totalElement.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
     
     // Inicializar métodos de pagamento
     initializePaymentMethods();
-    
-    // Eventos existentes
-    cardNumberInput.addEventListener('input', () => formatCardNumber(cardNumberInput));
-    expirationDateInput.addEventListener('input', () => formatExpirationDate(expirationDateInput));
-    cardholderNameInput.addEventListener('input', () => formatCardholderName(cardholderNameInput));
-    paymentForm.addEventListener('submit', processPayment);
-    
-    // Novos eventos para métodos de pagamento alternativos
-    if (copyPixButton) {
-        copyPixButton.addEventListener('click', copyPixCode);
-    }
-    
-    if (applePayButton) {
-        applePayButton.addEventListener('click', processApplePay);
-    }
-    
-    if (paypalButton) {
-        paypalButton.addEventListener('click', processPayPal);
-    }
-    
-    // Inicializar preview do cartão
-    updateCardPreview();
 }); 

@@ -49,17 +49,15 @@ body {
 .logo {
     text-align: center;
     margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.logo img {
-    width: 80px;
-    height: 80px;
+.logo-image {
+    max-width: 350px;
+    height: auto;
     margin-bottom: 15px;
-}
-
-.logo h1 {
-    color: var(--primary-color);
-    font-size: 2rem;
 }
 
 .form-group {
@@ -230,14 +228,9 @@ body {
     .register-card {
         padding: 30px;
     }
-
-    .logo img {
-        width: 60px;
-        height: 60px;
-    }
-
-    .logo h1 {
-        font-size: 1.5rem;
+    
+    .logo-image {
+        max-width: 280px;
     }
 }
 
@@ -245,9 +238,13 @@ body {
     .register-card {
         padding: 20px;
     }
-
+    
+    .logo-image {
+        max-width: 220px;
+    }
+    
     .form-group input {
-        padding: 10px 12px;
+        padding: 10px;
     }
 }
 
@@ -395,4 +392,32 @@ footer {
     100% {
         transform: translateY(-100px) translateX(0);
     }
+}
+
+.password-match-message {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.password-match-message.error {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.password-match-message.success {
+    color: #28a745;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.input-container.error input {
+    border-color: #dc3545;
+}
+
+.input-container.error input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 } 

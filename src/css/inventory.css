@@ -32,6 +32,12 @@ header .main-nav {
     backdrop-filter: blur(10px);
     height: 78.07px; /* Altura ajustada para 78.07px */
 }
+.logo-image {
+    height: 90px;
+    scale: 1.75;
+    width: auto;
+    transition: all 0.3s ease;
+}
 
 /* Estilo para o botão de menu toggle */
 header .menu-toggle {
@@ -77,33 +83,9 @@ header #nav-menu a:hover {
 }
 
 /* Estilo para o botão do carrinho */
-header .cart-button {
-    position: relative;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: color 0.3s ease;
-}
 
-header .cart-button:hover {
-    color: #6c5ce7;
-}
 
-header .cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #6c5ce7;
-    color: #fff;
-    font-size: 0.8rem;
-    padding: 2px 6px;
-    border-radius: 50%;
-    min-width: 20px;
-    text-align: center;
-}
+
 
 /* Media query para o menu responsivo */
 @media (max-width: 950px) {
@@ -736,7 +718,37 @@ footer {
     overflow-y: auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
-
+.cart-button{
+    position: relative;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+}
+.cart-button:hover {
+    color: #6c5ce7;
+}
+.cart-count {
+    position: absolute;
+    top: 0px;
+    right: -5px;
+    background: #6c5ce7;
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 25px;
+    max-height: 19px;
+    min-width: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+    
 .cart-header {
     display: flex;
     justify-content: space-between;
@@ -1113,4 +1125,23 @@ footer {
     html {
         height: -webkit-fill-available;
     }
+}
+
+.card-body {
+    color: var(--text-color) !important;
+}
+
+.card-body .card-title,
+.card-body .card-text,
+.card-body p {
+    color: var(--text-color) !important;
+}
+
+.item-card .card-body {
+    color: var(--text-color) !important;
+}
+
+.item-card .card-body h5,
+.item-card .card-body p {
+    color: var(--text-color) !important;
 } 

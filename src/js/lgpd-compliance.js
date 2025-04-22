@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('lgpdConsent', 'true');
         successMessage.style.display = 'block';
         setTimeout(() => {
-            window.location.href = '../index.html';
+            window.location.href = '../../index.html';
         }, 3000);
     });
 
@@ -97,6 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Verificar se o usuário já consentiu
     if (localStorage.getItem('lgpdConsent') === 'true') {
-        window.location.href = '/index.html';
+        window.location.href = '../../index.html';
     }
 }); 

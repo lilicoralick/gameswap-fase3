@@ -139,12 +139,37 @@ document.addEventListener('DOMContentLoaded', function() {
     function validatePasswordConfirmation() {
         const password = passwordInput.value;
         const confirmPassword = confirmPasswordInput.value;
+        const confirmPasswordContainer = confirmPasswordInput.parentElement;
+        const passwordMatchMessage = document.getElementById('password-match-message') || createPasswordMatchMessage();
 
-        if (password && confirmPassword && password !== confirmPassword) {
-            confirmPasswordInput.setCustomValidity('As senhas não coincidem');
+        if (password && confirmPassword) {
+            if (password !== confirmPassword) {
+                confirmPasswordInput.setCustomValidity('As senhas não coincidem');
+                confirmPasswordContainer.classList.add('error');
+                passwordMatchMessage.textContent = 'As senhas não coincidem';
+                passwordMatchMessage.classList.remove('success');
+                passwordMatchMessage.classList.add('error');
+            } else {
+                confirmPasswordInput.setCustomValidity('');
+                confirmPasswordContainer.classList.remove('error');
+                passwordMatchMessage.textContent = 'As senhas coincidem';
+                passwordMatchMessage.classList.remove('error');
+                passwordMatchMessage.classList.add('success');
+            }
         } else {
             confirmPasswordInput.setCustomValidity('');
+            confirmPasswordContainer.classList.remove('error');
+            passwordMatchMessage.textContent = '';
+            passwordMatchMessage.classList.remove('error', 'success');
         }
+    }
+
+    function createPasswordMatchMessage() {
+        const message = document.createElement('div');
+        message.id = 'password-match-message';
+        message.className = 'password-match-message';
+        confirmPasswordInput.parentElement.appendChild(message);
+        return message;
     }
 
     function validateForm() {
