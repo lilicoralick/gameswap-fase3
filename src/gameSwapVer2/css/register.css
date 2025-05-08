@@ -1,0 +1,35 @@
+:root {
+    --primary-color: #6c5ce7;
+    --text-color: #ffffff;
+    --text-secondary: #a29bfe;
+    --warning-color: #fdcb6e;
+    --success-color: #00b894;
+  }
+  
+  .text-info {
+    color: var(--text-secondary) !important;
+  }
+  
+  /* Validação visual dos requisitos da senha */
+  .requirement.valid i {
+    color: var(--success-color) !important;
+  }
+  
+  .requirement.invalid i {
+    color: red;
+  }
+  
+  /* Ícone de aviso de idade */
+  #ageWarning {
+    font-size: 0.9rem;
+  }
+  
+  /* Input com erro */
+  .input-container.error input {
+    border-color: #dc3545;
+  }
+  
+  .input-container.error input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+  

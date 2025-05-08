@@ -1,0 +1,92 @@
+:root {
+    --primary-color: #6C63FF;
+    --accent-color: #FF6B6B;
+    --background-color: #1a1a1a;
+    --text-color: #ffffff;
+    --text-secondary: #b3b3b3;
+    --card-bg: rgba(45, 45, 45, 0.8);
+    --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    --border-color: #404040;
+  }
+  
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  .security-tips-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+  }
+  
+  h1 i, .tip-icon {
+    color: var(--accent-color);
+  }
+  
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+  }
+  
+  .tip-card {
+    background-color: rgba(45, 45, 45, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    padding: 1.5rem;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  
+  .tip-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .tip-card ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .tip-card ul li {
+    padding-left: 1.2rem;
+    position: relative;
+    margin-bottom: 0.8rem;
+    color: var(--text-secondary);
+  }
+  
+  .tip-card ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+  
+  .security-reminder {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid var(--accent-color);
+    border-radius: 15px;
+    padding: 1.5rem;
+  }
+  
+  .security-reminder h4 {
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .security-reminder p {
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
