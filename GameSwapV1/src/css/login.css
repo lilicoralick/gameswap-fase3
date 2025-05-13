@@ -229,7 +229,7 @@ body {
     text-decoration: underline;
 }
 
-/* Estilos do Footer */
+/* ====== footer ====== */
 footer {
     background-color: var(--card-background);
     padding: 2rem;
@@ -238,51 +238,55 @@ footer {
 }
 
 .security-info {
-    max-width: 1200px;
-    margin: 0 auto 2rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
-    gap: 2rem;
 }
 
 .ssl-badge {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background-color: var(--primary-color);
+    background-color: rgba(15, 15, 30, 0.7);
     padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 50px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .ssl-badge i {
-    color: #4CAF50;
+    color: var(--success-color);
+    font-size: 1.2rem;
 }
 
 .security-details {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .security-details p {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-color);
-    opacity: 0.9;
 }
 
 .security-details i {
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
-
-.copyright {
+.copyright p {
     text-align: center;
     opacity: 0.7;
     font-size: 0.9rem;
+}
+
+footer .copyright {
+    text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -315,6 +319,12 @@ footer {
 }
 
 /* Animação de fundo */
+/* ====== Estilos de Animação de Fundo ====== */
+
+/* Container principal da animação
+   - position: fixed mantém a animação fixa na tela
+   - z-index: -1 coloca a animação atrás de todo o conteúdo
+   - overflow: hidden evita barras de rolagem */
 .background-animation {
     position: fixed;
     top: 0;
@@ -326,69 +336,84 @@ footer {
     background-color: transparent;
 }
 
-/* Estilos dos pixels e formas */
-.pixel {
-    position: absolute;
-    opacity: 0.4;
-    animation: float-up linear infinite;
-    transform: scale(0);
-}
-
-.pixel.square {
-    border-radius: 2px;
-}
-
-.pixel.triangle {
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
-
-.pixel.diamond {
-    transform: rotate(45deg);
-}
-
-.pixel.cross {
-    position: relative;
-    transform: rotate(45deg);
-}
-
-.pixel.cross::before,
-.pixel.cross::after {
-    content: '';
-    position: absolute;
-    background-color: currentColor;
-}
-
-.pixel.cross::before {
-    width: 100%;
-    height: 20%;
-    top: 40%;
-    left: 0;
-}
-
-.pixel.cross::after {
-    width: 20%;
-    height: 100%;
-    top: 0;
-    left: 40%;
-}
-
-.color1 { color: #6c5ce7; }
-.color2 { color: #a29bfe; }
-.color3 { color: #00cec9; }
-.color4 { color: #00b894; }
-.color5 { color: #fdcb6e; }
-
-@keyframes float-up {
+/* Definição da animação de flutuação
+   - translateY move as formas verticalmente
+   - rotate gira as formas durante a animação
+   - opacity controla a transparência em diferentes estágios */
+@keyframes floatUp {
     0% {
-        transform: translateY(100vh) scale(0);
+        transform: translateY(120vh) rotate(0deg); /* Inicia abaixo da tela */
         opacity: 0;
     }
-    10% {
-        opacity: 0.4;
-        transform: translateY(90vh) scale(1);
+    20% {
+        opacity: 0.3; /* Fade in */
+    }
+    80% {
+        opacity: 0.3; /* Mantém visível */
     }
     100% {
-        transform: translateY(-10vh) scale(0.5);
-        opacity: 0;
+        transform: translateY(-20vh) rotate(360deg); /* Termina acima da tela com rotação completa */
+        opacity: 0; /* Fade out */
     }
-} 
+}
+
+/* Estilo base para todas as formas pixeladas
+   - width/height: 8px cria o efeito pixelado
+   - box-shadow adiciona um brilho suave
+   - animation aplica a animação com duração e delay variáveis */
+.pixel {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    opacity: 0;
+    box-shadow: 0 0 4px rgba(148, 0, 211, 0.6);
+    animation: floatUp var(--duration) infinite linear;
+    animation-delay: var(--delay);
+}
+
+/* Variações de cores para as formas */
+.pixel.color1 {
+    background-color: var(--primary-color); /* Roxo principal */
+}
+
+.pixel.color2 {
+    background-color: var(--secondary-color); /* Roxo secundário */
+}
+
+.pixel.color3 {
+    background-color: #B23AEE; /* Violeta mais claro */
+}
+
+.pixel.color4 {
+    background-color: #9370DB; /* Roxo médio */
+}
+
+.pixel.color5 {
+    background-color: #BA55D3; /* Orquídea médio */
+}
+
+/* ==== Definição das formas geométricas usando clip-path ==== */
+
+/* Quadrado - forma básica */
+.pixel.square {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+/* Triângulo - três pontos formando um triângulo */
+.pixel.triangle {
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+/* Diamante - quadrado rotacionado 45 graus */
+.pixel.diamond {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+/* Cruz - forma mais complexa usando múltiplos pontos */
+.pixel.cross {
+    clip-path: polygon(
+        35% 0%, 65% 0%, 65% 35%, 100% 35%,
+        100% 65%, 65% 65%, 65% 100%, 35% 100%,
+        35% 65%, 0% 65%, 0% 35%, 35% 35%
+    );
+}
