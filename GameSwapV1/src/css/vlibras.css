@@ -1,0 +1,13 @@
+/* Estilos para o VLibras */
+[vw-access-button] {
+    z-index: 9999 !important;
+}
+
+.vw-plugin-top-wrapper {
+    z-index: 9999 !important;
+}
+
+[vw-plugin-wrapper] {
+    position: fixed !important;
+    z-index: 9999 !important;
+} 
