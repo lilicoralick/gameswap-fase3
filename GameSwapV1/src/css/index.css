@@ -634,6 +634,23 @@ footer {
     .logo-image {
         height: 70px; /* Slightly smaller on mobile */
     }
+
+    .vw-plugin-top-wrapper .vw-plugin-top {
+        width: 400px !important;
+        height: 300px !important;
+        transform: scale(1) !important;
+    }
+
+    .vw-plugin-top-wrapper .vw-plugin-top .vw-plugin-top-avatar {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    [vw-access-button] {
+        width: 60px !important;
+        height: 60px !important;
+        transform: scale(1.2) !important;
+    }
 }
 
 @media (max-width: 480px) {
