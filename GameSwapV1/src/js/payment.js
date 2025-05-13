@@ -1,3 +1,5 @@
+import { processLoyaltyPoints, calculateLoyaltyPoints } from './loyalty-points.js';
+
 // Função para formatar o número do cartão
 function formatCardNumber(input) {
     let value = input.value.replace(/\D/g, '');
@@ -271,86 +273,35 @@ function processPix() {
     }, 2000);
 }
 
-// Modificar a função processPayment para lidar com diferentes métodos
+// Modificar a função processPayment para incluir o processamento de pontos
 async function processPayment(event) {
     event.preventDefault();
     
     const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
     
-    switch(selectedMethod) {
-        case 'credit-card':
-            // Código existente para processamento de cartão de crédito
-            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
-            const cardholderName = document.getElementById('card-holder').value;
-            const expirationDate = document.getElementById('card-expiry').value;
-            const cvv = document.getElementById('card-cvv').value;
-            
-            // Validações
-            if (!validateCardNumber(cardNumber)) {
-                showError('Número do cartão inválido');
-                return;
-            }
-            
-            if (!validateExpirationDate(expirationDate)) {
-                showError('Data de expiração inválida');
-                return;
-            }
-            
-            if (cvv.length < 3) {
-                showError('CVV inválido');
-                return;
-            }
-            
-            try {
-                // Mostrar loading
-                showLoading();
-                
-                // Tokenizar os dados do cartão
-                const cardData = {
-                    number: cardNumber,
-                    holder: cardholderName,
-                    expiration: expirationDate,
-                    cvv: cvv
-                };
-                
-                const token = await tokenizeCard(cardData);
-                
-                // Processar o pagamento com o token
-                const paymentData = {
-                    token: token,
-                    amount: parseFloat(document.querySelector('.summary-total span:last-child').textContent.replace('R$', '').trim()),
-                    description: 'Pagamento GameSwap'
-                };
-                
-                // Simulação de processamento do pagamento
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Sucesso
-                showSuccess('Pagamento processado com sucesso!');
-                
-                // Limpar formulário
-                document.getElementById('payment-form').reset();
-                updateCardPreview();
-                
-            } catch (error) {
-                showError('Erro ao processar o pagamento. Tente novamente.');
-            } finally {
-                hideLoading();
-            }
-            break;
-            
-        case 'pix':
-            processPix();
-            break;
-            
-        case 'apple-pay':
-            processApplePay();
-            break;
-            
-        case 'paypal':
-            processPayPal();
-            break;
-    }
+    // Obter o valor total da compra
+    const totalElement = document.querySelector('.summary-total span:last-child');
+    const totalValue = parseFloat(totalElement.textContent.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
+    
+    // Processar os pontos de fidelidade
+    const pointsResult = processLoyaltyPoints(totalValue);
+    
+    // Atualizar os pontos no localStorage
+    const currentPoints = parseInt(localStorage.getItem('loyaltyPoints')) || 0;
+    const newTotalPoints = currentPoints + pointsResult.earnedPoints;
+    localStorage.setItem('loyaltyPoints', newTotalPoints.toString());
+    
+    // Mostrar mensagem de sucesso
+    showSuccess(`Pagamento processado com sucesso! Você ganhou ${pointsResult.earnedPoints.toLocaleString('pt-BR')} pontos de fidelidade!`);
+    
+    // Limpar carrinho após pagamento bem-sucedido
+    localStorage.removeItem('cart');
+    localStorage.removeItem('currentPurchase');
+    
+    // Redirecionar para a página de perfil após 2 segundos
+    setTimeout(() => {
+        window.location.href = './profile.html';
+    }, 2000);
 }
 
 // Funções auxiliares para feedback visual
@@ -393,18 +344,15 @@ function showSuccess(message) {
     }, 3000);
 }
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', function() {
-    // Carregar itens do carrinho
+// Função para atualizar o resumo do pagamento
+function updatePaymentSummary() {
     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     const currentPurchase = JSON.parse(localStorage.getItem('currentPurchase'));
     const cartItemsSummary = document.getElementById('cart-items-summary');
-    const paymentSummary = document.getElementById('payment-summary');
     
-    if (cartItemsSummary && paymentSummary) {
+    if (cartItemsSummary) {
         // Limpar o conteúdo atual
         cartItemsSummary.innerHTML = '';
-        paymentSummary.innerHTML = '';
         
         let subtotal = 0;
         
@@ -414,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const itemsToShow = currentPurchase.items || [currentPurchase];
             
             itemsToShow.forEach(item => {
-                const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                const price = parseFloat(item.price.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
                 subtotal += price;
                 
                 const itemElement = document.createElement('div');
@@ -434,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Se não houver compra atual, mostrar todos os itens do carrinho
         else if (cartItems.length > 0) {
             cartItems.forEach(item => {
-                const price = parseFloat(item.price.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                const price = parseFloat(item.price.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
                 subtotal += price;
                 
                 const itemElement = document.createElement('div');
@@ -461,16 +409,40 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calcular total
         const total = subtotal + serviceFee;
         
+        // Calcular pontos que serão ganhos (1 ponto por real)
+        const pointsToEarn = Math.floor(total);
+        
         // Atualizar valores na interface
         const subtotalElement = document.getElementById('subtotal-value');
         const serviceFeeElement = document.getElementById('service-fee-value');
         const totalElement = document.getElementById('total-value');
+        const pointsElement = document.getElementById('points-earned-value');
 
         if (subtotalElement) subtotalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
         if (serviceFeeElement) serviceFeeElement.textContent = `R$ ${serviceFee.toFixed(2).replace('.', ',')}`;
         if (totalElement) totalElement.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        if (pointsElement) pointsElement.textContent = pointsToEarn.toLocaleString('pt-BR');
     }
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar o resumo do pagamento
+    updatePaymentSummary();
     
     // Inicializar métodos de pagamento
     initializePaymentMethods();
+    
+    // Adicionar listener para o formulário de pagamento
+    const paymentForm = document.getElementById('payment-form');
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', processPayment);
+    }
+    
+    // Adicionar listener para atualizar o resumo quando houver mudanças
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'cart' || e.key === 'currentPurchase') {
+            updatePaymentSummary();
+        }
+    });
 }); 

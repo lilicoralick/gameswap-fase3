@@ -313,24 +313,33 @@
                         <div class="payment-summary">
                             <div class="summary-item">
                                 <span>Subtotal:</span>
-                                <span>R$ 299,90</span>
+                                <span id="subtotal-value">R$ 0,00</span>
                             </div>
                             <div class="summary-item">
                                 <span>Taxa de serviço:</span>
-                                <span>R$ 14,99</span>
+                                <span id="service-fee-value">R$ 0,00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Desconto:</span>
+                                <span id="discount-value">R$ 0,00</span>
+                            </div>
+                            <div class="summary-item points-earned">
+                                <span>Pontos a ganhar:</span>
+                                <span id="points-earned-value">0</span>
+                                <i class="fas fa-star"></i>
                             </div>
                             <div class="summary-total">
                                 <span>Total:</span>
-                                <span>R$ 314,89</span>
+                                <span id="total-value">R$ 0,00</span>
                             </div>
                         </div>
                         
                         <div class="payment-actions">
-                            <button class="btn-save-card">
+                            <button type="button" class="btn-save-card">
                                 <i class="fas fa-save"></i>
                                 Salvar Cartão
                             </button>
-                            <button class="btn-pay-now" type="submit" form="payment-form">
+                            <button type="submit" class="btn-pay-now">
                                 <i class="fas fa-lock"></i>
                                 Pagar Agora
                             </button>
@@ -486,57 +495,6 @@
             // Mostrar a seção inicialmente selecionada
             showSelectedPaymentSection();
 
-            // Carregar itens do carrinho
-            const cartItemsSummary = document.getElementById('cart-items-summary');
-            const currentPurchase = JSON.parse(localStorage.getItem('currentPurchase'));
-            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-            if (cartItemsSummary) {
-                cartItemsSummary.innerHTML = '';
-                let subtotal = 0;
-
-                // Verificar se há itens para mostrar
-                const itemsToShow = currentPurchase?.items || cartItems;
-
-                if (itemsToShow && itemsToShow.length > 0) {
-                    itemsToShow.forEach(item => {
-                        // Converte o preço de string para número
-                        const priceStr = item.price.toString();
-                        const price = parseFloat(priceStr.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
-                        
-                        if (!isNaN(price)) {
-                            subtotal += price;
-                            
-                            const itemElement = document.createElement('div');
-                            itemElement.className = 'cart-item';
-                            itemElement.innerHTML = `
-                                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                                <div class="cart-item-details">
-                                    <h4>${item.name}</h4>
-                                    <p>R$ ${price.toFixed(2).replace('.', ',')}</p>
-                                </div>
-                            `;
-                            cartItemsSummary.appendChild(itemElement);
-                        }
-                    });
-
-                    // Calcular taxas e total
-                    const serviceFee = subtotal * 0.05; // 5% de taxa de serviço
-                    const total = subtotal + serviceFee;
-
-                    // Atualizar valores na interface
-                    const subtotalElement = document.querySelector('.summary-item:nth-child(1) span:last-child');
-                    const serviceFeeElement = document.querySelector('.summary-item:nth-child(2) span:last-child');
-                    const totalElement = document.querySelector('.summary-total span:last-child');
-
-                    if (subtotalElement) subtotalElement.textContent = `R$ ${subtotal.toFixed(2)}`;
-                    if (serviceFeeElement) serviceFeeElement.textContent = `R$ ${serviceFee.toFixed(2)}`;
-                    if (totalElement) totalElement.textContent = `R$ ${total.toFixed(2)}`;
-                } else {
-                    cartItemsSummary.innerHTML = '<p>Nenhum item no carrinho</p>';
-                }
-            }
-
             // Função para atualizar o valor do PIX
             function updatePixValue(total) {
                 const pixCodeDisplay = document.querySelector('.code-display');
@@ -553,14 +511,22 @@
                 }
             }
 
-            // Atualizar o valor do PIX quando o carrinho for carregado
-            if (cartItemsSummary) {
-                cartItemsSummary.addEventListener('DOMSubtreeModified', function() {
-                    const totalElement = document.querySelector('.summary-total span:last-child');
-                    if (totalElement) {
-                        const total = parseFloat(totalElement.textContent.replace('R$ ', '').replace(',', '.'));
-                        updatePixValue(total);
-                    }
+            // Observar mudanças no total para atualizar o valor do PIX
+            const totalElement = document.querySelector('.summary-total span:last-child');
+            if (totalElement) {
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.type === 'characterData' || mutation.type === 'childList') {
+                            const total = parseFloat(totalElement.textContent.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
+                            updatePixValue(total);
+                        }
+                    });
+                });
+
+                observer.observe(totalElement, {
+                    characterData: true,
+                    childList: true,
+                    subtree: true
                 });
             }
 
@@ -571,7 +537,7 @@
                     if (this.checked) {
                         const totalElement = document.querySelector('.summary-total span:last-child');
                         if (totalElement) {
-                            const total = parseFloat(totalElement.textContent.replace('R$ ', '').replace(',', '.'));
+                            const total = parseFloat(totalElement.textContent.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
                             updatePixValue(total);
                         }
                     }
@@ -579,6 +545,6 @@
             }
         });
     </script>
-    <script src="../js/payment.js" defer></script>
+    <script src="../js/payment.js" type="module" defer></script>
 </body>
 </html> 
