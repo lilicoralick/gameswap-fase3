@@ -1168,90 +1168,93 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Footer e Segurança */
+/* ====== footer ====== */
 footer {
     background-color: var(--card-background);
     padding: 2rem;
     margin-top: 4rem;
+    width: 100%;
 }
 
 .security-info {
-    max-width: 1200px;
-    margin: 0 auto 2rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
-    gap: 2rem;
 }
 
 .ssl-badge {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background-color: var(--primary-color);
+    background-color: rgba(15, 15, 30, 0.7);
     padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 50px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .ssl-badge i {
-    color: #4CAF50;
+    color: var(--success-color);
+    font-size: 1.2rem;
 }
 
 .security-details {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .security-details p {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-color);
-    opacity: 0.9;
 }
 
 .security-details i {
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
-
-.copyright {
+.copyright p {
     text-align: center;
     opacity: 0.7;
     font-size: 0.9rem;
 }
 
+footer .copyright {
+    text-align: center;
+}
+
 @media (max-width: 768px) {
-    .security-info {
-        flex-direction: column;
-        text-align: center;
+    .login-card {
+        padding: 30px;
     }
 
-    .security-details {
+    .logo-image {
+        max-width: 280px;
+    }
+    
+    .form-options {
         flex-direction: column;
         gap: 1rem;
     }
+
+    .forgot-password {
+        align-self: flex-start;
+    }
 }
 
-.menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: color 0.3s;
-    padding: 0.5rem;
-}
+@media (max-width: 480px) {
+    .login-card {
+        padding: 20px;
+    }
 
-.menu-toggle:hover {
-    color: var(--primary-color);
-}
-
-.menu-toggle.active i::before {
-    content: "\f00d";
+    .form-group input {
+        padding: 10px 12px;
+    }
 }
 
 /* ====== Estilos de Animação de Fundo ====== */
