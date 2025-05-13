@@ -57,39 +57,41 @@ document.addEventListener('DOMContentLoaded', function() {
     createBackgroundAnimation();
 });
 
-// Função para criar a animação de fundo
-function createBackgroundAnimation() {
-    const bgAnimation = document.querySelector('.background-animation');
-    if (!bgAnimation) return;
-    
-    const colors = ['color1', 'color2', 'color3', 'color4', 'color5'];
+// ===== Background Animation Setup =====
+    const animationContainer = document.querySelector('.background-animation');
     const shapes = ['square', 'triangle', 'diamond', 'cross'];
-    
-    for (let i = 0; i < 30; i++) {
+    const colors = ['color1', 'color2', 'color3', 'color4', 'color5'];
+    const numberOfPixels = 50;
+
+    function createPixel() {
         const pixel = document.createElement('div');
-        pixel.classList.add('pixel');
-        
-        // Adicionar forma aleatória
         const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-        pixel.classList.add(randomShape);
-        
-        // Adicionar cor aleatória
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        pixel.classList.add(randomColor);
+        pixel.className = `pixel ${randomShape} ${randomColor}`;
         
-        // Definir posição aleatória
-        pixel.style.left = `${Math.random() * 100}%`;
-        pixel.style.top = `${Math.random() * 100}%`;
+        const left = Math.random() * 100;
+        pixel.style.left = `${left}%`;
         
-        // Definir tamanho aleatório
-        const size = Math.random() * 30 + 10;
-        pixel.style.width = `${size}px`;
-        pixel.style.height = `${size}px`;
+        const duration = 10 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        pixel.style.setProperty('--duration', `${duration}s`);
+        pixel.style.setProperty('--delay', `${delay}s`);
         
-        // Adicionar animação
-        pixel.style.animationDuration = `${Math.random() * 10 + 10}s`;
-        pixel.style.animationDelay = `${Math.random() * 5}s`;
-        
-        bgAnimation.appendChild(pixel);
+        return pixel;
     }
-} 
+
+    for (let i = 0; i < numberOfPixels; i++) {
+        animationContainer.appendChild(createPixel());
+    }
+
+    setInterval(() => {
+        const pixels = document.querySelectorAll('.pixel');
+        pixels.forEach(pixel => {
+            const computedStyle = window.getComputedStyle(pixel);
+            const transform = computedStyle.getPropertyValue('transform');
+            if (transform.includes('matrix') && parseFloat(transform.split(',')[5]) < 0) {
+                pixel.remove();
+                animationContainer.appendChild(createPixel());
+            }
+        });
+    }, 1000);

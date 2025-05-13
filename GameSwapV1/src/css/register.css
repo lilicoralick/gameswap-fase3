@@ -248,74 +248,103 @@ body {
     }
 }
 
+/* ====== Estilos de Animação de Fundo ====== */
+/* Container principal da animação
+   - position: fixed mantém a animação fixa na tela
+   - z-index: -1 coloca a animação atrás de todo o conteúdo
+   - overflow: hidden evita barras de rolagem */
 .background-animation {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: -1;
     overflow: hidden;
-    z-index: 0;
+    background-color: transparent;
 }
 
+/* Definição da animação de flutuação
+   - translateY move as formas verticalmente
+   - rotate gira as formas durante a animação
+   - opacity controla a transparência em diferentes estágios */
+@keyframes floatUp {
+    0% {
+        transform: translateY(120vh) rotate(0deg); /* Inicia abaixo da tela */
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.3; /* Fade in */
+    }
+    80% {
+        opacity: 0.3; /* Mantém visível */
+    }
+    100% {
+        transform: translateY(-20vh) rotate(360deg); /* Termina acima da tela com rotação completa */
+        opacity: 0; /* Fade out */
+    }
+}
+
+/* Estilo base para todas as formas pixeladas
+   - width/height: 8px cria o efeito pixelado
+   - box-shadow adiciona um brilho suave
+   - animation aplica a animação com duração e delay variáveis */
 .pixel {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    animation: float-up var(--duration) linear infinite;
+    width: 8px;
+    height: 8px;
+    opacity: 0;
+    box-shadow: 0 0 4px rgba(148, 0, 211, 0.6);
+    animation: floatUp var(--duration) infinite linear;
     animation-delay: var(--delay);
-    opacity: 0.1;
 }
 
+/* Variações de cores para as formas */
+.pixel.color1 {
+    background-color: var(--primary-color); /* Roxo principal */
+}
+
+.pixel.color2 {
+    background-color: var(--secondary-color); /* Roxo secundário */
+}
+
+.pixel.color3 {
+    background-color: #B23AEE; /* Violeta mais claro */
+}
+
+.pixel.color4 {
+    background-color: #9370DB; /* Roxo médio */
+}
+
+.pixel.color5 {
+    background-color: #BA55D3; /* Orquídea médio */
+}
+
+/* ==== Definição das formas geométricas usando clip-path ==== */
+
+/* Quadrado - forma básica */
 .pixel.square {
-    background: currentColor;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
+/* Triângulo - três pontos formando um triângulo */
 .pixel.triangle {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 20px solid currentColor;
-    background: none;
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
 }
 
+/* Diamante - quadrado rotacionado 45 graus */
 .pixel.diamond {
-    transform: rotate(45deg);
-    background: currentColor;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
 
+/* Cruz - forma mais complexa usando múltiplos pontos */
 .pixel.cross {
-    background: none;
-    position: relative;
+    clip-path: polygon(
+        35% 0%, 65% 0%, 65% 35%, 100% 35%,
+        100% 65%, 65% 65%, 65% 100%, 35% 100%,
+        35% 65%, 0% 65%, 0% 35%, 35% 35%
+    );
 }
-
-.pixel.cross::before,
-.pixel.cross::after {
-    content: '';
-    position: absolute;
-    background: currentColor;
-}
-
-.pixel.cross::before {
-    width: 20px;
-    height: 4px;
-    top: 8px;
-    left: 0;
-}
-
-.pixel.cross::after {
-    width: 4px;
-    height: 20px;
-    left: 8px;
-    top: 0;
-}
-
-.color1 { color: #6c5ce7; }
-.color2 { color: #a29bfe; }
-.color3 { color: #00cec9; }
-.color4 { color: #00b894; }
-.color5 { color: #fdcb6e; }
 
 /* Estilos do Footer */
 footer {
