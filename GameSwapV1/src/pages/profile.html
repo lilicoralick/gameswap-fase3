@@ -81,7 +81,7 @@
                 <div class="profile-sidebar">
                     <div class="profile-card">
                         <div class="profile-avatar">
-                            <img src="../assets/default-avatar.png" alt="Avatar" id="profile-avatar-img">
+                            <img src="../assets/Images/default-avatar.png" alt="Avatar" id="profile-avatar-img">
                             <button class="change-avatar" id="change-avatar">
                                 <i class="fas fa-camera"></i>
                             </button>
@@ -270,12 +270,44 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="profile-section">
+                        <h2>Meus Pontos de Fidelidade</h2>
+                        <div class="loyalty-points-card">
+                            <div class="points-header">
+                                <i class="fas fa-star"></i>
+                                <h3>Meus Pontos de Fidelidade</h3>
+                            </div>
+                            <div class="points-display">
+                                <div class="total-points">
+                                    <span id="total-points">0</span>
+                                    <span>pontos</span>
+                                </div>
+                                <div class="level-info">
+                                    <h4>Nível Atual: <span id="current-level-name">Iniciante</span></h4>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div id="points-progress" class="progress"></div>
+                                    </div>
+                                    <span id="next-level-points">0 pontos para o próximo nível</span>
+                                </div>
+                            </div>
+                            <div class="benefits-section">
+                                <h4>Seus Benefícios:</h4>
+                                <ul id="loyalty-benefits" class="benefits-list">
+                                    <!-- Benefícios serão adicionados dinamicamente -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
     <script src="../js/profile.js" defer></script>
+    <script src="../js/profile-points.js" type="module" defer></script>
     <script>
         // Menu Toggle
         const menuToggle = document.getElementById('menu-toggle');
