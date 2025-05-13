@@ -47,9 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirmPassword');
 
-    // Validação de idade
-    birthDateInput.addEventListener('change', function() {
-        const birthDate = new Date(this.value);
+    // Função reutilizável para calcular idade
+    function calculateAge(birthDate) {
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -57,6 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
             age--;
         }
+        
+        return age;
+    }
+
+    // Validação de idade
+    birthDateInput.addEventListener('change', function() {
+        const birthDate = new Date(this.value);
+        const age = calculateAge(birthDate);
 
         if (age < 18) {
             ageWarning.style.display = 'flex';
@@ -174,13 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function validateForm() {
         const birthDate = new Date(birthDateInput.value);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
+        const age = calculateAge(birthDate);
 
         if (age < 18) {
             showError('É necessário ter 18 anos ou mais para se cadastrar. Menores de idade não são permitidos na plataforma.');
