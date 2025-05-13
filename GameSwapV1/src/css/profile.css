@@ -647,5 +647,156 @@
 
     .security-badge {
         padding: 0.5rem 1rem;
+    }
 }
+
+/* Estilos para o card de pontos de fidelidade */
+.loyalty-points-card {
+    background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 100%);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.points-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.points-header i {
+    font-size: 24px;
+    color: #FFD700;
+}
+
+.points-header h3 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.points-display {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.total-points {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.total-points span:first-child {
+    font-size: 2.5em;
+    font-weight: bold;
+    display: block;
+}
+
+.level-info {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.level-info h4 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.progress-container {
+    margin-top: 15px;
+}
+
+.progress-bar {
+    background: rgba(255, 255, 255, 0.2);
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress {
+    background: #FFD700;
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+#next-level-points {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.benefits-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.benefits-section h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.2em;
+}
+
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.benefits-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+.benefits-list li i {
+    color: #FFD700;
+}
+
+.next-level-benefits {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.next-level-benefits h4 {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1em;
+    margin: 0 0 10px 0;
+}
+
+.next-benefit {
+    opacity: 0.7;
+}
+
+.next-benefit i {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .loyalty-points-card {
+        padding: 15px;
+    }
+    
+    .points-display {
+        padding: 15px;
+    }
+    
+    .total-points span:first-child {
+        font-size: 2em;
+    }
+    
+    .benefits-list li {
+        font-size: 0.9em;
+    }
 } 
