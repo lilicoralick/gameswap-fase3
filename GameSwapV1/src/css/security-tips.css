@@ -2,12 +2,12 @@
     --primary-color: #6C63FF;
     --secondary-color: #4CAF50;
     --accent-color: #FF6B6B;
-    --background-color: #1a1a1a;
+    --background-color: #0f0f1a;
     --text-color: #ffffff;
     --text-secondary: #b3b3b3;
-    --card-background: #2d2d2d;
+    --card-background: #1a1a2e;
     --hover-color: #2d2d44;
-    --border-color: #404040;
+    --border-color: rgba(108, 92, 231, 0.2);
     --success-color: #4CAF50;
     --error-color: #f44336;
     --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
@@ -27,7 +27,6 @@
     box-shadow: var(--card-shadow);
     border: 1px solid var(--border-color);
     backdrop-filter: blur(10px);
-    background: rgba(45, 45, 45, 0.8);
 }
 
 .security-tips-card h1 {
@@ -63,7 +62,7 @@
 }
 
 .tip-card {
-    background: rgba(45, 45, 45, 0.5);
+    background: var(--card-background);
     border-radius: 15px;
     padding: 2rem;
     border: 1px solid var(--border-color);
