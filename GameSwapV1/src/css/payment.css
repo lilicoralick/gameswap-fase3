@@ -1,0 +1,22 @@
+/* Estilos para a seção de pontos */
+.points-earned {
+    background: rgba(147, 112, 219, 0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.points-earned i {
+    color: #9370DB;
+    font-size: 1.2em;
+    margin-left: 5px;
+}
+
+.points-earned span:last-child {
+    font-weight: bold;
+    color: #9370DB;
+    margin-right: 5px;
+} 
