@@ -35,7 +35,6 @@ main {
     margin-top: 1rem;
 }
 
-
 .content-area {
     width: 100%;
     min-width: 0;
@@ -184,6 +183,7 @@ main {
 .security-details i {
     color: var(--primary-color);
 }
+
 .price-inputs {
     display: flex;
     flex-direction: column;
@@ -251,7 +251,6 @@ main {
 }
 
 .animated-title {
-
     white-space: normal;
     border-right: none;
     padding-right: 0;
@@ -1102,4 +1101,12 @@ main {
     .carousel-control.next {
         right: 10px;
     }
+}
+
+.footer-title {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
