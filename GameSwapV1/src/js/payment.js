@@ -282,15 +282,15 @@ async function processPayment(event) {
     // Obter o valor total da compra
     const totalElement = document.querySelector('.summary-total span:last-child');
     const totalValue = parseFloat(totalElement.textContent.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
-    
+            
     // Processar os pontos de fidelidade
     const pointsResult = processLoyaltyPoints(totalValue);
-    
+                
     // Atualizar os pontos no localStorage
     const currentPoints = parseInt(localStorage.getItem('loyaltyPoints')) || 0;
     const newTotalPoints = currentPoints + pointsResult.earnedPoints;
     localStorage.setItem('loyaltyPoints', newTotalPoints.toString());
-    
+                
     // Mostrar mensagem de sucesso
     showSuccess(`Pagamento processado com sucesso! Você ganhou ${pointsResult.earnedPoints.toLocaleString('pt-BR')} pontos de fidelidade!`);
     

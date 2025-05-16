@@ -93,58 +93,64 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'auto';
     }
 
-    // Alterna a barra lateral de filtros no mobile
-    if (filterToggle) {
-        filterToggle.addEventListener('click', function(e) {
+    // Função para alternar o sidebar
+    function toggleFilterSidebar() {
+        const sidebar = document.getElementById('filter-sidebar');
+        const overlay = document.getElementById('filter-overlay');
+        const toggleBtn = document.getElementById('filter-toggle');
+        
+        if (sidebar && overlay && toggleBtn) {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            toggleBtn.classList.toggle('active');
+            
+            // Previne o scroll do body quando o sidebar está aberto
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+    }
+
+    // Event listeners para o sidebar
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterToggle = document.getElementById('filter-toggle');
+        const filterOverlay = document.getElementById('filter-overlay');
+        const closeFilterBtn = document.getElementById('close-filter-btn');
+        
+        if (filterToggle) {
+            filterToggle.addEventListener('click', function(e) {
             e.stopPropagation();
-            if (filterSidebar.classList.contains('active')) {
-                closeFilterMenu();
-            } else {
-                openFilterMenu();
-            }
+                toggleFilterSidebar();
         });
     }
 
-    // Fecha os filtros ao clicar no botão fechar do topo
-    if (closeFilterBtn) {
-        closeFilterBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            closeFilterMenu();
-        });
-    }
-
-    // Fecha os filtros ao clicar no botão fechar
-    if (closeFilters) {
-        closeFilters.addEventListener('click', function(e) {
-            e.stopPropagation();
-            closeFilterMenu();
-        });
-    }
-
-    // Fecha os filtros ao clicar no overlay
     if (filterOverlay) {
-        filterOverlay.addEventListener('click', function() {
-            closeFilterMenu();
+            filterOverlay.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleFilterSidebar();
         });
     }
 
-    // Previne que cliques dentro do filtro fechem o menu
-    if (filterSidebar) {
-        filterSidebar.addEventListener('click', function(e) {
+        if (closeFilterBtn) {
+            closeFilterBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+                toggleFilterSidebar();
         });
     }
     
-    // Fecha o filtro ao clicar fora dele
-    document.addEventListener('click', function(event) {
-        if (filterSidebar && filterSidebar.classList.contains('active')) {
-            const isFilterToggle = event.target === filterToggle || filterToggle.contains(event.target);
-            const isFilterSidebar = event.target === filterSidebar || filterSidebar.contains(event.target);
-            
-            if (!isFilterToggle && !isFilterSidebar) {
-                closeFilterMenu();
+        // Fecha o sidebar ao redimensionar a janela para desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 950) {
+                const sidebar = document.getElementById('filter-sidebar');
+                const overlay = document.getElementById('filter-overlay');
+                const toggleBtn = document.getElementById('filter-toggle');
+                
+                if (sidebar && overlay && toggleBtn) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    toggleBtn.classList.remove('active');
+                    document.body.style.overflow = '';
             }
         }
+        });
     });
 
     // Aplica os filtros e fecha a barra lateral em mobile
