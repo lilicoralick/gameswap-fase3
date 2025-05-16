@@ -17,20 +17,14 @@
     color: #fff;
     margin-bottom: 0.5rem;
 }
-.security-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
+
 .logo-image {
     height: 90px;
     scale: 1.75;
     width: auto;
     transition: all 0.3s ease;
 }
+
 /* Estilos para o título animado, como nas outras páginas */
 .animated-title {
     white-space: normal;
@@ -799,4 +793,12 @@
     .benefits-list li {
         font-size: 0.9em;
     }
+} 
+
+.footer-title {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
 } 
