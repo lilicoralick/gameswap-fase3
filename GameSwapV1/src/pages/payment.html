@@ -512,14 +512,14 @@
             }
 
             // Observar mudanças no total para atualizar o valor do PIX
-            const totalElement = document.querySelector('.summary-total span:last-child');
-            if (totalElement) {
+                    const totalElement = document.querySelector('.summary-total span:last-child');
+                    if (totalElement) {
                 const observer = new MutationObserver(function(mutations) {
                     mutations.forEach(function(mutation) {
                         if (mutation.type === 'characterData' || mutation.type === 'childList') {
                             const total = parseFloat(totalElement.textContent.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
-                            updatePixValue(total);
-                        }
+                        updatePixValue(total);
+                    }
                     });
                 });
 

@@ -15,34 +15,35 @@
 }
 
 /* ===== Layout ===== */
-.main-content {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+main {
     position: relative;
-}
-.logo-image {
-    height: 90px;
-    scale: 1.75;
-    width: auto;
-    transition: all 0.3s ease;
-}
-.filter-sidebar {
-    width: 300px;
-    background: var(--card-background);
-    padding: 1.5rem;
-    border-radius: 10px;
-    height: fit-content;
-    position: sticky;
-    top: 100px;
-    z-index: 1000;
+    display: flex;
+    min-height: calc(100vh - 78px);
+    width: 100%;
+    justify-content: center;
 }
 
+.filter-sidebar {
+    width: 280px;
+    background: var(--card-background);
+    padding: 1.5rem;
+    border-radius: 0 10px 10px 0;
+    height: fit-content;
+    position: static;
+    z-index: 1000;
+    flex-shrink: 0;
+    margin-top: 1rem;
+}
+
+
 .content-area {
-    flex: 1;
+    width: 100%;
     min-width: 0;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
 }
 
 /* ===== Filtros ===== */
@@ -409,14 +410,28 @@
 
 .item-image {
     position: relative;
-    aspect-ratio: 16/9;
+    aspect-ratio: 4/3;
     overflow: hidden;
+    background-color: var(--card-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .item-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    padding: 1.5rem;
+}
+
+.item-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('../assets/Images/LOGOTIPO(POSITIVO).png') center/150% no-repeat;
+    opacity: 0.02;
+    z-index: 2;
 }
 
 .item-overlay {
@@ -794,13 +809,13 @@
 
 /* ===== Responsividade ===== */
 @media (max-width: 1200px) {
-    .main-content {
-        padding: 1.5rem;
-        gap: 1.5rem;
-    }
-    
     .filter-sidebar {
         width: 250px;
+    }
+    
+    .main-content {
+        margin-left: 250px;
+        max-width: calc(100% - 250px);
     }
 }
 
@@ -894,50 +909,13 @@
 }
 
 @media (max-width: 950px) {
-    .filter-toggle {
-        display: flex !important; /* Força exibição no mobile */
-        z-index: 1000;
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        max-width: 1400px;
     }
-    
-    .filter-sidebar {
-        position: fixed;
-        top: 78px;
-        right: -100%;
-        height: calc(100vh - 78px);
-        width: 85%;
-        max-width: 350px;
-        z-index: 1010;
-        overflow-y: auto;
-        transition: right 0.3s ease;
-        padding-bottom: 100px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        border-radius: 0;
-    }
-    
-    .filter-sidebar.active {
-        right: 0;
-    }
-    
-    .filter-overlay.active {
-        display: block;
-    }
-    
-    .filter-mobile-actions {
-        display: flex;
-        position: sticky;
-        bottom: 0;
-        background: var(--card-background);
-        padding: 1rem;
-        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-    
-    
-
-    .close-filter-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .content-area {
+        margin: 1rem;
     }
 }
 
@@ -1030,46 +1008,22 @@
     overflow: hidden;
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
-    margin-top: 78px; /* Altura do navbar */
-}
-
-.carousel-container {
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    margin-top: 78px;
 }
 
 .carousel-track {
     position: relative;
     width: 100%;
-    height: auto;
-    min-height: 500px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.carousel-slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.carousel-slide.active {
-    opacity: 1;
 }
 
 .banner-image {
     width: 100%;
-    height: auto;
-    max-height: 90vh;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
     border-radius: 0;
     box-shadow: none;
 }
